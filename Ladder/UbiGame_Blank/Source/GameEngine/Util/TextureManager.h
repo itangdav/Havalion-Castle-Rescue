@@ -15,6 +15,7 @@ namespace GameEngine
 			Ladder,
 			Wall,
             Rock,
+            Fireball,
 			Count,
 		};
 	}	
@@ -27,6 +28,7 @@ namespace GameEngine
 			case eTexture::Ladder: return "ladder-realistic.png";
 			case eTexture::Wall: return "brick-wall-v1.1.png";
             case eTexture::Rock: return "Rock.png";
+            case eTexture::Fireball: return "Fireball.png";
             default: return "UnknownTextType";
         }
 		return "UnknownTexType";
