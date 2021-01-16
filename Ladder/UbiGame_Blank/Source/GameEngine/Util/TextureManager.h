@@ -11,9 +11,8 @@ namespace GameEngine
 		enum type
 		{
 			None = -1,
-
-			Player, 
-
+			Player,
+			Ladder,
 			Count,
 		};
 	}	
@@ -23,6 +22,7 @@ namespace GameEngine
         switch (texture)
         {
             case eTexture::Player: return "Player.png";
+			case eTexture::Ladder: return "Ladder.png";
             default: return "UnknownTextType";
         }
 		return "UnknownTexType";
