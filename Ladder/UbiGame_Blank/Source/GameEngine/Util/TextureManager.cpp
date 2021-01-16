@@ -53,7 +53,7 @@ namespace TextureHelper
 		case GameEngine::eTexture::None:
 			break;
 		case GameEngine::eTexture::Player:
-			return sf::Vector2f(30.f, 30.f);
+			return sf::Vector2f(64.f, 64.f);
 		case GameEngine::eTexture::Count:
 			break;
 		default:

@@ -154,5 +154,8 @@
     <Image Include="Resources\img\Player.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resources\img\climbing-sprite.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
