@@ -13,6 +13,10 @@ namespace GameEngine
 			None = -1,
 			Player,
 			Ladder,
+			Wall,
+            Rock,
+			Fog,
+            Fireball,
 			Count,
 		};
 	}	
@@ -22,7 +26,11 @@ namespace GameEngine
         switch (texture)
         {
             case eTexture::Player: return "climbing-sprite.png";
-			case eTexture::Ladder: return "Ladder.png";
+			case eTexture::Ladder: return "ladder-realistic.png";
+			case eTexture::Wall: return "brick-wall-v1.1.png";
+            case eTexture::Rock: return "Rock.png";
+			case eTexture::Fog: return "fog-overlay.png";
+            case eTexture::Fireball: return "Fireball.png";
             default: return "UnknownTextType";
         }
 		return "UnknownTexType";

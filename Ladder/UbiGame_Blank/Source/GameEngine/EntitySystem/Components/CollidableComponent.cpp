@@ -40,7 +40,7 @@ void CollidableComponent::OnRemoveFromWorld()
 void CollidableComponent::SetupDefaultBoundingBox()
 {
 	//Static AABB for the time being		
-	SetBoundingBox(GetEntity()->GetSize());
+	SetBoundingBox(sf::Vector2f(GetEntity()->GetSize().x / 2, GetEntity()->GetSize().y / 2));
 }
 
 

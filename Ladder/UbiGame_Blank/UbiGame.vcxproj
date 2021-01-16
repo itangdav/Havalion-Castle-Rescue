@@ -174,10 +174,16 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
     <ClCompile Include="Source\GameEngine\EntitySystem\Components\CollidableComponent.cpp" />
     <ClCompile Include="Source\GameEngine\Util\CollisionManager.cpp" />
     <ClCompile Include="Source\GameEngine\Util\SoundManager.cpp" />
+    <ClCompile Include="Source\Game\Components\BackgroundMovementComponent.cpp" />
+    <ClCompile Include="Source\Game\Components\LinkedEntityComponent.cpp" />
+    <ClCompile Include="Source\Game\Components\ObstacleMovementComponent.cpp" />
     <ClCompile Include="Source\Game\Components\PlayerMovementComponent.cpp" />
     <ClCompile Include="Source\Game\GameBoard.cpp" />
     <ClCompile Include="Source\GameEngine\EntitySystem\Components\RenderComponent.cpp" />
     <ClCompile Include="Source\GameEngine\EntitySystem\Component.cpp" />
+    <ClCompile Include="Source\Game\GameControls\ObstacleManager.cpp" />
+    <ClCompile Include="Source\Game\GameControls\ObstacleShower.cpp" />
+    <ClCompile Include="Source\Game\GameEntities\ObstacleEntity.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\GameEngine\EntitySystem\Entity.cpp" />
     <ClCompile Include="Source\GameEngine\GameEngineMain.cpp" />
@@ -196,6 +202,9 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
     <ClInclude Include="Source\GameEngine\EntitySystem\Components\CollidableComponent.h" />
     <ClInclude Include="Source\GameEngine\Util\CollisionManager.h" />
     <ClInclude Include="Source\GameEngine\Util\SoundManager.h" />
+    <ClInclude Include="Source\Game\Components\BackgroundMovementComponent.h" />
+    <ClInclude Include="Source\Game\Components\LinkedEntityComponent.h" />
+    <ClInclude Include="Source\Game\Components\ObstacleMovementComponent.h" />
     <ClInclude Include="Source\Game\Components\PlayerMovementComponent.h" />
     <ClInclude Include="Source\Game\GameBoard.h" />
     <ClInclude Include="Source\GameEngine\EntitySystem\Components\RenderComponent.h" />
@@ -204,6 +213,9 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
     <ClInclude Include="Source\GameEngine\GameEngineMain.h" />
     <ClInclude Include="Source\GameEngine\Util\TextureManager.h" />
     <ClInclude Include="Source\GameEngine\EntitySystem\Components\SpriteRenderComponent.h" />
+    <ClInclude Include="Source\Game\GameControls\ObstacleManager.h" />
+    <ClInclude Include="Source\Game\GameControls\ObstacleShower.h" />
+    <ClInclude Include="Source\Game\GameEntities\ObstacleEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\img\climbing-sprite.png" />
