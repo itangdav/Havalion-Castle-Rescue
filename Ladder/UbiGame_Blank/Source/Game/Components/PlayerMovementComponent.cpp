@@ -68,10 +68,10 @@ void PlayerMovementComponent::Update()
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			int currX = (int)(round((GetEntity()->GetPos()).x) + 0.03);
+			int currX = GetEntity()->GetPos().x;
 
 			for (int i = 0; i < 4; i++) {
-				if (currX == laddersArr[i + 1]) {
+				if (abs(currX-laddersArr[i + 1])<=5) {
 					jumpDuration = jumpTimes[i];
 					maxJumpDuration = jumpDuration;
 					startPosition = currX;
@@ -85,10 +85,9 @@ void PlayerMovementComponent::Update()
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			int currX = (int)(round((GetEntity()->GetPos()).x) + 0.03);
-
+			int currX = GetEntity()->GetPos().x;
 			for (int i = 0; i < 4; i++) {
-				if (currX == laddersArr[i]) {
+				if (abs(currX - laddersArr[i]) <= 5) {
 					jumpDuration = jumpTimes[i];
 					maxJumpDuration = jumpDuration;
 					startPosition = currX;
