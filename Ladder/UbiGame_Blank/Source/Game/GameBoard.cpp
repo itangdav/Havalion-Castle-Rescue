@@ -10,12 +10,12 @@ GameBoard::GameBoard()
 	:m_player(nullptr)
 {
 	CreatePlayer();
+	CreateLadders();
 }
 
 
 GameBoard::~GameBoard()
 {
-
 }
 
 void GameBoard::CreatePlayer()
@@ -34,6 +34,31 @@ void GameBoard::CreatePlayer()
 	spriteRender->SetTileIndex(2, 0);
 	spriteRender->image = 2;
 	m_player->AddComponent<PlayerMovementComponent>();
+}
+
+void GameBoard::CreateLadders()
+{
+	unsigned int ladderWidth = 76;
+	unsigned int ladderHeight = 148;
+
+	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
+	unsigned int winWidth = mainWindow->getSize().x;
+	unsigned int winHeight = mainWindow->getSize().y;
+	int copiesStacked = (winHeight / ladderHeight + 1) * 2;
+
+	for (int i = 0; i < 5; i++) {
+		ladders[i] = new GameEngine::Entity*[copiesStacked];
+		for (int j = 0; j < copiesStacked; j++) {
+			ladders[i][j] = new GameEngine::Entity();
+			GameEngine::GameEngineMain::GetInstance()->AddEntity(ladders[i][j]);
+			ladders[i][j]->SetSize(sf::Vector2f(ladderWidth, ladderHeight));
+			ladders[i][j]->SetPos(sf::Vector2f(winWidth / 6.0 * (i + 1), winHeight - ladderHeight / 2.0 - ladderHeight * j));
+			GameEngine::SpriteRenderComponent* render = ladders[i][j]->AddComponent<GameEngine::SpriteRenderComponent>();
+			render->SetFillColor(sf::Color::Transparent);
+			render->SetZLevel(1);
+			render->SetTexture(GameEngine::eTexture::Ladder);
+		}
+	}
 }
 
 
