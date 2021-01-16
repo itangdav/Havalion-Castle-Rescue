@@ -12,6 +12,7 @@ namespace GameEngine
 		enum type
 		{			
 			None,
+            RollingRock,
 		};
 	}
 

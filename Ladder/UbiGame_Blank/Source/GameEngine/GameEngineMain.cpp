@@ -39,7 +39,6 @@ GameEngineMain::~GameEngineMain()
 	delete m_renderTarget;
 }
 
-
 void GameEngineMain::OnInitialised()
 {
 	//Engine is initialised, this spot should be used for game object and clocks initialisation
