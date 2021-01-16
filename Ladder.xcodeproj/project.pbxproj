@@ -880,7 +880,8 @@
 		8AAAD55C25B3752A006265F8 /* ObstacleShower.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObstacleShower.h; sourceTree = "<group>"; };
 		8AAAD55D25B3754F006265F8 /* ObstacleManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObstacleManager.h; sourceTree = "<group>"; };
 		8AAAD55E25B37558006265F8 /* ObstacleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObstacleManager.cpp; sourceTree = "<group>"; };
-		8AAAD56025B375EB006265F8 /* Rock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rock.png; sourceTree = "<group>"; };
+		8AAAD56225B38375006265F8 /* Rock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rock.png; sourceTree = "<group>"; };
+		8AAAD56325B38501006265F8 /* Fireball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Fireball.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1037,7 +1038,8 @@
 		8AAAD20625B37478006265F8 /* img */ = {
 			isa = PBXGroup;
 			children = (
-				8AAAD56025B375EB006265F8 /* Rock.png */,
+				8AAAD56325B38501006265F8 /* Fireball.png */,
+				8AAAD56225B38375006265F8 /* Rock.png */,
 				8AAAD20725B37478006265F8 /* fog overlay.png */,
 				8AAAD20825B37478006265F8 /* brick-wall-v1.1.png */,
 				8AAAD20925B37478006265F8 /* ladder-realistic.png */,

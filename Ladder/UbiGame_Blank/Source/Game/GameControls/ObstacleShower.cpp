@@ -64,11 +64,10 @@ void ObstacleShower::SpawnObstacle(bool onladder)
     sf::RenderWindow* window = GameEngine::GameEngineMain::GetInstance() -> GetRenderWindow();
     float screenWidth = (window -> getSize()).x;
     static int ladderCount = 5;
-    static float ladderWidth = 76.f;
     sf::Vector2f pos = sf::Vector2f(0.f, 0.f);
     int ladderNum = RandInt(0, ladderCount - 1);
-    float gap = (screenWidth - ladderWidth*ladderCount)/(ladderCount + 1);
-    pos.x = onladder ? (gap + ladderNum*(gap + ladderWidth) + ladderWidth/2.0f) : RandFloat(0.f, screenWidth);
+    float laddersX[5] = { 0.14, 0.31, 0.5, 0.61, 0.84 };
+    pos.x = onladder ? laddersX[ladderNum]*screenWidth : RandFloat(0.f, screenWidth);
     if (onladder)
     {
         int cnt = (int)GameEngine::eObstacle::ladderType::Count;
