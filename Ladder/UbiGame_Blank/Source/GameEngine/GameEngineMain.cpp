@@ -17,6 +17,7 @@ float GameEngineMain::WINDOW_WIDTH = 1800;
 GameEngineMain* GameEngineMain::sm_instance = nullptr;
 sf::Clock		GameEngineMain::sm_deltaTimeClock;
 sf::Clock		GameEngineMain::sm_gameClock;
+sf::Time		GameEngineMain::sm_pauseTime = sf::seconds(0);
 
 bool GameEngineMain::isRunning = true;
 bool GameEngineMain::isPaused = false;
