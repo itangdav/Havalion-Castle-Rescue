@@ -231,10 +231,12 @@ void GameBoard::Update()
 			GameEngine::GameEngineMain::GetInstance()->isPaused ^= true;
 			if (GameEngine::GameEngineMain::GetInstance()->isPaused) {
 				pauseText->GetComponent<GameEngine::TextRenderComponent>()->SetZLevel(60);
+				pauseClock.restart();
 				m_shower->DisableShower();
 			}
 			else {
 				pauseText->GetComponent<GameEngine::TextRenderComponent>()->SetZLevel(0);
+				GameEngine::GameEngineMain::GetInstance()->sm_pauseTime += pauseClock.getElapsedTime();
 				m_shower->EnableShower();
 			}
 			PauseMenuComponent::pauseDuration = 0.2;

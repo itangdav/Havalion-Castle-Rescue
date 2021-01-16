@@ -40,6 +40,7 @@ namespace Game
 		void CreateFog();
 
 		GameEngine::Entity* pauseText;
+		sf::Clock pauseClock;
 		void CreatePauseText();
 	};
 }
