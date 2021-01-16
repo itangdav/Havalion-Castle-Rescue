@@ -25,7 +25,7 @@ namespace GameEngine
 	{
         switch (texture)
         {
-            case eTexture::Player: return "climbing-sprite.png";
+            case eTexture::Player: return "character.png";
 			case eTexture::Ladder: return "ladder-realistic.png";
 			case eTexture::Wall: return "brick-wall-v1.1.png";
             case eTexture::Rock: return "Rock.png";

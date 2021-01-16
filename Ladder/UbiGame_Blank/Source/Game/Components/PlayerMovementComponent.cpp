@@ -113,22 +113,34 @@ void PlayerMovementComponent::Update()
 
 	if (jumpDuration > 0) {
 		if (jumpDuration <= maxJumpDuration / 8 && playerVel < 0) {
-			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(1, 0);
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(10, 0);
+		}
+		else if (jumpDuration <= maxJumpDuration / 4 && playerVel < 0) {
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(9, 0);
 		}
 		else if (jumpDuration >= 7 * maxJumpDuration / 8 && playerVel < 0) {
-			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(1, 0);
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(6, 0);
+		}
+		else if (jumpDuration >= 3 * maxJumpDuration / 4 && playerVel < 0) {
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(7, 0);
 		}
 		else if (playerVel < 0) {
-			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(0, 0);
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(8, 0);
 		}
 		else if (jumpDuration <= maxJumpDuration / 8 && playerVel > 0) {
-			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(3, 0);
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(15, 0);
+		}
+		else if (jumpDuration <= maxJumpDuration / 4 && playerVel > 0) {
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(14, 0);
 		}
 		else if (jumpDuration >= 7 * maxJumpDuration / 8 && playerVel > 0) {
-			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(3, 0);
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(11, 0);
+		}
+		else if (jumpDuration >= 3 * maxJumpDuration / 4 && playerVel > 0) {
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(12, 0);
 		}
 		else if (playerVel > 0) {
-			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(4, 0);
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(13, 0);
 		}
 	}
 	else {
@@ -152,7 +164,6 @@ void PlayerMovementComponent::Update()
 	if (GameEngine::GameEngineMain::GetInstance()->isRunning) {
 		GameEngine::GameEngineMain::GetInstance()->score += dt *
 			GameEngine::GameEngineMain::GetInstance()->GetGameSpeed();
-		std::cout << GameEngine::GameEngineMain::GetInstance()->score << std::endl;
 	}
 
 	
