@@ -13,6 +13,7 @@ GameBoard::GameBoard()
 	:m_player(nullptr)
 {
 	CreatePlayer();
+	CreateWall();
 	CreateLadders();
     CreateShower();
 }
@@ -63,10 +64,11 @@ void GameBoard::CreateLadders()
 	int copiesStacked = (winHeight / ladderHeight + 1) * 2;
 
 	// Create a hidden center that the ladders can follow
-	GameEngine::Entity* hiddenCenter = new GameEngine::Entity();
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(hiddenCenter);
-	hiddenCenter->SetPos(sf::Vector2f(winWidth / 2.0, 0));
-	hiddenCenter->AddComponent<BackgroundMovementComponent>();
+	ladderHiddenCenter = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(ladderHiddenCenter);
+	ladderHiddenCenter->SetPos(sf::Vector2f(winWidth / 2.0, 0));
+	BackgroundMovementComponent* bgComp = ladderHiddenCenter->AddComponent<BackgroundMovementComponent>();
+	bgComp->SetSingleHeight(ladderHeight);
 
 	float laddersX[5] = { 0.14, 0.31, 0.5, 0.65, 0.84 };
 
@@ -82,37 +84,52 @@ void GameBoard::CreateLadders()
 			render->SetZLevel(1);
 			render->SetTexture(GameEngine::eTexture::Ladder);
 			LinkedEntityComponent* linkedComp = ladders[i][j]->AddComponent<LinkedEntityComponent>();
-			linkedComp->SetFollowedEntity(hiddenCenter);
-			sf::Vector2f dif = ladders[i][j]->GetPos() - hiddenCenter->GetPos();
+			linkedComp->SetFollowedEntity(ladderHiddenCenter);
+			sf::Vector2f dif = ladders[i][j]->GetPos() - ladderHiddenCenter->GetPos();
 			linkedComp->SetFollowOffset(dif);
 		}
 	}
 }
 
-//void GameBoard::CreateWall()
-//{
-//	unsigned int ladderWidth = 76;
-//	unsigned int ladderHeight = 148;
-//
-//	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
-//	unsigned int winWidth = mainWindow->getSize().x;
-//	unsigned int winHeight = mainWindow->getSize().y;
-//	int copiesStacked = (winHeight / ladderHeight + 1) * 2;
-//
-//	for (int i = 0; i < 5; i++) {
-//		ladders[i] = new GameEngine::Entity * [copiesStacked];
-//		for (int j = 0; j < copiesStacked; j++) {
-//			ladders[i][j] = new GameEngine::Entity();
-//			GameEngine::GameEngineMain::GetInstance()->AddEntity(ladders[i][j]);
-//			ladders[i][j]->SetSize(sf::Vector2f(ladderWidth, ladderHeight));
-//			ladders[i][j]->SetPos(sf::Vector2f(winWidth / 6.0 * (i + 1), winHeight - ladderHeight / 2.0 - ladderHeight * j));
-//			GameEngine::SpriteRenderComponent* render = ladders[i][j]->AddComponent<GameEngine::SpriteRenderComponent>();
-//			render->SetFillColor(sf::Color::Transparent);
-//			render->SetZLevel(1);
-//			render->SetTexture(GameEngine::eTexture::Ladder);
-//		}
-//	}
-//}
+void GameBoard::CreateWall()
+{
+	// Specify the size of the wall image
+	unsigned int wallWidth = 640;
+	unsigned int wallHeight = 640;
+
+	// Get the window dimensions
+	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
+	unsigned int winWidth = mainWindow->getSize().x;
+	unsigned int winHeight = mainWindow->getSize().y;
+	int copiesHor = winWidth / wallWidth + 1;
+	int copiesVer = (winHeight / wallHeight + 1) * 2;
+
+	// Create a hidden center that the wall images can follow
+	wallHiddenCenter = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(wallHiddenCenter);
+	wallHiddenCenter->SetPos(sf::Vector2f(winWidth / 2.0, 0));
+	BackgroundMovementComponent* bgComp = wallHiddenCenter->AddComponent<BackgroundMovementComponent>();
+	bgComp->SetSingleHeight(wallHeight);
+
+	walls = new GameEngine::Entity**[copiesHor];
+	for (int i = 0; i < copiesHor; i++) {
+		walls[i] = new GameEngine::Entity*[copiesVer];
+		for (int j = 0; j < copiesVer; j++) {
+			walls[i][j] = new GameEngine::Entity();
+			GameEngine::GameEngineMain::GetInstance()->AddEntity(walls[i][j]);
+			walls[i][j]->SetSize(sf::Vector2f(wallWidth, wallHeight));
+			walls[i][j]->SetPos(sf::Vector2f(wallWidth * (i + 0.5), winHeight - wallHeight * (j + 0.5)));
+			GameEngine::SpriteRenderComponent* render = walls[i][j]->AddComponent<GameEngine::SpriteRenderComponent>();
+			render->SetFillColor(sf::Color::Transparent);
+			render->SetZLevel(0);
+			render->SetTexture(GameEngine::eTexture::Wall);
+			LinkedEntityComponent* linkedComp = walls[i][j]->AddComponent<LinkedEntityComponent>();
+			linkedComp->SetFollowedEntity(wallHiddenCenter);
+			sf::Vector2f dif = walls[i][j]->GetPos() - wallHiddenCenter->GetPos();
+			linkedComp->SetFollowOffset(dif);
+		}
+	}
+}
 
 void GameBoard::Update()
 {
