@@ -44,11 +44,12 @@ void GameBoard::CreatePlayer()
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
     
 	spriteRender->SetFillColor(sf::Color::Transparent);
-	spriteRender->SetZLevel(2);
+	spriteRender->SetZLevel(9);
 	spriteRender->SetTexture(GameEngine::eTexture::Player);
 	spriteRender->SetTileIndex(2, 0);
 	spriteRender->image = 2;
 	m_player->AddComponent<PlayerMovementComponent>();
+
 }
 
 void GameBoard::CreateLadders()

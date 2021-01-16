@@ -18,10 +18,13 @@ GameEngineMain* GameEngineMain::sm_instance = nullptr;
 sf::Clock		GameEngineMain::sm_deltaTimeClock;
 sf::Clock		GameEngineMain::sm_gameClock;
 
+bool isRunning;
+
 GameEngineMain::GameEngineMain()
 	: m_renderTarget(nullptr)
 	, m_gameBoard(nullptr)
 	, m_windowInitialised(false)
+	, isRunning(true)
 {
 	CreateAndSetUpWindow();
 	//Load predefined textures
@@ -40,6 +43,7 @@ GameEngineMain::~GameEngineMain()
 }
 
 float GameEngineMain::GetGameSpeed() {
+	if (!isRunning) return 0;
 	return pow(GameEngineMain::GetInstance()->GetGameTime() / 6 + 1, 0.5);
 }
 
