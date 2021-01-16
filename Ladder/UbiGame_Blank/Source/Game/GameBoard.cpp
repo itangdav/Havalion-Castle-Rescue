@@ -20,10 +20,14 @@ GameBoard::~GameBoard()
 
 void GameBoard::CreatePlayer()
 {
+	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
+	unsigned int winWidth = mainWindow->getSize().x;
+	unsigned int winHeight = mainWindow->getSize().y;
+
 	m_player = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 
-	m_player->SetPos(sf::Vector2f(250.f, 250.f));
+	m_player->SetPos(sf::Vector2f(winWidth/2, winHeight/2));
 	m_player->SetSize(sf::Vector2f(30.f, 30.f));
 
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());

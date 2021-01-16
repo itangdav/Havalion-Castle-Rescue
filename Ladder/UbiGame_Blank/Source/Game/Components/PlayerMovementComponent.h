@@ -19,6 +19,7 @@ namespace Game
 		float jumpHeight;
 		float jumpDistance;
 		float jumpTime;
+		float cooldown;
 	
 	private:
 

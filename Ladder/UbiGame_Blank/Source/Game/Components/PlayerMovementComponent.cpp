@@ -25,20 +25,24 @@ void PlayerMovementComponent::OnAddToWorld()
 
 void PlayerMovementComponent::Update()
 {
+	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
+	unsigned int winWidth = mainWindow->getSize().x;
+	unsigned int winHeight = mainWindow->getSize().y;
 	Component::Update();
 
 	float dt = GameEngine::GameEngineMain::GetTimeDelta();
 
 	sf::Vector2f wantedVel = sf::Vector2f(0.f, 0.f);
 
-	float ladders[5] = { 50, 131, 190, 250, 400};
+	float laddersArr[5] = { winWidth / 6, 2 * winWidth / 6, 3 * winWidth / 6, 4 * winWidth / 6, 5 * winWidth / 6 };
 
-	float jumpTimes[4] = { 0.5, 0.5, 0.5, 0.5 };
+	float jumpTimes[4] = { 1.5, 1.5, 1.5, 1.5 };
 	
+	float maxCooldown = 0.2;
 
 	float jumpHeights[4] = { 50, 50, 50, 80};
 
-	float defaultHeight = 250;
+	float defaultHeight = winHeight/2;
 
 	float playerVel = 1;
 
@@ -52,18 +56,22 @@ void PlayerMovementComponent::Update()
 	}
 
 	if (jumpDuration == 0) {
+
+		cooldown -= dt;
+		if (cooldown <= 0) cooldown = 0;
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
 			int currX = (int)(round((GetEntity()->GetPos()).x) + 0.03);
 			
 			for (int i = 0; i < 4; i++) {
-				if (currX == ladders[i + 1]) {
+				if (currX == laddersArr[i + 1]) {
 					jumpDuration = jumpTimes[i];
 					maxJumpDuration = jumpDuration;
 					startPosition = currX;
-					endPosition = ladders[i];
+					endPosition = laddersArr[i];
 					jumpHeight = jumpHeights[i];
-					jumpDistance = ladders[i + 1] - ladders[i];
+					jumpDistance = laddersArr[i + 1] - laddersArr[i];
 					jumpTime = jumpTimes[i];
 				}
 			}
@@ -74,19 +82,20 @@ void PlayerMovementComponent::Update()
 			int currX = (int)(round((GetEntity()->GetPos()).x) + 0.03);
 
 			for (int i = 0; i < 4; i++) {
-				if (currX == ladders[i]) {
+				if (currX == laddersArr[i]) {
 					jumpDuration = jumpTimes[i];
 					maxJumpDuration = jumpDuration;
 					startPosition = currX;
-					endPosition = ladders[i+1];
+					endPosition = laddersArr[i+1];
 					jumpHeight = jumpHeights[i];
-					jumpDistance = ladders[i+1] - ladders[i];
+					jumpDistance = laddersArr[i+1] - laddersArr[i];
 					jumpTime = jumpTimes[i];
 				}
 			}
 		}
 	}
 	else if (jumpDuration - dt <= 0) {
+		cooldown = maxCooldown;
 		wantedVel.y = -1 * GetEntity()->GetPos().y + defaultHeight;
 		wantedVel.x = -1 * GetEntity()->GetPos().x + endPosition;
 	}
@@ -117,7 +126,19 @@ void PlayerMovementComponent::Update()
 		}
 	}
 	else {
-		GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(2, 0);
+		if (cooldown == 0)
+		{
+			cooldown = maxCooldown;
+			if (GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->image == 2) {
+				GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->image = 1;
+				GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(1, 0);
+			}
+			else {
+				GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->image = 2;
+				GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(2, 0);
+			}
+			
+		}
 	}
 	
 
