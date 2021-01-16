@@ -27,7 +27,7 @@ namespace GameEngine
         {
             case eTexture::Player: return "character.png";
 			case eTexture::Ladder: return "ladder-realistic.png";
-			case eTexture::Wall: return "brick-wall-v1.1.png";
+			case eTexture::Wall: return "brick-wall-v1.6.png";
             case eTexture::Rock: return "Rock.png";
 			case eTexture::Fog: return "fog-overlay.png";
             case eTexture::Fireball: return "Fireball.png";
