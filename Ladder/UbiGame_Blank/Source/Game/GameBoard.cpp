@@ -11,6 +11,8 @@
 #include "Game/GameControls/ObstacleShower.h"
 #include "GameEngine/EntitySystem/Components/CollidableComponent.h"
 #include "GameEngine/Util/CollisionManager.h"
+#include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
+#include "Game/Components/PauseMenuComponent.h"
 #include <vector>
 #include <string>
 
@@ -25,6 +27,7 @@ GameBoard::GameBoard()
 	CreateLadders();
 	CreateFog();
     CreateShower();
+	CreatePauseText();
 }
 
 
@@ -108,7 +111,7 @@ void GameBoard::CreateLadders()
 			ladders[i][j]->SetPos(sf::Vector2f(winWidth *laddersX[i], winHeight - ladderHeight / 2.0 - ladderHeight * j));
 			GameEngine::SpriteRenderComponent* render = ladders[i][j]->AddComponent<GameEngine::SpriteRenderComponent>();
 			render->SetFillColor(sf::Color::Transparent);
-			render->SetZLevel(1);
+			render->SetZLevel(2);
 			render->SetTexture(GameEngine::eTexture::Ladder);
 			LinkedEntityComponent* linkedComp = ladders[i][j]->AddComponent<LinkedEntityComponent>();
 			linkedComp->SetFollowedEntity(ladderHiddenCenter);
@@ -148,7 +151,7 @@ void GameBoard::CreateWall()
 			walls[i][j]->SetPos(sf::Vector2f(wallWidth * (i + 0.5), winHeight - wallHeight * (j + 0.5)));
 			GameEngine::SpriteRenderComponent* render = walls[i][j]->AddComponent<GameEngine::SpriteRenderComponent>();
 			render->SetFillColor(sf::Color::Transparent);
-			render->SetZLevel(0);
+			render->SetZLevel(1);
 			render->SetTexture(GameEngine::eTexture::Wall);
 			LinkedEntityComponent* linkedComp = walls[i][j]->AddComponent<LinkedEntityComponent>();
 			linkedComp->SetFollowedEntity(wallHiddenCenter);
@@ -177,6 +180,25 @@ void GameBoard::CreateFog() {
 	render->SetTexture(GameEngine::eTexture::Fog);
 }
 
+void GameBoard::CreatePauseText() {
+	// Get the window dimensions
+	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
+	int winWidth = (int)mainWindow->getSize().x;
+	int winHeight = (int)mainWindow->getSize().y;
+
+	pauseText = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(pauseText);
+	pauseText->SetPos(sf::Vector2f(winWidth / 2, winHeight / 2));
+	pauseText->SetSize(sf::Vector2f(100, 50));
+	GameEngine::TextRenderComponent* render = pauseText->AddComponent<GameEngine::TextRenderComponent>();
+	render->SetFont("arial.ttf");
+	render->SetString("Paused");
+	render->SetZLevel(0);
+	render->SetCharacterSizePixels(40);
+	render->SetFillColor(sf::Color::Transparent);
+	pauseText->AddComponent<Game::PauseMenuComponent>();
+}
+
 void GameBoard::Update()
 {
     m_shower -> Update();
@@ -198,15 +220,30 @@ void GameBoard::Update()
         {
             //end game
 			GameEngine::GameEngineMain::GetInstance()->isRunning = false;
-
 			m_shower->DisableShower();
-
 			scoreRender->SetColor(sf::Color::Red);
-
         }
     }
 
-	
+	if (!GameEngine::GameEngineMain::GetInstance()->isRunning) return;
+
+	float dt = GameEngine::GameEngineMain::GetTimeDelta();
+	PauseMenuComponent::pauseDuration -= dt;
+	if (PauseMenuComponent::pauseDuration <= 0) {
+		PauseMenuComponent::pauseDuration = 0;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+			GameEngine::GameEngineMain::GetInstance()->isPaused ^= true;
+			if (GameEngine::GameEngineMain::GetInstance()->isPaused) {
+				pauseText->GetComponent<GameEngine::TextRenderComponent>()->SetZLevel(60);
+				m_shower->DisableShower();
+			}
+			else {
+				pauseText->GetComponent<GameEngine::TextRenderComponent>()->SetZLevel(0);
+				m_shower->EnableShower();
+			}
+			PauseMenuComponent::pauseDuration = 0.2;
+		}
+	}
 
 	scoreRender->SetString(std::to_string((int)GameEngine::GameEngineMain::GetInstance()->score));
 

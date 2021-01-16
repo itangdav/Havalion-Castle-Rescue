@@ -5,7 +5,6 @@
 #include "GameEngine/GameEngineMain.h"
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
 
-
 using namespace Game;
 
 PlayerMovementComponent::PlayerMovementComponent()
@@ -25,6 +24,8 @@ void PlayerMovementComponent::OnAddToWorld()
 
 void PlayerMovementComponent::Update()
 {
+	if (GameEngine::GameEngineMain::GetInstance()->isPaused) return;
+	
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	unsigned int winWidth = mainWindow->getSize().x;
 	unsigned int winHeight = mainWindow->getSize().y;
@@ -160,7 +161,7 @@ void PlayerMovementComponent::Update()
 	jumpDuration -= dt;
 	if (jumpDuration <= 0) jumpDuration = 0;
 
-	if (GameEngine::GameEngineMain::GetInstance()->isRunning) {
+	if (GameEngine::GameEngineMain::GetInstance()->isRunning && !GameEngine::GameEngineMain::GetInstance()->isPaused) {
 		GameEngine::GameEngineMain::GetInstance()->score += dt *
 			GameEngine::GameEngineMain::GetInstance()->GetGameSpeed();
 	}

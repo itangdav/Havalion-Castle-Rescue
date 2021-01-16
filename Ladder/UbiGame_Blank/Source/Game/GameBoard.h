@@ -1,7 +1,6 @@
 #pragma once
 #include "GameEngine/EntitySystem/Entity.h"
-#include <SFML/Audio/Music.hpp>
-#include <SFML/Audio.hpp>
+#include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
 
 #include <SFML/System/Vector2.hpp>
 #include <vector>
@@ -39,6 +38,9 @@ namespace Game
 
 		GameEngine::Entity* fog;
 		void CreateFog();
+
+		GameEngine::Entity* pauseText;
+		void CreatePauseText();
 	};
 }
 

@@ -18,13 +18,13 @@ GameEngineMain* GameEngineMain::sm_instance = nullptr;
 sf::Clock		GameEngineMain::sm_deltaTimeClock;
 sf::Clock		GameEngineMain::sm_gameClock;
 
-bool isRunning;
+bool GameEngineMain::isRunning = true;
+bool GameEngineMain::isPaused = false;
 
 GameEngineMain::GameEngineMain()
 	: m_renderTarget(nullptr)
 	, m_gameBoard(nullptr)
 	, m_windowInitialised(false)
-	, isRunning(true)
 	, score(0.f)
 	, nextPlay(0)
 {
@@ -45,7 +45,7 @@ GameEngineMain::~GameEngineMain()
 }
 
 float GameEngineMain::GetGameSpeed() {
-	if (!isRunning) return 0;
+	if (!isRunning || isPaused) return 0;
 	return pow(GameEngineMain::GetInstance()->GetGameTime() / 6 + 1, 0.5);
 }
 
@@ -56,7 +56,6 @@ void GameEngineMain::OnInitialised()
 	sm_deltaTimeClock.restart();
 	sm_gameClock.restart();
 }
-
 
 void GameEngineMain::CreateAndSetUpWindow()
 {
