@@ -34,13 +34,19 @@ void PlayerMovementComponent::Update()
 
 	sf::Vector2f wantedVel = sf::Vector2f(0.f, 0.f);
 
-	float laddersArr[5] = { winWidth / 6, 2 * winWidth / 6, 3 * winWidth / 6, 4 * winWidth / 6, 5 * winWidth / 6 };
+	float laddersX[5] = { 0.14, 0.31, 0.5, 0.61, 0.84 };
 
-	float jumpTimes[4] = { 1.5, 1.5, 1.5, 1.5 };
+	float laddersArr[5] = { winWidth, winWidth, winWidth, winWidth, winWidth};
+
+	for (int i = 0; i < 5; i++) {
+		laddersArr[i] *= laddersX[i];
+	}
+
+	float jumpTimes[4] = { 0.9, 1, 0.7, 1.3 };
 	
 	float maxCooldown = 0.2;
 
-	float jumpHeights[4] = { 50, 50, 50, 80};
+	float jumpHeights[4] = { 50, 50, 30, 80};
 
 	float defaultHeight = winHeight/2;
 

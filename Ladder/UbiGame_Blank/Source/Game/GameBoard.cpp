@@ -50,13 +50,15 @@ void GameBoard::CreateLadders()
 	unsigned int winHeight = mainWindow->getSize().y;
 	int copiesStacked = (winHeight / ladderHeight + 1) * 2;
 
+	float laddersX[5] = { 0.14, 0.31, 0.5, 0.61, 0.84 };
+
 	for (int i = 0; i < 5; i++) {
 		ladders[i] = new GameEngine::Entity*[copiesStacked];
 		for (int j = 0; j < copiesStacked; j++) {
 			ladders[i][j] = new GameEngine::Entity();
 			GameEngine::GameEngineMain::GetInstance()->AddEntity(ladders[i][j]);
 			ladders[i][j]->SetSize(sf::Vector2f(ladderWidth, ladderHeight));
-			ladders[i][j]->SetPos(sf::Vector2f(winWidth / 6.0 * (i + 1), winHeight - ladderHeight / 2.0 - ladderHeight * j));
+			ladders[i][j]->SetPos(sf::Vector2f(winWidth *laddersX[i], winHeight - ladderHeight / 2.0 - ladderHeight * j));
 			GameEngine::SpriteRenderComponent* render = ladders[i][j]->AddComponent<GameEngine::SpriteRenderComponent>();
 			render->SetFillColor(sf::Color::Transparent);
 			render->SetZLevel(1);
