@@ -30,15 +30,20 @@ void PlayerMovementComponent::Update()
 
 	sf::Vector2f wantedVel = sf::Vector2f(0.f, 0.f);
 
-	float jumpDistance = 100;
+	float ladders[5] = { 50, 131, 190, 250, 400};
 
-	float jumpTime = 1;
+	float jumpTimes[4] = { 1, 1, 1, 1.4 };
+	
 
-	float jumpHeight = 50;
+	float jumpHeights[4] = { 50, 50, 50, 80};
 
-	float defaultHeight = 300;
+	float defaultHeight = 250;
 
-	float playerVel = jumpDistance / jumpTime;
+	float playerVel = 1;
+
+	if (jumpTime != 0) {
+		playerVel = jumpDistance / jumpTime;
+	}
 
 
 	if (startPosition - endPosition >= 0) {
@@ -48,32 +53,33 @@ void PlayerMovementComponent::Update()
 	if (jumpDuration == 0) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			switch ((int)(round((GetEntity()->GetPos()).x) + 0.03)) {
-			case 300: 
-				jumpDuration = jumpTime;
-				startPosition = (int)(round((GetEntity()->GetPos()).x) + 0.03);
-				endPosition = (int)(round((GetEntity()->GetPos()).x) + 0.03) - jumpDistance;
-			case 400:
-				jumpDuration = jumpTime;
-				startPosition = (int)(round((GetEntity()->GetPos()).x) + 0.03);
-				endPosition = (int)(round((GetEntity()->GetPos()).x) + 0.03) - jumpDistance;
-			default:
-				break;
+			int currX = (int)(round((GetEntity()->GetPos()).x) + 0.03);
+			
+			for (int i = 0; i < 4; i++) {
+				if (currX == ladders[i + 1]) {
+					jumpDuration = jumpTimes[i];
+					startPosition = currX;
+					endPosition = ladders[i];
+					jumpHeight = jumpHeights[i];
+					jumpDistance = ladders[i + 1] - ladders[i];
+					jumpTime = jumpTimes[i];
+				}
 			}
+
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			switch ((int)(round((GetEntity()->GetPos()).x) + 0.03)) {
-			case 200:
-				jumpDuration = jumpTime;
-				startPosition = (int)(round((GetEntity()->GetPos()).x) + 0.03);
-				endPosition = (int)(round((GetEntity()->GetPos()).x) + 0.03) + jumpDistance;
-			case 300:
-				jumpDuration = jumpTime;
-				startPosition = (int)(round((GetEntity()->GetPos()).x) + 0.03);
-				endPosition = (int)(round((GetEntity()->GetPos()).x) + 0.03) + jumpDistance;
-			default:
-				break;
+			int currX = (int)(round((GetEntity()->GetPos()).x) + 0.03);
+
+			for (int i = 0; i < 4; i++) {
+				if (currX == ladders[i]) {
+					jumpDuration = jumpTimes[i];
+					startPosition = currX;
+					endPosition = ladders[i+1];
+					jumpHeight = jumpHeights[i];
+					jumpDistance = ladders[i+1] - ladders[i];
+					jumpTime = jumpTimes[i];
+				}
 			}
 		}
 	}

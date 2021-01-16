@@ -15,6 +15,9 @@ namespace Game
 		float jumpDuration;
 		float startPosition;
 		float endPosition;
+		float jumpHeight;
+		float jumpDistance;
+		float jumpTime;
 	
 	private:
 
