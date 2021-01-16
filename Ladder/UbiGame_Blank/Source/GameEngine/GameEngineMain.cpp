@@ -51,7 +51,7 @@ void GameEngineMain::OnInitialised()
 
 void GameEngineMain::CreateAndSetUpWindow()
 {
-    m_renderWindow = new sf::RenderWindow(sf::VideoMode(), "Hack The North", sf::Style::Fullscreen);
+    m_renderWindow = new sf::RenderWindow(sf::VideoMode::getDesktopMode(), "Hack The North", sf::Style::Fullscreen);
 //	m_renderWindow = new sf::RenderWindow(sf::VideoMode((unsigned int)WINDOW_WIDTH, (unsigned int)WINDOW_HEIGHT), "Hack The North");
 	m_renderTarget = m_renderWindow;
 }
