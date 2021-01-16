@@ -20,11 +20,11 @@ namespace GameEngine
 
 	inline const char* GetPath(eTexture::type texture)
 	{
-		switch (texture)
-		{
-		case eTexture::Player: return "Player.png";
-		}
-		
+        switch (texture)
+        {
+            case eTexture::Player: return "Player.png";
+            default: return "UnknownTextType";
+        }
 		return "UnknownTexType";
 	}
 
