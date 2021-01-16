@@ -84,7 +84,7 @@ float ObstacleManager::GetObstacleVelocityFactor (eObstacle::ladderType type)
 {
     switch (type)
     {
-        case eObstacle::ladderType::Rock: return 5.f;
+        case eObstacle::ladderType::Rock: return 4.f;
         case eObstacle::ladderType::Fireball: return 3.f;
         default: return 0.f;
     }
@@ -95,7 +95,7 @@ float ObstacleManager::GetObstacleVelocityFactor (eObstacle::nonLadderType type)
 {
     switch (type)
     {
-        case eObstacle::nonLadderType::Rock: return 5.f;
+        case eObstacle::nonLadderType::Rock: return 4.f;
         case eObstacle::nonLadderType::Fireball: return 3.f;
         default: return 0.f;
     }

@@ -41,7 +41,7 @@ void GameBoard::CreatePlayer()
 	m_player = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 
-	m_player->SetPos(sf::Vector2f(winWidth/2, winHeight/2));
+	m_player->SetPos(sf::Vector2f(winWidth/2, 4 * winHeight/5));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
     std::cout << m_player->GetPos().x << std::endl;
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
@@ -154,6 +154,10 @@ void GameBoard::Update()
         if (myBox.intersects(colideBox, intersection))
         {
             //end game
+			GameEngine::GameEngineMain::GetInstance()->isRunning = false;
+
+			m_shower->DisableShower();
+
         }
     }
 }

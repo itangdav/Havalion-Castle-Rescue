@@ -20,6 +20,7 @@ namespace GameEngine
 		static float		   GetTimeDelta() { return GetInstance()->m_lastDT; }
 		static float		   GetGameTime() { return sm_gameClock.getElapsedTime().asSeconds(); }
 		bool isRunning;
+		float score;
 
 		sf::RenderWindow* GetRenderWindow() const { return m_renderWindow; }
 		void Update();		

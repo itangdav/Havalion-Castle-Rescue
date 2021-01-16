@@ -36,19 +36,19 @@ void PlayerMovementComponent::Update()
 
 	float laddersX[5] = { 0.14, 0.31, 0.5, 0.65, 0.84 };
 
-	float laddersArr[5] = { (float)winWidth, (float)winWidth, (float)winWidth, (float)winWidth, (float)winWidth};
+	float laddersArr[5] = { (float)winWidth, (float)winWidth, (float)winWidth, (float)winWidth, (float)winWidth };
 
 	for (int i = 0; i < 5; i++) {
 		laddersArr[i] *= laddersX[i];
 	}
 
 	float jumpTimes[4] = { 0.9, 1, 0.8, 1.1 };
-	
+
 	float maxCooldown = 0.1;
 
-	float jumpHeights[4] = { 50, 55, 40, 65};
+	float jumpHeights[4] = { 50, 55, 40, 65 };
 
-	float defaultHeight = winHeight/2;
+	float defaultHeight = 4 * winHeight / 5;
 
 	float playerVel = 1;
 
@@ -69,7 +69,7 @@ void PlayerMovementComponent::Update()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
 			int currX = (int)(round((GetEntity()->GetPos()).x) + 0.03);
-			
+
 			for (int i = 0; i < 4; i++) {
 				if (currX == laddersArr[i + 1]) {
 					jumpDuration = jumpTimes[i];
@@ -92,9 +92,9 @@ void PlayerMovementComponent::Update()
 					jumpDuration = jumpTimes[i];
 					maxJumpDuration = jumpDuration;
 					startPosition = currX;
-					endPosition = laddersArr[i+1];
+					endPosition = laddersArr[i + 1];
 					jumpHeight = jumpHeights[i];
-					jumpDistance = laddersArr[i+1] - laddersArr[i];
+					jumpDistance = laddersArr[i + 1] - laddersArr[i];
 					jumpTime = jumpTimes[i];
 				}
 			}
@@ -107,8 +107,8 @@ void PlayerMovementComponent::Update()
 	}
 	else {
 		wantedVel.x = playerVel * dt;
-		wantedVel.y = -1 * jumpHeight * (1 - pow(((GetEntity()->GetPos().x + wantedVel.x)-(startPosition+endPosition)/2),2)/pow(jumpDistance/2,2)) -GetEntity()->GetPos().y + defaultHeight;
-	
+		wantedVel.y = -1 * jumpHeight * (1 - pow(((GetEntity()->GetPos().x + wantedVel.x) - (startPosition + endPosition) / 2), 2) / pow(jumpDistance / 2, 2)) - GetEntity()->GetPos().y + defaultHeight;
+
 	}
 
 	if (jumpDuration > 0) {
@@ -138,16 +138,22 @@ void PlayerMovementComponent::Update()
 			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->image++;
 			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->image %= 6;
 			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->image, 0);
-			
-			
+
+
 		}
 	}
-	
+
 
 
 
 	jumpDuration -= dt;
 	if (jumpDuration <= 0) jumpDuration = 0;
+
+	if (GameEngine::GameEngineMain::GetInstance()->isRunning) {
+		GameEngine::GameEngineMain::GetInstance()->score += dt *
+			GameEngine::GameEngineMain::GetInstance()->GetGameSpeed();
+		std::cout << GameEngine::GameEngineMain::GetInstance()->score << std::endl;
+	}
 
 	
 
