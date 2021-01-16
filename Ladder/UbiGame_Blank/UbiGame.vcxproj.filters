@@ -185,4 +185,18 @@
   <ItemGroup>
     <Font Include="Resources\fonts\arial.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\snd\glassBreak.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\snd\thunder.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\snd\music.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\snd\music.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

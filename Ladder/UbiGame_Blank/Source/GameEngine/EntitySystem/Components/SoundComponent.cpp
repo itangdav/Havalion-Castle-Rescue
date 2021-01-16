@@ -16,7 +16,9 @@ SoundComponent::~SoundComponent()
 
 void SoundComponent::OnAddToWorld()
 {
+
 	Component::OnAddToWorld();
+
 }
 
 

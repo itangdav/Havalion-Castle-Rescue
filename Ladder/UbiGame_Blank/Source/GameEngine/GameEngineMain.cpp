@@ -26,6 +26,7 @@ GameEngineMain::GameEngineMain()
 	, m_windowInitialised(false)
 	, isRunning(true)
 	, score(0.f)
+	, nextPlay(0)
 {
 	CreateAndSetUpWindow();
 	//Load predefined textures

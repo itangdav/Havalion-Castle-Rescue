@@ -21,6 +21,7 @@ namespace GameEngine
 		static float		   GetGameTime() { return sm_gameClock.getElapsedTime().asSeconds(); }
 		bool isRunning;
 		float score;
+		float nextPlay;
 
 		sf::RenderWindow* GetRenderWindow() const { return m_renderWindow; }
 		void Update();		

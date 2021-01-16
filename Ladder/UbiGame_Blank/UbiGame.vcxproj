@@ -224,6 +224,12 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
   <ItemGroup>
     <Font Include="Resources\fonts\arial.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\snd\glassBreak.wav" />
+    <Media Include="Resources\snd\music.mp3" />
+    <Media Include="Resources\snd\music.wav" />
+    <Media Include="Resources\snd\thunder.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

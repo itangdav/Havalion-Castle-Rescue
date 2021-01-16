@@ -1,5 +1,7 @@
 #pragma once
 #include "GameEngine/EntitySystem/Entity.h"
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Audio.hpp>
 
 #include <SFML/System/Vector2.hpp>
 #include <vector>
