@@ -23,7 +23,7 @@ void GameBoard::CreatePlayer()
 	m_player = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 
-	m_player->SetPos(sf::Vector2f(0.f, 0.f));
+	m_player->SetPos(sf::Vector2f(300.f, 300.f));
 	m_player->SetSize(sf::Vector2f(10.f, 10.f));
 
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
