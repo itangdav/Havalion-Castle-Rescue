@@ -3,7 +3,10 @@
 
 #include <SFML/System/Vector2.hpp>
 #include <vector>
-
+namespace GameEngine
+{
+    class ObstacleShower;
+}
 namespace Game
 {
 	//Used for storing and controlling all game related entities, as well as providing an entry point for the "game" side of application	
@@ -19,9 +22,11 @@ namespace Game
 
 	private:
 		void CreatePlayer();
+        void CreateShower();
 		GameEngine::Entity* m_player;
 		void CreateLadders();
 		GameEngine::Entity** ladders[5];
+        GameEngine::ObstacleShower* m_shower;
 	};
 }
 

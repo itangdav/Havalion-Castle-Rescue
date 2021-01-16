@@ -50,16 +50,13 @@ namespace TextureHelper
 	{
 		switch (texture)
 		{
-		case GameEngine::eTexture::None:
-			break;
-		case GameEngine::eTexture::Player:
-			return sf::Vector2f(64.f, 64.f);
-		case GameEngine::eTexture::Count:
-			break;
-		default:
-			break;
+            case GameEngine::eTexture::Player:
+                return sf::Vector2f(64.f, 64.f);
+            case GameEngine::eTexture::Rock:
+                return sf::Vector2f(256.f, 256.f);
+            default:
+                return sf::Vector2f(-1.f, -1.f);
 		}
-
 		return sf::Vector2f(-1.f, -1.f);
 	}
 }
