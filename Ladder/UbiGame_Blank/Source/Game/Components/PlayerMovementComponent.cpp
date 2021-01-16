@@ -3,6 +3,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include "PlayerMovementComponent.h"
 #include "GameEngine/GameEngineMain.h"
+#include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
 
 
 using namespace Game;
@@ -32,7 +33,7 @@ void PlayerMovementComponent::Update()
 
 	float ladders[5] = { 50, 131, 190, 250, 400};
 
-	float jumpTimes[4] = { 1, 1, 1, 1.4 };
+	float jumpTimes[4] = { 0.5, 0.5, 0.5, 0.5 };
 	
 
 	float jumpHeights[4] = { 50, 50, 50, 80};
@@ -58,6 +59,7 @@ void PlayerMovementComponent::Update()
 			for (int i = 0; i < 4; i++) {
 				if (currX == ladders[i + 1]) {
 					jumpDuration = jumpTimes[i];
+					maxJumpDuration = jumpDuration;
 					startPosition = currX;
 					endPosition = ladders[i];
 					jumpHeight = jumpHeights[i];
@@ -74,6 +76,7 @@ void PlayerMovementComponent::Update()
 			for (int i = 0; i < 4; i++) {
 				if (currX == ladders[i]) {
 					jumpDuration = jumpTimes[i];
+					maxJumpDuration = jumpDuration;
 					startPosition = currX;
 					endPosition = ladders[i+1];
 					jumpHeight = jumpHeights[i];
@@ -92,6 +95,31 @@ void PlayerMovementComponent::Update()
 		wantedVel.y = -1 * jumpHeight * (1 - pow(((GetEntity()->GetPos().x + wantedVel.x)-(startPosition+endPosition)/2),2)/pow(jumpDistance/2,2)) -GetEntity()->GetPos().y + defaultHeight;
 	
 	}
+
+	if (jumpDuration > 0) {
+		if (jumpDuration <= maxJumpDuration / 8 && playerVel < 0) {
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(1, 0);
+		}
+		else if (jumpDuration >= 7 * maxJumpDuration / 8 && playerVel < 0) {
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(1, 0);
+		}
+		else if (playerVel < 0) {
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(0, 0);
+		}
+		else if (jumpDuration <= maxJumpDuration / 8 && playerVel > 0) {
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(3, 0);
+		}
+		else if (jumpDuration >= 7 * maxJumpDuration / 8 && playerVel > 0) {
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(3, 0);
+		}
+		else if (playerVel > 0) {
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(4, 0);
+		}
+	}
+	else {
+		GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(2, 0);
+	}
+	
 
 
 

@@ -31,7 +31,8 @@ void GameBoard::CreatePlayer()
 	spriteRender->SetFillColor(sf::Color::Transparent);
 	spriteRender->SetZLevel(2);
 	spriteRender->SetTexture(GameEngine::eTexture::Player);
-	spriteRender->SetTileIndex(1, 0);
+	spriteRender->SetTileIndex(2, 0);
+	spriteRender->image = 2;
 	m_player->AddComponent<PlayerMovementComponent>();
 }
 
@@ -39,24 +40,18 @@ void GameBoard::CreatePlayer()
 void GameBoard::Update()
 {
 	if (m_player->GetComponent<PlayerMovementComponent>()->jumpDuration == 0) {
-		if (m_player->GetComponent<GameEngine::SpriteRenderComponent>()->direction != 1) {
-			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(1, 0);
-			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->direction = 1;
-			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->Update();
+		if (m_player->GetComponent<GameEngine::SpriteRenderComponent>()->image == 2) {
+			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(2, 0);
 		}
 	}
 	else if (m_player->GetComponent<PlayerMovementComponent>()->startPosition - m_player->GetComponent<PlayerMovementComponent>()->endPosition >= 0) {
-		if (m_player->GetComponent<GameEngine::SpriteRenderComponent>()->direction != 0) {
+		if (m_player->GetComponent<GameEngine::SpriteRenderComponent>()->image == 0) {
 			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(0, 0);
-			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->direction = 0;
-			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->Update();
 		}
 	}
 	else {
-		if (m_player->GetComponent<GameEngine::SpriteRenderComponent>()->direction != 2) {
-			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(2, 0);
-			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->direction = 2;
-			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->Update();
+		if (m_player->GetComponent<GameEngine::SpriteRenderComponent>()->image == 4) {
+			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(4, 0);
 		}
 	}
 }

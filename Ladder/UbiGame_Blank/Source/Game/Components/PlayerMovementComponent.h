@@ -13,6 +13,7 @@ namespace Game
 		virtual void OnAddToWorld() override;
 
 		float jumpDuration;
+		float maxJumpDuration;
 		float startPosition;
 		float endPosition;
 		float jumpHeight;

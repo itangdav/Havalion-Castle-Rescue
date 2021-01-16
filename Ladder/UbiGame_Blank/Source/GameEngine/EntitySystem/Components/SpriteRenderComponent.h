@@ -23,7 +23,7 @@ namespace GameEngine
 		void SetTileIndex(sf::Vector2i vect) { m_tileIndex = vect; }
 		void SetTileIndex(int xIdx, int yIdx) { m_tileIndex = sf::Vector2i(xIdx, yIdx); }		
 
-		int direction;
+		int image;
 
 	private:
 		void UpdateTileRect();
