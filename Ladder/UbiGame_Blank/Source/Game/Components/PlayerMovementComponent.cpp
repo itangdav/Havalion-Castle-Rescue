@@ -36,7 +36,7 @@ void PlayerMovementComponent::Update()
 
 	float laddersX[5] = { 0.14, 0.31, 0.5, 0.61, 0.84 };
 
-	float laddersArr[5] = { winWidth, winWidth, winWidth, winWidth, winWidth};
+	float laddersArr[5] = { (float)winWidth, (float)winWidth, (float)winWidth, (float)winWidth, (float)winWidth};
 
 	for (int i = 0; i < 5; i++) {
 		laddersArr[i] *= laddersX[i];

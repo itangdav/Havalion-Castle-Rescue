@@ -5,6 +5,7 @@
 #include "Game/Components/BackgroundMovementComponent.h"
 #include "Game/Components/LinkedEntityComponent.h"
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
+#include "Game/GameControls/ObstacleShower.h"
 
 using namespace Game;
 
@@ -13,11 +14,18 @@ GameBoard::GameBoard()
 {
 	CreatePlayer();
 	CreateLadders();
+    CreateShower();
 }
 
 
 GameBoard::~GameBoard()
 {
+}
+
+void GameBoard::CreateShower()
+{
+    m_shower = new GameEngine::ObstacleShower();
+    m_shower -> EnableShower();
 }
 
 void GameBoard::CreatePlayer()
@@ -108,5 +116,5 @@ void GameBoard::CreateLadders()
 
 void GameBoard::Update()
 {
-	
+    m_shower -> Update();
 }

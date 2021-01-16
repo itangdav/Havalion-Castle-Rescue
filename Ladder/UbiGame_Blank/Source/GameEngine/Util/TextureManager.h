@@ -13,6 +13,7 @@ namespace GameEngine
 			None = -1,
 			Player,
 			Ladder,
+            Rock,
 			Count,
 		};
 	}	
@@ -23,6 +24,7 @@ namespace GameEngine
         {
             case eTexture::Player: return "climbing-sprite.png";
 			case eTexture::Ladder: return "Ladder.png";
+            case eTexture::Rock: return "Rock.png";
             default: return "UnknownTextType";
         }
 		return "UnknownTexType";
