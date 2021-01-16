@@ -90,10 +90,13 @@
     <ClCompile Include="Source\Game\GameControls\ObstacleShower.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game\GameEntities\ObstacleEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Game\Components\ObstacleMovementComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\GameEntities\ObstacleEntity.cpp">
+    <ClCompile Include="Source\Game\Components\PauseMenuComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,10 +170,13 @@
     <ClInclude Include="Source\Game\GameControls\ObstacleShower.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game\GameEntities\ObstacleEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Game\Components\ObstacleMovementComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\GameEntities\ObstacleEntity.h">
+    <ClInclude Include="Source\Game\Components\PauseMenuComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -184,5 +190,19 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\fonts\arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\snd\glassBreak.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\snd\thunder.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\snd\music.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\snd\music.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>
