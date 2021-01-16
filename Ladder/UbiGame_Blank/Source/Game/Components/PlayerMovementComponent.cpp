@@ -30,7 +30,7 @@ void PlayerMovementComponent::Update()
 	unsigned int winHeight = mainWindow->getSize().y;
 	Component::Update();
 
-	float dt = GameEngine::GameEngineMain::GetTimeDelta();
+	float dt = GameEngine::GameEngineMain::GetTimeDelta() * GameEngine::GameEngineMain::GetInstance()->GetGameSpeed();
 
 	sf::Vector2f wantedVel = sf::Vector2f(0.f, 0.f);
 
