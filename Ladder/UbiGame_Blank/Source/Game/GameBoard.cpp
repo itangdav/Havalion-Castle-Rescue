@@ -18,6 +18,7 @@ GameBoard::GameBoard()
 	CreatePlayer();
 	CreateWall();
 	CreateLadders();
+	CreateFog();
     CreateShower();
 }
 
@@ -133,6 +134,25 @@ void GameBoard::CreateWall()
 			linkedComp->SetFollowOffset(dif);
 		}
 	}
+}
+
+void GameBoard::CreateFog() {
+	// Get the window dimensions
+	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
+	int winWidth = (int) mainWindow->getSize().x;
+	int winHeight = (int) mainWindow->getSize().y;
+
+	// Set the fog dimensions
+	int fogWidth = winWidth;
+	int fogHeight = winWidth * 27 / 192;
+	fog = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(fog);
+	fog->SetSize(sf::Vector2f(fogWidth, fogHeight));
+	fog->SetPos(sf::Vector2f(winWidth / 2.0, fogHeight / 2.0));
+	GameEngine::SpriteRenderComponent* render = fog->AddComponent<GameEngine::SpriteRenderComponent>();
+	render->SetFillColor(sf::Color::Transparent);
+	render->SetZLevel(3);
+	render->SetTexture(GameEngine::eTexture::Fog);
 }
 
 void GameBoard::Update()

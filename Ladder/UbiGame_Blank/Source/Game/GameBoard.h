@@ -33,6 +33,9 @@ namespace Game
 		GameEngine::Entity*** walls;
 		void CreateWall();
         GameEngine::ObstacleShower* m_shower;
+
+		GameEngine::Entity* fog;
+		void CreateFog();
 	};
 }
 
