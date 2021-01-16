@@ -19,6 +19,7 @@ GameBoard::GameBoard()
 	, m_score(nullptr)
 {
 	CreatePlayer();
+    CreateGod();
 	CreateWall();
 	CreateLadders();
 	CreateFog();
@@ -28,6 +29,12 @@ GameBoard::GameBoard()
 
 GameBoard::~GameBoard()
 {
+    
+}
+
+void GameBoard::CreateGod()
+{
+    m_god = new GameEngine::Entity();
 }
 
 void GameBoard::CreateShower()

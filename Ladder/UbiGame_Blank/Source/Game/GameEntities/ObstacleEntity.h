@@ -3,6 +3,7 @@
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
 #include "GameEngine/EntitySystem/Components/AnimationComponent.h"
 #include "GameEngine/GameEngineMain.h"
+#include "GameEngine/Util/AnimationManager.h"
 
 namespace GameEngine
 {
@@ -19,8 +20,12 @@ namespace GameEngine
         
         void SetVelocityFactor(float velocityFactor);
         float GetVelocityFactor();
+        
+        void SetAnim(EAnimationId::type anim);
                 
     protected:
         GameEngine::SpriteRenderComponent* m_renderComponent;
+    private:
+        EAnimationId::type m_EAnim;
     };
 }

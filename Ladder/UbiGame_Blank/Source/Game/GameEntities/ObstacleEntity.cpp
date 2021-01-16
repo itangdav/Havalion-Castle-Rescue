@@ -7,12 +7,12 @@ using namespace GameEngine;
 
 ObstacleEntity::ObstacleEntity()
 {
+    m_EAnim = EAnimationId::None;
     m_renderComponent = AddComponent<GameEngine::SpriteRenderComponent>();
     m_renderComponent -> SetFillColor(sf::Color::Transparent);
     AddComponent<GameEngine::CollidableComponent>();
     AddComponent<GameEngine::ObstacleMovementComponent>();
     AddComponent<GameEngine::AnimationComponent>();
-    
 }
 
 ObstacleEntity::~ObstacleEntity()
@@ -40,6 +40,11 @@ float ObstacleEntity::GetVelocityFactor()
     return GetComponent<GameEngine::ObstacleMovementComponent>() -> GetVelocityFactor();
 }
 
+void ObstacleEntity::SetAnim(EAnimationId::type anim)
+{
+    m_EAnim = anim;
+}
+
 void ObstacleEntity::Update()
 {
     Entity::Update();
@@ -52,7 +57,7 @@ void ObstacleEntity::Update()
     }
     else
     {
-//        if (anim) anim -> PlayAnim(EAnimationId::type animId)
+        if (anim && !(anim -> IsAnimPlaying())) anim -> PlayAnim(m_EAnim);
         if (move) move -> StartMove();
     }
 }
