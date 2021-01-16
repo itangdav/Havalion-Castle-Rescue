@@ -48,7 +48,7 @@ void GameBoard::CreatePlayer()
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_score);
 	
-	m_score->SetPos(sf::Vector2f(150.f, 50.f));
+	m_score->SetPos(sf::Vector2f(winWidth/2 - 20, 30.f));
 	m_score->SetSize(sf::Vector2f(200.f, 72.f));
 	m_player->SetPos(sf::Vector2f(winWidth/2, 4 * winHeight/5));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
@@ -65,11 +65,12 @@ void GameBoard::CreatePlayer()
 	m_player->AddComponent<PlayerMovementComponent>();
     m_player -> AddComponent<GameEngine::CollidableComponent>();
 
-	scoreRender->SetString("Score: 0");
-	scoreRender->SetCharacterSizePixels(30);
+	scoreRender->SetString("0");
+	scoreRender->SetCharacterSizePixels(40);
 	scoreRender->SetZLevel(60);
 	scoreRender->SetFont("arial.ttf");
 	scoreRender->SetFillColor(sf::Color::Transparent);
+	scoreRender->SetColor(sf::Color(43, 193, 135, 255));
 	
 }
 
@@ -179,6 +180,7 @@ void GameBoard::Update()
     
     std::vector<CollidableComponent*>& collidables = CollisionManager::GetInstance()->GetCollidables();
     GameEngine::CollidableComponent* thiscol = m_player -> GetComponent<GameEngine::CollidableComponent>();
+	GameEngine::TextRenderComponent* scoreRender = m_score->GetComponent<GameEngine::TextRenderComponent>();
     for (int a = 0; a < collidables.size(); ++a)
     {
         CollidableComponent* colComponent = collidables[a];
@@ -195,11 +197,13 @@ void GameBoard::Update()
 
 			m_shower->DisableShower();
 
+			scoreRender->SetColor(sf::Color::Red);
+
         }
     }
 
-	GameEngine::TextRenderComponent* scoreRender = m_score->GetComponent<GameEngine::TextRenderComponent>();
+	
 
-	scoreRender->SetString("Score: " + std::to_string((int)GameEngine::GameEngineMain::GetInstance()->score));
+	scoreRender->SetString(std::to_string((int)GameEngine::GameEngineMain::GetInstance()->score));
 
 }
