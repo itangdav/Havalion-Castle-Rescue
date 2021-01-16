@@ -5,15 +5,18 @@
 #include "Game/Components/BackgroundMovementComponent.h"
 #include "Game/Components/LinkedEntityComponent.h"
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
+#include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
 #include "Game/GameControls/ObstacleShower.h"
 #include "GameEngine/EntitySystem/Components/CollidableComponent.h"
 #include "GameEngine/Util/CollisionManager.h"
 #include <vector>
+#include <string>
 
 using namespace Game;
 
 GameBoard::GameBoard()
 	:m_player(nullptr)
+	, m_score(nullptr)
 {
 	CreatePlayer();
 	CreateWall();
@@ -40,12 +43,19 @@ void GameBoard::CreatePlayer()
 	unsigned int winHeight = mainWindow->getSize().y;
 
 	m_player = new GameEngine::Entity();
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
+	m_score = new GameEngine::Entity();
 
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_score);
+	
+	m_score->SetPos(sf::Vector2f(200.f, 200.f));
+	m_score->SetSize(sf::Vector2f(200.f, 72.f));
 	m_player->SetPos(sf::Vector2f(winWidth/2, 4 * winHeight/5));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
-    std::cout << m_player->GetPos().x << std::endl;
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
+	GameEngine::TextRenderComponent* scoreRender = static_cast<GameEngine::TextRenderComponent*>(m_score->AddComponent<GameEngine::TextRenderComponent>());
+
+	
     
 	spriteRender->SetFillColor(sf::Color::Transparent);
 	spriteRender->SetZLevel(9);
@@ -54,6 +64,12 @@ void GameBoard::CreatePlayer()
 	spriteRender->image = 2;
 	m_player->AddComponent<PlayerMovementComponent>();
     m_player -> AddComponent<GameEngine::CollidableComponent>();
+
+	scoreRender->SetString("0");
+	scoreRender->SetCharacterSizePixels(30);
+	scoreRender->SetZLevel(60);
+	scoreRender->SetFillColor(sf::Color::Transparent);
+	
 }
 
 void GameBoard::CreateLadders()
@@ -180,4 +196,9 @@ void GameBoard::Update()
 
         }
     }
+
+	GameEngine::TextRenderComponent* scoreRender = m_score->GetComponent<GameEngine::TextRenderComponent>();
+
+	scoreRender->SetString(std::to_string((int)GameEngine::GameEngineMain::GetInstance()->score));
+
 }

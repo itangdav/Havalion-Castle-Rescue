@@ -23,6 +23,7 @@ namespace Game
 	private:
         void CreateShower();
 		GameEngine::Entity* m_player;
+		GameEngine::Entity* m_score;
 		void CreatePlayer();
 
 		GameEngine::Entity* ladderHiddenCenter;
