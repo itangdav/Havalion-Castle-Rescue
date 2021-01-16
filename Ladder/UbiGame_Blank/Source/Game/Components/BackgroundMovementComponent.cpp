@@ -4,11 +4,11 @@
 
 using namespace Game;
 
-float BackgroundMovementComponent::speed = 100;
+float BackgroundMovementComponent::speed = 150;
 
 void BackgroundMovementComponent::Update() {
 	Component::Update();
-
+	BackgroundMovementComponent::speed = 150 * GameEngine::GameEngineMain::GetInstance()->GetGameSpeed();
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	int winWidth = (int) mainWindow->getSize().x;
 	int winHeight = (int) mainWindow->getSize().y;
@@ -21,6 +21,7 @@ void BackgroundMovementComponent::Update() {
 		sf::Vector2f goToTop = { 0, (float) (-halfCopies * singleHeight)};
 		GetEntity()->SetPos(GetEntity()->GetPos() + goToTop);
 	}
+
 }
 
 void BackgroundMovementComponent::OnAddToWorld() {
