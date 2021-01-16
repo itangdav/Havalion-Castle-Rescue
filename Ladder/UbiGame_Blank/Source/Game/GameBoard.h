@@ -14,13 +14,13 @@ namespace Game
 	public:
 		GameBoard();
 		virtual ~GameBoard();
-
-		void Update();		
+		void Update();
 		bool IsGameOver() { return false; }
 
 	private:
 		void CreatePlayer();
 		GameEngine::Entity* m_player;
+		void CreateHiddenCenter();
 		void CreateLadders();
 		GameEngine::Entity** ladders[5];
 	};
