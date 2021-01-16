@@ -60,7 +60,7 @@ void GameBoard::CreateLadders()
 	hiddenCenter->SetPos(sf::Vector2f(winWidth / 2.0, 0));
 	hiddenCenter->AddComponent<BackgroundMovementComponent>();
 
-	float laddersX[5] = { 0.14, 0.31, 0.5, 0.61, 0.84 };
+	float laddersX[5] = { 0.14, 0.31, 0.5, 0.65, 0.84 };
 
 	for (int i = 0; i < 5; i++) {
 		ladders[i] = new GameEngine::Entity*[copiesStacked];
