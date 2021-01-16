@@ -5,6 +5,8 @@
 #include "Game/Components/BackgroundMovementComponent.h"
 #include "Game/Components/LinkedEntityComponent.h"
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
+#include "GameEngine/EntitySystem/Components/SoundComponent.h"
+#include "GameEngine/Util/SoundManager.h"
 #include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
 #include "Game/GameControls/ObstacleShower.h"
 #include "GameEngine/EntitySystem/Components/CollidableComponent.h"
@@ -41,6 +43,7 @@ void GameBoard::CreateShower()
 
 void GameBoard::CreatePlayer()
 {
+
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	unsigned int winWidth = mainWindow->getSize().x;
 	unsigned int winHeight = mainWindow->getSize().y;
@@ -57,9 +60,10 @@ void GameBoard::CreatePlayer()
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
 	GameEngine::TextRenderComponent* scoreRender = static_cast<GameEngine::TextRenderComponent*>(m_score->AddComponent<GameEngine::TextRenderComponent>());
-
-	
+	GameEngine::SoundComponent* musicComp = static_cast<GameEngine::SoundComponent*>(m_player->AddComponent<GameEngine::SoundComponent>());
     
+	musicComp->LoadSoundFromFile("Resources/snd/music.wav");
+
 	spriteRender->SetFillColor(sf::Color::Transparent);
 	spriteRender->SetZLevel(9);
 	spriteRender->SetTexture(GameEngine::eTexture::Player);
@@ -231,10 +235,12 @@ void GameBoard::Update()
 			GameEngine::GameEngineMain::GetInstance()->isPaused ^= true;
 			if (GameEngine::GameEngineMain::GetInstance()->isPaused) {
 				pauseText->GetComponent<GameEngine::TextRenderComponent>()->SetZLevel(60);
+				pauseClock.restart();
 				m_shower->DisableShower();
 			}
 			else {
 				pauseText->GetComponent<GameEngine::TextRenderComponent>()->SetZLevel(0);
+				GameEngine::GameEngineMain::GetInstance()->sm_pauseTime += pauseClock.getElapsedTime();
 				m_shower->EnableShower();
 			}
 			PauseMenuComponent::pauseDuration = 0.2;
@@ -243,4 +249,11 @@ void GameBoard::Update()
 
 	scoreRender->SetString(std::to_string((int)GameEngine::GameEngineMain::GetInstance()->score));
 
+	GameEngine::SoundComponent* musicComp = m_player->GetComponent<GameEngine::SoundComponent>();
+	
+	if (GameEngine::GameEngineMain::GetInstance()->GetGameTime() >= GameEngine::GameEngineMain::GetInstance()->nextPlay && GameEngine::GameEngineMain::GetInstance()->isRunning) {
+		
+		GameEngine::GameEngineMain::GetInstance()->nextPlay += 4.6 * 60;
+		musicComp->PlaySound(0, false);
+	}
 }
