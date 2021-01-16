@@ -4,10 +4,11 @@
 
 using namespace GameEngine;
 
-SpriteRenderComponent::SpriteRenderComponent()	
+SpriteRenderComponent::SpriteRenderComponent()
 	: m_texture(eTexture::None)
 	, m_tileIndex(sf::Vector2i(0, 0))
 	, m_animComponent(nullptr)
+	, direction(1)
 {
 
 }
