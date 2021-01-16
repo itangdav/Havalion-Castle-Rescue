@@ -48,7 +48,7 @@ void GameBoard::CreatePlayer()
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_score);
 	
-	m_score->SetPos(sf::Vector2f(200.f, 200.f));
+	m_score->SetPos(sf::Vector2f(150.f, 50.f));
 	m_score->SetSize(sf::Vector2f(200.f, 72.f));
 	m_player->SetPos(sf::Vector2f(winWidth/2, 4 * winHeight/5));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
@@ -65,9 +65,10 @@ void GameBoard::CreatePlayer()
 	m_player->AddComponent<PlayerMovementComponent>();
     m_player -> AddComponent<GameEngine::CollidableComponent>();
 
-	scoreRender->SetString("0");
+	scoreRender->SetString("Score: 0");
 	scoreRender->SetCharacterSizePixels(30);
 	scoreRender->SetZLevel(60);
+	scoreRender->SetFont("arial.ttf");
 	scoreRender->SetFillColor(sf::Color::Transparent);
 	
 }
@@ -199,6 +200,6 @@ void GameBoard::Update()
 
 	GameEngine::TextRenderComponent* scoreRender = m_score->GetComponent<GameEngine::TextRenderComponent>();
 
-	scoreRender->SetString(std::to_string((int)GameEngine::GameEngineMain::GetInstance()->score));
+	scoreRender->SetString("Score: " + std::to_string((int)GameEngine::GameEngineMain::GetInstance()->score));
 
 }
