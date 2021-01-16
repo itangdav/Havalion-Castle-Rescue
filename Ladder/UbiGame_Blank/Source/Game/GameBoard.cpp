@@ -54,6 +54,12 @@ void GameBoard::CreateLadders()
 	unsigned int winHeight = mainWindow->getSize().y;
 	int copiesStacked = (winHeight / ladderHeight + 1) * 2;
 
+	// Create a hidden center that the ladders can follow
+	GameEngine::Entity* hiddenCenter = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(hiddenCenter);
+	hiddenCenter->SetPos(sf::Vector2f(winWidth / 2.0, 0));
+	hiddenCenter->AddComponent<BackgroundMovementComponent>();
+
 	float laddersX[5] = { 0.14, 0.31, 0.5, 0.61, 0.84 };
 
 	for (int i = 0; i < 5; i++) {
