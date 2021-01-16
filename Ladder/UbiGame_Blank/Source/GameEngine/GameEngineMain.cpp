@@ -39,6 +39,10 @@ GameEngineMain::~GameEngineMain()
 	delete m_renderTarget;
 }
 
+float GameEngineMain::GetGameSpeed() {
+	return pow(GameEngineMain::GetInstance()->GetGameTime() / 6 + 1, 0.5);
+}
+
 void GameEngineMain::OnInitialised()
 {
 	//Engine is initialised, this spot should be used for game object and clocks initialisation
