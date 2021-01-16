@@ -16,7 +16,8 @@ ObstacleMovementComponent::~ObstacleMovementComponent()
 void ObstacleMovementComponent::Update()
 {
     Component::Update();
-    float velocity = 100.0f*m_velocityFactor; // changes as the game progresses
+    float multi = GameEngine::GameEngineMain::GetInstance() -> GetGameSpeed();
+    float velocity = 100.0f*multi*m_velocityFactor; // changes as the game progresses
     float dt = GameEngine::GameEngineMain::GetInstance() -> GetTimeDelta();
     
     sf::Vector2f displace = sf::Vector2f(0.0f, velocity*dt);
