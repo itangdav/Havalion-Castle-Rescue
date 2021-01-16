@@ -18,10 +18,16 @@ namespace Game
 		bool IsGameOver() { return false; }
 
 	private:
-		void CreatePlayer();
 		GameEngine::Entity* m_player;
-		void CreateLadders();
+		void CreatePlayer();
+
+		GameEngine::Entity* ladderHiddenCenter;
 		GameEngine::Entity** ladders[5];
+		void CreateLadders();
+
+		GameEngine::Entity* wallHiddenCenter;
+		GameEngine::Entity*** walls;
+		void CreateWall();
 	};
 }
 
