@@ -3,7 +3,7 @@
 
 using namespace GameEngine;
 
-ObstacleMovementComponent::ObstacleMovementComponent():m_velocityFactor(0.f)
+ObstacleMovementComponent::ObstacleMovementComponent():m_velocityFactor(0.f), m_moving(true)
 {
     
 }
@@ -16,8 +16,9 @@ ObstacleMovementComponent::~ObstacleMovementComponent()
 void ObstacleMovementComponent::Update()
 {
     Component::Update();
-    float multi = GameEngine::GameEngineMain::GetInstance() -> GetGameSpeed();
-    float velocity = 100.0f*multi*m_velocityFactor; // changes as the game progresses
+    if (!m_moving) return;
+    float speed = GameEngine::GameEngineMain::GetInstance() -> GetGameSpeed();
+    float velocity = 100.0f*speed*m_velocityFactor; // changes as the game progresses
     float dt = GameEngine::GameEngineMain::GetInstance() -> GetTimeDelta();
     
     sf::Vector2f displace = sf::Vector2f(0.0f, velocity*dt);
@@ -44,4 +45,14 @@ void ObstacleMovementComponent::SetVelocityFactor(float velocityFactor)
 float ObstacleMovementComponent::GetVelocityFactor()
 {
     return m_velocityFactor;
+}
+
+void ObstacleMovementComponent::StopMove()
+{
+    m_moving = false;
+}
+
+void ObstacleMovementComponent::StartMove()
+{
+    m_moving = true;
 }

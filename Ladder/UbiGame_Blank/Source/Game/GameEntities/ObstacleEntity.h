@@ -2,6 +2,7 @@
 #include "GameEngine/EntitySystem/Entity.h"
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
 #include "GameEngine/EntitySystem/Components/AnimationComponent.h"
+#include "GameEngine/GameEngineMain.h"
 
 namespace GameEngine
 {
@@ -14,6 +15,7 @@ namespace GameEngine
         ~ObstacleEntity();
         virtual void OnAddToWorld() override;
         virtual void OnRemoveFromWorld() override;
+        virtual void Update() override;
         
         void SetVelocityFactor(float velocityFactor);
         float GetVelocityFactor();

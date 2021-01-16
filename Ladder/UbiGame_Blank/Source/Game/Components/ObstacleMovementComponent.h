@@ -15,9 +15,11 @@ namespace GameEngine
         
         void SetVelocityFactor(float velocityFactor);
         float GetVelocityFactor();
-        
+        void StopMove();
+        void StartMove();
     private:
         float m_velocityFactor;
+        bool m_moving;
     };
 
 }
