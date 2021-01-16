@@ -32,6 +32,7 @@ void AnimationManager::InitStaticGameAnimations()
 	);
 	*/
     m_animDefinitions.push_back(SAnimationDefinition(EAnimationId::RollingRock, eTexture::Rock, sf::Vector2i(0, 0), 32, 60));
+    m_animDefinitions.push_back(SAnimationDefinition(EAnimationId::FiryBall, eTexture::Fireball, sf::Vector2i(0, 0), 6, 60));
 }
 
 

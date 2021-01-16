@@ -53,7 +53,9 @@ namespace TextureHelper
             case GameEngine::eTexture::Player:
                 return sf::Vector2f(64.f, 64.f);
             case GameEngine::eTexture::Rock:
-                return sf::Vector2f(256.f, 256.f);
+                return sf::Vector2f(198.f, 198.f);
+            case GameEngine::eTexture::Fireball:
+                return sf::Vector2f(182.f, 362.f);
             default:
                 return sf::Vector2f(-1.f, -1.f);
 		}

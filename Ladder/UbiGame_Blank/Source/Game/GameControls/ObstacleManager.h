@@ -13,12 +13,14 @@ namespace GameEngine
         {
             None = -1,
             Rock,
+            Fireball,
             Count,
         };
         enum class nonLadderType
         {
             None = -1,
             Rock,
+            Fireball,
             Count,
         };
     }

@@ -6,6 +6,9 @@
 #include "Game/Components/LinkedEntityComponent.h"
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
 #include "Game/GameControls/ObstacleShower.h"
+#include "GameEngine/EntitySystem/Components/CollidableComponent.h"
+#include "GameEngine/Util/CollisionManager.h"
+#include <vector>
 
 using namespace Game;
 
@@ -41,7 +44,7 @@ void GameBoard::CreatePlayer()
 
 	m_player->SetPos(sf::Vector2f(winWidth/2, winHeight/2));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
-
+    std::cout << m_player->GetPos().x << std::endl;
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
     
 	spriteRender->SetFillColor(sf::Color::Transparent);
@@ -50,6 +53,7 @@ void GameBoard::CreatePlayer()
 	spriteRender->SetTileIndex(2, 0);
 	spriteRender->image = 2;
 	m_player->AddComponent<PlayerMovementComponent>();
+    m_player -> AddComponent<GameEngine::CollidableComponent>();
 }
 
 void GameBoard::CreateLadders()
@@ -154,4 +158,22 @@ void GameBoard::CreateFog() {
 void GameBoard::Update()
 {
     m_shower -> Update();
+    using namespace GameEngine;
+    
+    std::vector<CollidableComponent*>& collidables = CollisionManager::GetInstance()->GetCollidables();
+    GameEngine::CollidableComponent* thiscol = m_player -> GetComponent<GameEngine::CollidableComponent>();
+    for (int a = 0; a < collidables.size(); ++a)
+    {
+        CollidableComponent* colComponent = collidables[a];
+        if (colComponent == thiscol)
+            continue;
+
+        AABBRect intersection;
+        AABBRect myBox = thiscol -> GetWorldAABB();
+        AABBRect colideBox = colComponent -> GetWorldAABB();
+        if (myBox.intersects(colideBox, intersection))
+        {
+            //end game
+        }
+    }
 }
