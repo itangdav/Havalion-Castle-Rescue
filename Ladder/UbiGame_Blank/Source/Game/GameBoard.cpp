@@ -1,7 +1,7 @@
 #include "GameBoard.h"
 
 #include "GameEngine/GameEngineMain.h"
-#include "Game\Components\PlayerMovementComponent.h"
+#include "Game/Components/PlayerMovementComponent.h"
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
 
 using namespace Game;
@@ -27,8 +27,8 @@ void GameBoard::CreatePlayer()
 	m_player->SetSize(sf::Vector2f(10.f, 10.f));
 
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
-	
-	spriteRender->SetFillColor(sf::Color::Color(100,5,5,255));
+    
+	spriteRender->SetFillColor(sf::Color::Transparent);
 	spriteRender->SetZLevel(2);
 	spriteRender->SetTexture(GameEngine::eTexture::Player);
 	m_player->AddComponent<PlayerMovementComponent>();

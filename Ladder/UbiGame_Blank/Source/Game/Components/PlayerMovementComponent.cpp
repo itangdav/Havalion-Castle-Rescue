@@ -1,9 +1,9 @@
-#include "PlayerMovementComponent.h"
-#include "GameEngine\GameEngineMain.h"
 #include <math.h>
 #include <iostream>
-
 #include <SFML/Window/Keyboard.hpp>
+#include "PlayerMovementComponent.h"
+#include "GameEngine/GameEngineMain.h"
+
 
 using namespace Game;
 
@@ -19,12 +19,12 @@ PlayerMovementComponent::~PlayerMovementComponent()
 
 void PlayerMovementComponent::OnAddToWorld() 
 {
-	__super::OnAddToWorld();
+	Component::OnAddToWorld();
 }
 
 void PlayerMovementComponent::Update()
 {
-	__super::Update();
+	Component::Update();
 
 	float dt = GameEngine::GameEngineMain::GetTimeDelta();
 
