@@ -28,7 +28,7 @@ void GameBoard::CreatePlayer()
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 
 	m_player->SetPos(sf::Vector2f(winWidth/2, winHeight/2));
-	m_player->SetSize(sf::Vector2f(30.f, 30.f));
+	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
     
@@ -70,19 +70,5 @@ void GameBoard::CreateLadders()
 
 void GameBoard::Update()
 {
-	if (m_player->GetComponent<PlayerMovementComponent>()->jumpDuration == 0) {
-		if (m_player->GetComponent<GameEngine::SpriteRenderComponent>()->image == 2) {
-			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(2, 0);
-		}
-	}
-	else if (m_player->GetComponent<PlayerMovementComponent>()->startPosition - m_player->GetComponent<PlayerMovementComponent>()->endPosition >= 0) {
-		if (m_player->GetComponent<GameEngine::SpriteRenderComponent>()->image == 0) {
-			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(0, 0);
-		}
-	}
-	else {
-		if (m_player->GetComponent<GameEngine::SpriteRenderComponent>()->image == 4) {
-			m_player->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(4, 0);
-		}
-	}
+	
 }

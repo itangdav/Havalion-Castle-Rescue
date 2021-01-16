@@ -44,7 +44,7 @@ void PlayerMovementComponent::Update()
 
 	float jumpTimes[4] = { 0.9, 1, 0.7, 1.3 };
 	
-	float maxCooldown = 0.2;
+	float maxCooldown = 0.1;
 
 	float jumpHeights[4] = { 50, 50, 30, 80};
 
@@ -135,14 +135,10 @@ void PlayerMovementComponent::Update()
 		if (cooldown == 0)
 		{
 			cooldown = maxCooldown;
-			if (GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->image == 2) {
-				GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->image = 1;
-				GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(1, 0);
-			}
-			else {
-				GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->image = 2;
-				GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(2, 0);
-			}
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->image++;
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->image %= 6;
+			GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->SetTileIndex(GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>()->image, 0);
+			
 			
 		}
 	}
