@@ -90,10 +90,10 @@
     <ClCompile Include="Source\Game\GameControls\ObstacleShower.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\GameEntities\ObstacleEntity.cpp">
+    <ClCompile Include="Source\Game\Components\ObstacleMovementComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Components\ObstacleMovementComponent.cpp">
+    <ClCompile Include="Source\Game\GameEntities\ObstacleEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,10 +167,10 @@
     <ClInclude Include="Source\Game\GameControls\ObstacleShower.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\GameEntities\ObstacleEntity.h">
+    <ClInclude Include="Source\Game\Components\ObstacleMovementComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Components\ObstacleMovementComponent.h">
+    <ClInclude Include="Source\Game\GameEntities\ObstacleEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

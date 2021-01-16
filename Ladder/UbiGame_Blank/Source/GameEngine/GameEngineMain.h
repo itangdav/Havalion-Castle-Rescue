@@ -28,6 +28,9 @@ namespace GameEngine
 		void RemoveEntity(Entity* entity);
 
 		void OnInitialised();
+
+		float GetGameSpeed();
+
 		bool IsGameOver() const { return m_gameBoard && m_gameBoard->IsGameOver(); }
 
 	private:
