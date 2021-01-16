@@ -86,9 +86,11 @@ void ObstacleShower::SpawnObstacle(bool onladder)
 
 void ObstacleShower::SpawnNewRandomObstacles()
 {
-    static float minNextTime = 0.2f;
-    static float maxNextTime = 1.5f;
+    float speed = GameEngine::GameEngineMain::GetInstance() -> GetGameSpeed();
+    float minNextTime = 0.2f/speed;
+    float maxNextTime = 1.5f/speed;
     float dice = RandFloat(0.f, 1.f);
+    
     SpawnObstacle(dice <= 0.2f);
     m_spawntimer = RandFloat(minNextTime, maxNextTime);
 }

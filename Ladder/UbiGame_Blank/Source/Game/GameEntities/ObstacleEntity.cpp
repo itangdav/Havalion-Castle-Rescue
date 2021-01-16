@@ -39,3 +39,20 @@ float ObstacleEntity::GetVelocityFactor()
 {
     return GetComponent<GameEngine::ObstacleMovementComponent>() -> GetVelocityFactor();
 }
+
+void ObstacleEntity::Update()
+{
+    Entity::Update();
+    AnimationComponent* anim = GetComponent<AnimationComponent>();
+    ObstacleMovementComponent* move = GetComponent<ObstacleMovementComponent>();
+    if (!(GameEngineMain::GetInstance() -> isRunning))
+    {
+        if (anim) anim -> StopAnim();
+        if (move) move -> StopMove();
+    }
+    else
+    {
+//        if (anim) anim -> PlayAnim(EAnimationId::type animId)
+        if (move) move -> StartMove();
+    }
+}
