@@ -30,7 +30,7 @@ GameBoard::GameBoard()
 	CreateLadders();
 	CreateFog();
     CreateShower();
-	CreatePauseText();
+	CreatePauseMenu();
 }
 
 
