@@ -67,7 +67,7 @@ void PlayerMovementComponent::Update()
 		cooldown -= dt;
 		if (cooldown <= 0) cooldown = 0;
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			int currX = GetEntity()->GetPos().x;
 
@@ -84,7 +84,7 @@ void PlayerMovementComponent::Update()
 			}
 
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
 			int currX = GetEntity()->GetPos().x;
 			for (int i = 0; i < 4; i++) {
