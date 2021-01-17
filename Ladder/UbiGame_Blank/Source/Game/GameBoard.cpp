@@ -52,6 +52,7 @@ GameBoard::GameBoard()
 	CreateFog();
     CreateShower();
 	CreatePauseMenu();
+	CreateRestartButtons();
 }
 
 GameBoard::~GameBoard()
@@ -66,7 +67,8 @@ void GameBoard::Restart() {
 
 	// Reset restart button status
 	restartPressed = false;
-	restartButton->GetComponent<GameEngine::SpriteRenderComponent>()->SetTexture(GameEngine::eTexture::BackButton);
+	restartButton->GetComponent<GameEngine::SpriteRenderComponent>()->SetZLevel(0);
+	restartButtonPressed->GetComponent<GameEngine::SpriteRenderComponent>()->SetZLevel(0);
 
 	// Undo end game
 	pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(0);
@@ -334,7 +336,7 @@ void GameBoard::CreatePauseMenu() {
 	shadeRender->SetFillColor(sf::Color(0, 0, 0, 200));
 }
 
-void GameBoard::CreateRestartButton() {
+void GameBoard::CreateRestartButtons() {
 	// Get the window dimensions
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	int winWidth = (int)mainWindow->getSize().x;
@@ -347,8 +349,18 @@ void GameBoard::CreateRestartButton() {
 	restartButton->SetSize(sf::Vector2f(64, 64));
 	GameEngine::SpriteRenderComponent* render = restartButton->AddComponent<GameEngine::SpriteRenderComponent>();
 	render->SetFillColor(sf::Color::Transparent);
-	render->SetZLevel(70);
+	render->SetZLevel(0);
 	render->SetTexture(GameEngine::eTexture::BackButton);
+
+	// Create the restart button when pressed
+	restartButtonPressed = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(restartButtonPressed);
+	restartButtonPressed->SetPos(sf::Vector2f(winWidth / 2, winHeight / 2));
+	restartButtonPressed->SetSize(sf::Vector2f(64, 64));
+	GameEngine::SpriteRenderComponent* pressedRender = restartButtonPressed->AddComponent<GameEngine::SpriteRenderComponent>();
+	pressedRender->SetFillColor(sf::Color::Transparent);
+	pressedRender->SetZLevel(0);
+	pressedRender->SetTexture(GameEngine::eTexture::BackButtonPressed);
 }
 
 void GameBoard::Update()
@@ -370,8 +382,9 @@ void GameBoard::Update()
 
 			// Check if the mouse click is on the button
 			if (mouseX <= restartX + halfRestartWidth && mouseX >= restartX - halfRestartWidth &&
-				mouseY <= restartY + halfRestartHeight && mouseY >= restartY - halfRestartHeight) {
-				restartButton->GetComponent<GameEngine::SpriteRenderComponent>()->SetTexture(GameEngine::eTexture::BackButtonPressed);
+				mouseY <= restartY + halfRestartHeight && mouseY >= restartY - halfRestartHeight && !restartPressed) {
+				restartButtonPressed->GetComponent<GameEngine::SpriteRenderComponent>()->SetZLevel(71);
+				restartButton->GetComponent<GameEngine::SpriteRenderComponent>()->SetZLevel(0);
 				restartPressed = true;
 			}
 		}
@@ -417,8 +430,8 @@ void GameBoard::Update()
 			scoreOutput << std::endl;
 			scoreOutput.close();
 
-			// Restart the game
-			CreateRestartButton();
+			// Show restart button
+			restartButton->GetComponent<GameEngine::SpriteRenderComponent>()->SetZLevel(70);
         }
     }
 

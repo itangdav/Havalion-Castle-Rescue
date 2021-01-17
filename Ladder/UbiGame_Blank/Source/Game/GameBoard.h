@@ -61,8 +61,9 @@ namespace Game
 		void CreatePauseMenu();
 
 		GameEngine::Entity* restartButton;
+		GameEngine::Entity* restartButtonPressed;
 		bool restartPressed;
-		void CreateRestartButton();
+		void CreateRestartButtons();
 
 		std::fstream scoreFile;
 		std::vector<int> scores;
