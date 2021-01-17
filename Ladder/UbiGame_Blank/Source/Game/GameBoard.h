@@ -32,6 +32,7 @@ namespace Game
 		GameEngine::Entity* m_player;
 		GameEngine::Entity* m_score;
 		GameEngine::Entity* m_highScores;
+		GameEngine::Entity* m_highScoresBack;
 		void CreatePlayer();
     
         void CreateGod();
