@@ -26,7 +26,7 @@ namespace GameEngine
 		static float score;
 
 		sf::RenderWindow* GetRenderWindow() const { return m_renderWindow; }
-		void Update();		
+		void Update();
 		void SetRenderTarget(sf::RenderTarget* target) { m_renderTarget = target; }
 
 		void AddEntity(Entity* entity);

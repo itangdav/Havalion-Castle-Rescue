@@ -355,9 +355,6 @@ void GameBoard::Update()
 				std::cout << scores[i] << " ";
 			}
 			std::cout << std::endl;
-            
-            fclose(stdout);
-            
 			Restart();
         }
     }
