@@ -196,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="Resources\fonts\arial.ttf" />
+    <Font Include="Resources\fonts\ARCADEPI.TTF" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\snd\glassBreak.wav">
