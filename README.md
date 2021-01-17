@@ -5,7 +5,7 @@
 [![Youtube](https://img.youtube.com/vi/2rzQRaaD_DQ/0.jpg)](https://www.youtube.com/watch?v=2rzQRaaD_DQ)
 
 ## Run It
-Download this repo and run the ubigame.exe file in /Resources/ folder.
+Download this repo and run the UbiGame.exe file in /Release/ folder.
 
 ## Inspiration
 Inspired by Piano Tiles except we want to avoid certain tiles.
