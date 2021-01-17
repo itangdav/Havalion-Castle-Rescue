@@ -73,6 +73,9 @@ void GameBoard::CreatePlayer()
 	//GameEngine::SoundComponent* musicComp = static_cast<GameEngine::SoundComponent*>(m_player->AddComponent<GameEngine::SoundComponent>());
     
 	//musicComp->LoadSoundFromFile("Resources/snd/music.wav");
+	BGMusic.openFromFile("Resources/snd/music.wav");
+	BGMusic.play();
+	BGMusic.setLoop(true);
 
 	spriteRender->SetFillColor(sf::Color::Transparent);
 	spriteRender->SetZLevel(9);
@@ -213,6 +216,10 @@ void GameBoard::CreatePauseMenu() {
 	textRender->SetCharacterSizePixels(40);
 	textRender->SetFillColor(sf::Color::Transparent);
 
+	if (BGMusic.getStatus() != sf::SoundStream::Paused) {
+		BGMusic.pause();
+	}
+
 	// Create a dark shade to block the game while the game is paused
 	pauseShade = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(pauseShade);
@@ -246,6 +253,7 @@ void GameBoard::Update()
 			GameEngine::GameEngineMain::GetInstance()->isRunning = false;
 			m_shower->DisableShower();
 			scoreRender->SetColor(sf::Color(224, 36, 0, 255));
+			BGMusic.stop();
         }
     }
 
@@ -282,4 +290,11 @@ void GameBoard::Update()
 		GameEngine::GameEngineMain::GetInstance()->nextPlay += 4.6 * 60;
 		musicComp->PlaySound(0, false);
 	}*/
+
+	if (BGMusic.getStatus() != sf::SoundStream::Playing && (GameEngine::GameEngineMain::GetInstance()->isRunning && !GameEngine::GameEngineMain::GetInstance()->isPaused)) {
+		BGMusic.play();
+	}
+	else if (BGMusic.getStatus() != sf::SoundStream::Paused && (!GameEngine::GameEngineMain::GetInstance()->isRunning || GameEngine::GameEngineMain::GetInstance()->isPaused)) {
+		BGMusic.pause();
+	}
 }
