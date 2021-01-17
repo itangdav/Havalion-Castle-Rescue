@@ -15,9 +15,13 @@
 #include "Game/Components/PauseMenuComponent.h"
 #include "Game/Components/GodControlComponent.h"
 #include <vector>
+#include <algorithm>
 #include <string>
 
 using namespace Game;
+
+sf::Music GameBoard::BGMusic;
+float GameBoard::PauseDuration = 0;
 
 GameBoard::GameBoard()
 	:m_player(nullptr)
@@ -29,7 +33,7 @@ GameBoard::GameBoard()
 	CreateLadders();
 	CreateFog();
     CreateShower();
-	CreatePauseText();
+	CreatePauseMenu();
 }
 
 
@@ -53,25 +57,48 @@ void GameBoard::CreateShower()
 
 void GameBoard::CreatePlayer()
 {
+<<<<<<< HEAD
+=======
+	FILE* stream;
+	freopen_s(&stream, "scores.txt", "r", stdin);
+
+	std::vector<int> scores;
+	int x;
+	while (std::cin >> x)
+	{
+		scores.push_back(x);
+	}
+
+	fclose(stream);
+
+>>>>>>> b306277da570b6f209010cb2f672c0a13617bdc0
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	unsigned int winWidth = mainWindow->getSize().x;
 	unsigned int winHeight = mainWindow->getSize().y;
 
 	m_player = new GameEngine::Entity();
 	m_score = new GameEngine::Entity();
+	m_highScores = new GameEngine::Entity();
 
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_score);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_highScores);
 	
 	m_score->SetPos(sf::Vector2f(winWidth/2 - 20, 30.f));
 	m_score->SetSize(sf::Vector2f(200.f, 72.f));
+	m_highScores->SetPos(sf::Vector2f(winWidth - 100, 30.f));
+	m_highScores->SetSize(sf::Vector2f(100.f, 720.f));
 	m_player->SetPos(sf::Vector2f(winWidth/2, 4 * winHeight/5));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
 	GameEngine::TextRenderComponent* scoreRender = static_cast<GameEngine::TextRenderComponent*>(m_score->AddComponent<GameEngine::TextRenderComponent>());
+	GameEngine::TextRenderComponent* hScoreRender = static_cast<GameEngine::TextRenderComponent*>(m_highScores->AddComponent<GameEngine::TextRenderComponent>());
 	//GameEngine::SoundComponent* musicComp = static_cast<GameEngine::SoundComponent*>(m_player->AddComponent<GameEngine::SoundComponent>());
     
 	//musicComp->LoadSoundFromFile("Resources/snd/music.wav");
+	BGMusic.openFromFile("Resources/snd/music.wav");
+	BGMusic.play();
+	BGMusic.setLoop(true);
 
 	spriteRender->SetFillColor(sf::Color::Transparent);
 	spriteRender->SetZLevel(9);
@@ -82,12 +109,26 @@ void GameBoard::CreatePlayer()
     m_player -> AddComponent<GameEngine::CollidableComponent>();
 
 	scoreRender->SetString("0");
-	scoreRender->SetCharacterSizePixels(40);
+	scoreRender->SetCharacterSizePixels(69);
 	scoreRender->SetZLevel(60);
 	scoreRender->SetFont("arial.ttf");
 	scoreRender->SetFillColor(sf::Color::Transparent);
-	scoreRender->SetColor(sf::Color(43, 193, 135, 255));
+	scoreRender->SetColor(sf::Color(222, 180, 33, 255));
+
+	std::string str = "High Scores: \n";
+
+	for (int i = 0; i < (int)scores.size(); i++) {
+		str.append(std::to_string(i+1) + ") " + std::to_string(scores[i]) + "\n");
+	}
+
+	hScoreRender->SetString(str);
+	hScoreRender->SetCharacterSizePixels(21);
+	hScoreRender->SetZLevel(60);
+	hScoreRender->SetFont("arial.ttf");
+	hScoreRender->SetFillColor(sf::Color::Transparent);
+	hScoreRender->SetColor(sf::Color::Blue);
 	
+	m_player->GetComponent<PlayerMovementComponent>()->scores = scores;
 }
 
 void GameBoard::CreateLadders()
@@ -194,23 +235,36 @@ void GameBoard::CreateFog() {
 	}
 }
 
-void GameBoard::CreatePauseText() {
+void GameBoard::CreatePauseMenu() {
 	// Get the window dimensions
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	int winWidth = (int)mainWindow->getSize().x;
 	int winHeight = (int)mainWindow->getSize().y;
 
+	// Create a message that says "Paused"
 	pauseText = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(pauseText);
 	pauseText->SetPos(sf::Vector2f(winWidth / 2 - 70, winHeight / 2 - 30));
 	pauseText->SetSize(sf::Vector2f(200, 100));
-	GameEngine::TextRenderComponent* render = pauseText->AddComponent<GameEngine::TextRenderComponent>();
-	render->SetFont("arial.ttf");
-	render->SetString("Paused");
-	render->SetZLevel(0);
-	render->SetCharacterSizePixels(40);
-	render->SetFillColor(sf::Color::Transparent);
-	pauseText->AddComponent<Game::PauseMenuComponent>();
+	GameEngine::TextRenderComponent* textRender = pauseText->AddComponent<GameEngine::TextRenderComponent>();
+	textRender->SetFont("arial.ttf");
+	textRender->SetString("Paused");
+	textRender->SetZLevel(0);
+	textRender->SetCharacterSizePixels(40);
+	textRender->SetFillColor(sf::Color::Transparent);
+
+	if (BGMusic.getStatus() != sf::SoundStream::Paused) {
+		BGMusic.pause();
+	}
+
+	// Create a dark shade to block the game while the game is paused
+	pauseShade = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(pauseShade);
+	pauseShade->SetPos(sf::Vector2f(winWidth / 2.0, winHeight / 2.0));
+	pauseShade->SetSize(sf::Vector2f(winWidth, winHeight));
+	GameEngine::RenderComponent* shadeRender = pauseShade->AddComponent<GameEngine::RenderComponent>();
+	shadeRender->SetZLevel(0);
+	shadeRender->SetFillColor(sf::Color(0, 0, 0, 200));
 }
 
 void GameBoard::Update()
@@ -235,29 +289,49 @@ void GameBoard::Update()
             //end game
 			GameEngine::GameEngineMain::GetInstance()->isRunning = false;
 			m_shower->DisableShower();
-			scoreRender->SetColor(sf::Color::Red);
+			scoreRender->SetColor(sf::Color(224, 36, 0, 255));
+			BGMusic.stop();
+
+
+			//save high score
+			FILE* stream1;
+			freopen_s(&stream1, "scores.txt", "w", stdout);
+
+			std::vector<int> scores = m_player->GetComponent<PlayerMovementComponent>()->scores;
+
+			scores.push_back((int)GameEngine::GameEngineMain::GetInstance()->score);
+
+			std::sort(scores.begin(), scores.end(), std::greater<int>());
+
+			for (int i = 0; i < std::min(5, (int)scores.size()); i++) {
+				std::cout << scores[i] << " ";
+			}
+			std::cout << std::endl;
+			fclose(stream1);
         }
     }
 
 	if (!GameEngine::GameEngineMain::GetInstance()->isRunning) return;
 
 	float dt = GameEngine::GameEngineMain::GetTimeDelta();
-	PauseMenuComponent::pauseDuration -= dt;
-	if (PauseMenuComponent::pauseDuration <= 0) {
-		PauseMenuComponent::pauseDuration = 0;
+	GameBoard::PauseDuration -= dt;
+	if (GameBoard::PauseDuration <= 0) {
+		GameBoard::PauseDuration = 0;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			GameEngine::GameEngineMain::GetInstance()->isPaused ^= true;
 			if (GameEngine::GameEngineMain::GetInstance()->isPaused) {
 				pauseText->GetComponent<GameEngine::TextRenderComponent>()->SetZLevel(60);
+				pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(59);
 				pauseClock.restart();
 				m_shower->DisableShower();
 			}
 			else {
 				pauseText->GetComponent<GameEngine::TextRenderComponent>()->SetZLevel(0);
+				pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(0);
 				GameEngine::GameEngineMain::GetInstance()->sm_pauseTime += pauseClock.getElapsedTime();
 				m_shower->EnableShower();
 			}
-			PauseMenuComponent::pauseDuration = 0.2;
+			GameBoard::PauseDuration = 0.2;
 		}
 	}
 
@@ -270,4 +344,11 @@ void GameBoard::Update()
 		GameEngine::GameEngineMain::GetInstance()->nextPlay += 4.6 * 60;
 		musicComp->PlaySound(0, false);
 	}*/
+
+	if (BGMusic.getStatus() != sf::SoundStream::Playing && (GameEngine::GameEngineMain::GetInstance()->isRunning && !GameEngine::GameEngineMain::GetInstance()->isPaused)) {
+		BGMusic.play();
+	}
+	else if (BGMusic.getStatus() != sf::SoundStream::Paused && (!GameEngine::GameEngineMain::GetInstance()->isRunning || GameEngine::GameEngineMain::GetInstance()->isPaused)) {
+		BGMusic.pause();
+	}
 }

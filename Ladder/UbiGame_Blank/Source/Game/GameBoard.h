@@ -1,7 +1,11 @@
 #pragma once
 #include "GameEngine/EntitySystem/Entity.h"
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
 #include <SFML/System/Vector2.hpp>
+#include <SFML/System/Time.hpp>
 #include <vector>
 
 namespace GameEngine
@@ -20,13 +24,19 @@ namespace Game
 		virtual ~GameBoard();
 		void Update();
 		bool IsGameOver() { return false; }
+<<<<<<< HEAD
         
         GameEngine::ObstacleShower* GetShower() {return m_shower;}
+=======
+		static sf::Music BGMusic;
+		static float PauseDuration;
+>>>>>>> b306277da570b6f209010cb2f672c0a13617bdc0
 
 	private:
         void CreateShower();
 		GameEngine::Entity* m_player;
 		GameEngine::Entity* m_score;
+		GameEngine::Entity* m_highScores;
 		void CreatePlayer();
     
         void CreateGod();
@@ -46,8 +56,9 @@ namespace Game
         GameEngine::Entity* m_god;
 
 		GameEngine::Entity* pauseText;
+		GameEngine::Entity* pauseShade;
 		sf::Clock pauseClock;
-		void CreatePauseText();
+		void CreatePauseMenu();
 	};
 }
 
