@@ -3,7 +3,7 @@
 ## Demo Video
 
 <p align="center">
-  <video src="https://www.youtube.com/watch?v=2rzQRaaD_DQ" alt="Sublime's custom image"/>
+  [![Youtube](https://img.youtube.com/vi/2rzQRaaD_DQ/0.jpg)](https://www.youtube.com/watch?v=2rzQRaaD_DQ)
 </p>
 
 ## Inspiration
