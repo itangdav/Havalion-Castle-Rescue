@@ -1,5 +1,7 @@
 # Havalion Castle Escape
 
+![Image](https://user-images.githubusercontent.com/39445499/104834949-2b8ad680-5871-11eb-88dc-139a184ca8b6.png)
+
 ## Inspiration
 Inspired by Piano Tiles except we want to avoid certain tiles.
 
