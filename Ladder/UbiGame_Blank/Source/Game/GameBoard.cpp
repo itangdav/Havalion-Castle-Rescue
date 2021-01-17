@@ -58,7 +58,7 @@ void GameBoard::Restart() {
 	unsigned int winWidth = mainWindow->getSize().x;
 	unsigned int winHeight = mainWindow->getSize().y;
 
-	// Reset plaayer
+	// Reset player
 	m_player->SetPos(sf::Vector2f(winWidth / 2.0, 4.0 * winHeight / 5));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 	m_player->GetComponent<PlayerMovementComponent>()->jumpDuration = 0;
@@ -68,7 +68,25 @@ void GameBoard::Restart() {
 	wallHiddenCenter->SetPos(sf::Vector2f(winWidth / 2.0, 0));
 
 	// Reset score
-	
+	GameEngine::GameEngineMain::score = 0;
+
+	// Reset the timers
+	GameEngine::GameEngineMain::GetInstance()->ResetGameTime();
+
+	//// Rerender high scores
+	//FILE* stream;
+	//freopen_s(&stream, "scores.txt", "r", stdin);
+	//std::vector<int> scores;
+	//int x;
+	//while (std::cin >> x) {
+	//	scores.push_back(x);
+	//}
+	//fclose(stream);
+	//std::string str = "High Scores: \n";
+	//for (int i = 0; i < (int)scores.size(); i++) {
+	//	str.append(std::to_string(i + 1) + ") " + std::to_string(scores[i]) + "\n");
+	//}
+	//m_highScores->GetComponent<GameEngine::TextRenderComponent>()->SetString(str);
 }
 
 void GameBoard::CreateGod()
