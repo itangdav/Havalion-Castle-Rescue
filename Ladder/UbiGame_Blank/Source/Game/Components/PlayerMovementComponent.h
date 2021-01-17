@@ -1,5 +1,6 @@
 #pragma once
 #include "GameEngine/EntitySystem/Component.h"
+#include <vector>
 
 namespace Game
 {
@@ -20,6 +21,8 @@ namespace Game
 		float jumpDistance;
 		float jumpTime;
 		float cooldown;
+
+		std::vector<int> scores;
 	
 	private:
 
