@@ -38,7 +38,7 @@ namespace Game
 		void CreateWall();
         GameEngine::ObstacleShower* m_shower;
 
-		GameEngine::Entity* fog;
+		GameEngine::Entity** fog;
 		void CreateFog();
         
         GameEngine::Entity* m_god;
