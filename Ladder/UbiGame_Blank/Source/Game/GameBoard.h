@@ -2,6 +2,7 @@
 #include "GameEngine/EntitySystem/Entity.h"
 #include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
 #include <SFML/System/Vector2.hpp>
+#include "SFML/Audio/Music.hpp"
 #include <vector>
 
 namespace GameEngine
@@ -21,6 +22,7 @@ namespace Game
 		void Update();
 		bool IsGameOver() { return false; }
 		static sf::Music BGMusic;
+		static float PauseDuration;
 
 	private:
         void CreateShower();
