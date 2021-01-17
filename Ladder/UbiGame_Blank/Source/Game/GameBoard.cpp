@@ -124,8 +124,8 @@ void GameBoard::CreateLadders()
 void GameBoard::CreateWall()
 {
 	// Specify the size of the wall image
-	unsigned int wallWidth = 640;
-	unsigned int wallHeight = 640;
+	unsigned int wallWidth = 320;
+	unsigned int wallHeight = 320;
 
 	// Get the window dimensions
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
