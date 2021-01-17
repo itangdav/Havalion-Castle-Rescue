@@ -1,8 +1,11 @@
 #pragma once
 #include "Game/GameEntities/ObstacleEntity.h"
 #include "Game/GameControls/ObstacleManager.h"
+#include "Game/Components/ObstacleMovementComponent.h"
 #include "GameEngine/GameEngineMain.h"
 #include <random>
+#include <set>
+#include <stack>
 
 namespace GameEngine
 {
@@ -17,6 +20,7 @@ namespace GameEngine
         void Update();
         
         void ShootArrow(int laddernum);
+        void ClearObstacles();
         
     private:
         bool m_showering;
@@ -25,9 +29,13 @@ namespace GameEngine
         void SpawnNewRandomObstacles();
         void SpawnObstacle(bool onladder);
         
+        void CheckOutOfBound();
+        
         std::mt19937 m_g1;
         float RandFloat (float a, float b);
         int RandInt (int a, int b);
+        
+        std::set<ObstacleEntity*> m_obstacles;
         
         void CreateObstacle(eObstacle::nonLadderType type, sf::Vector2f& pos);
         void CreateObstacle(eObstacle::ladderType type, sf::Vector2f& pos);

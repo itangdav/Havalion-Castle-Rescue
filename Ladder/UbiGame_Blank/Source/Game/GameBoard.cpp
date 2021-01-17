@@ -58,7 +58,7 @@ void GameBoard::Restart() {
 	unsigned int winWidth = mainWindow->getSize().x;
 	unsigned int winHeight = mainWindow->getSize().y;
 
-	// Reset plaayer
+	// Reset player
 	m_player->SetPos(sf::Vector2f(winWidth / 2.0, 4.0 * winHeight / 5));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 	m_player->GetComponent<PlayerMovementComponent>()->jumpDuration = 0;
@@ -68,7 +68,25 @@ void GameBoard::Restart() {
 	wallHiddenCenter->SetPos(sf::Vector2f(winWidth / 2.0, 0));
 
 	// Reset score
-	
+	GameEngine::GameEngineMain::score = 0;
+
+	// Reset the timers
+	GameEngine::GameEngineMain::GetInstance()->ResetGameTime();
+    m_shower -> ClearObstacles();
+	//// Rerender high scores
+	//FILE* stream;
+	//freopen_s(&stream, "scores.txt", "r", stdin);
+	//std::vector<int> scores;
+	//int x;
+	//while (std::cin >> x) {
+	//	scores.push_back(x);
+	//}
+	//fclose(stream);
+	//std::string str = "High Scores: \n";
+	//for (int i = 0; i < (int)scores.size(); i++) {
+	//	str.append(std::to_string(i + 1) + ") " + std::to_string(scores[i]) + "\n");
+	//}
+	//m_highScores->GetComponent<GameEngine::TextRenderComponent>()->SetString(str);
 }
 
 void GameBoard::CreateGod()
@@ -102,20 +120,25 @@ void GameBoard::CreatePlayer()
 	m_player = new GameEngine::Entity();
 	m_score = new GameEngine::Entity();
 	m_highScores = new GameEngine::Entity();
+	m_highScoresBack = new GameEngine::Entity();
 
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_score);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_highScores);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_highScoresBack);
 	
 	m_score->SetPos(sf::Vector2f(winWidth / 2.0 - 20, 30.f));
 	m_score->SetSize(sf::Vector2f(200.f, 72.f));
-	m_player->SetPos(sf::Vector2f(winWidth / 2.0, 4.0 * winHeight / 5));
+	m_highScores->SetPos(sf::Vector2f(winWidth - 200, 30.f));
+	m_highScores->SetSize(sf::Vector2f(200.f, 720.f));
+	m_highScoresBack->SetPos(sf::Vector2f(winWidth - 150, 100.f));
+	m_highScoresBack->SetSize(sf::Vector2f(150.f, 300.f));
+	m_player->SetPos(sf::Vector2f(winWidth/2.0, 4.0 * winHeight/5));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
 	GameEngine::TextRenderComponent* scoreRender = static_cast<GameEngine::TextRenderComponent*>(m_score->AddComponent<GameEngine::TextRenderComponent>());
-	m_highScores->SetPos(sf::Vector2f(winWidth - 100, 30.f));
-	m_highScores->SetSize(sf::Vector2f(100.f, 720.f));
 	GameEngine::TextRenderComponent* hScoreRender = static_cast<GameEngine::TextRenderComponent*>(m_highScores->AddComponent<GameEngine::TextRenderComponent>());
+	GameEngine::TextRenderComponent* hScoreRender1 = static_cast<GameEngine::TextRenderComponent*>(m_highScoresBack->AddComponent<GameEngine::TextRenderComponent>());
     
 	BGMusic.openFromFile("Resources/snd/music.wav");
 	BGMusic.play();
@@ -146,9 +169,14 @@ void GameBoard::CreatePlayer()
 	hScoreRender->SetCharacterSizePixels(21);
 	hScoreRender->SetZLevel(60);
 	hScoreRender->SetFont("arial.ttf");
-	hScoreRender->SetFillColor(sf::Color::Transparent);
-	hScoreRender->SetColor(sf::Color::Blue);
+	hScoreRender->SetFillColor(sf::Color(0,0,0,0));
+	hScoreRender->SetColor(sf::Color::White);
 	
+	hScoreRender1->SetString("");
+	hScoreRender1->SetZLevel(59);
+	hScoreRender1->SetFont("arial.ttf");
+	hScoreRender1->SetFillColor(sf::Color(0, 0, 0, 200));
+
 	m_player->GetComponent<PlayerMovementComponent>()->scores = scores;
 }
 
@@ -315,7 +343,6 @@ void GameBoard::Update()
 			pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(59);
 
 			//save high score
-			// FILE* stream1;
             freopen("scores.txt", "w", stdout);
             
 			std::vector<int> scores = m_player->GetComponent<PlayerMovementComponent>()->scores;

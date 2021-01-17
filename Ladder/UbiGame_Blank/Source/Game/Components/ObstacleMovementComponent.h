@@ -17,6 +17,8 @@ namespace GameEngine
         float GetVelocityFactor();
         void StopMove();
         void StartMove();
+        bool IsOutOfBound();
+
     private:
         float m_velocityFactor;
         bool m_moving;

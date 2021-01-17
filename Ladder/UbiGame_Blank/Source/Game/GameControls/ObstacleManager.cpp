@@ -89,7 +89,7 @@ float ObstacleManager::GetObstacleVelocityFactor (eObstacle::ladderType type)
     {
         case eObstacle::ladderType::Rock: return 4.f;
         case eObstacle::ladderType::Fireball: return 3.f;
-        case eObstacle::ladderType::Arrow: return 7.f;
+        case eObstacle::ladderType::Arrow: return 5.f;
         default: return 0.f;
     }
     return 0.f;

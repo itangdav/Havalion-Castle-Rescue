@@ -3,7 +3,7 @@
 
 using namespace GameEngine;
 
-ObstacleShower::ObstacleShower():m_spawntimer(0.f), m_showering(false), m_g1((unsigned int)time(0)), m_arrowReloadTime(0.5f)
+ObstacleShower::ObstacleShower():m_spawntimer(0.f), m_showering(false), m_g1((unsigned int)time(0)), m_arrowReloadTime(1.0f)
 {
 
 }
@@ -35,6 +35,7 @@ void ObstacleShower::CreateObstacle(GameEngine::eObstacle::ladderType type, sf::
         anim -> PlayAnim(ObstacleManager::GetInstance() -> GetObstacleAnimation(type));
         obstacle -> SetAnim(ObstacleManager::GetInstance() -> GetObstacleAnimation(type));
     }
+    m_obstacles.insert(obstacle);
 }
 
 void ObstacleShower::CreateObstacle(GameEngine::eObstacle::nonLadderType type, sf::Vector2f& pos)
@@ -59,6 +60,7 @@ void ObstacleShower::CreateObstacle(GameEngine::eObstacle::nonLadderType type, s
         anim -> PlayAnim(ObstacleManager::GetInstance() -> GetObstacleAnimation(type));
         obstacle -> SetAnim(ObstacleManager::GetInstance() -> GetObstacleAnimation(type));
     }
+    m_obstacles.insert(obstacle);
 }
 
 void ObstacleShower::SpawnObstacle(bool onladder)
@@ -74,7 +76,7 @@ void ObstacleShower::SpawnObstacle(bool onladder)
     {
         int cnt = (int)GameEngine::eObstacle::ladderType::Count;
         if (cnt <= 0) return;
-        GameEngine::eObstacle::ladderType type = static_cast<GameEngine::eObstacle::ladderType>(RandInt(0, cnt - 1));
+        GameEngine::eObstacle::ladderType type = static_cast<GameEngine::eObstacle::ladderType>(RandInt(0, cnt - 2));
         CreateObstacle(type, pos);
     }
     else
@@ -95,7 +97,7 @@ void ObstacleShower::ShootArrow(int laddernum)
     float screenWidth = (window -> getSize()).x;
     sf::Vector2f pos = sf::Vector2f(laddersX[laddernum-1]*screenWidth, 0.f);
     CreateObstacle(GameEngine::eObstacle::ladderType::Arrow, pos);
-    m_arrowReloadTime = 0.5f;
+    m_arrowReloadTime = 1.0f;
 }
 
 void ObstacleShower::SpawnNewRandomObstacles()
@@ -111,11 +113,29 @@ void ObstacleShower::SpawnNewRandomObstacles()
 
 void ObstacleShower::Update()
 {
+    CheckOutOfBound();
     if (!m_showering) return;
     float dt = GameEngine::GameEngineMain::GetInstance() -> GetTimeDelta();
     m_spawntimer -= dt;
     m_arrowReloadTime -= dt;
     if (m_spawntimer <= 0.f) SpawnNewRandomObstacles();
+}
+
+void ObstacleShower::CheckOutOfBound()
+{
+    std::stack<ObstacleEntity*> needDelete;
+    for (ObstacleEntity* obstacle: m_obstacles)
+    {
+        ObstacleMovementComponent* move = obstacle -> GetComponent<ObstacleMovementComponent>();
+        if (move && move -> IsOutOfBound()) needDelete.push(obstacle);
+    }
+    while (!needDelete.empty())
+    {
+        ObstacleEntity* ent = needDelete.top();
+        needDelete.pop();
+        m_obstacles.erase(ent);
+        GameEngineMain::GetInstance() -> RemoveEntity(ent);
+    }
 }
 
 void ObstacleShower::EnableShower()
@@ -136,4 +156,16 @@ float ObstacleShower::RandFloat (float a, float b)
 int ObstacleShower::RandInt(int a, int b)
 {
     return std::uniform_int_distribution<int>(a, b)(m_g1);
+}
+
+void ObstacleShower::ClearObstacles()
+{
+    std::stack<ObstacleEntity*> s;
+    for (ObstacleEntity* obstacle: m_obstacles) s.push(obstacle);
+    while (!s.empty())
+    {
+        ObstacleEntity* ent = s.top();
+        s.pop();
+        GameEngineMain::GetInstance() -> RemoveEntity(ent);
+    }
 }
