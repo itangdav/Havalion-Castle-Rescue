@@ -185,6 +185,7 @@ void GameBoard::CreatePlayer()
 	hScoreRender1->SetFillColor(sf::Color(0, 0, 0, 200));
 }
 
+
 void GameBoard::CreateLadders()
 {
 	// Specify the size of the ladder image
