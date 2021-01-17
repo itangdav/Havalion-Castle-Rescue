@@ -5,7 +5,7 @@
 ## Inspiration
 Inspired by Piano Tiles except we want to avoid certain tiles.
 
-##Theme/Mechanic
+## Theme/Mechanic
 - Keep it alive!
 - Local Multiplayer
 - The more you have, the worse it is!
