@@ -60,8 +60,13 @@ GameBoard::~GameBoard()
 }
 
 void GameBoard::Restart() {
+	// Reset game status
 	GameEngine::GameEngineMain::GetInstance()->isPaused = false;
 	GameEngine::GameEngineMain::GetInstance()->isRunning = true;
+
+	// Reset restart button status
+	restartPressed = false;
+	restartButton->GetComponent<GameEngine::SpriteRenderComponent>()->SetTexture(GameEngine::eTexture::BackButton);
 
 	// Undo end game
 	pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(0);
@@ -91,8 +96,11 @@ void GameBoard::Restart() {
 
 	// Reset the timers
 	GameEngine::GameEngineMain::GetInstance()->ResetGameTime();
+
+	// Reset obstacles and projectiles
 	m_shower -> ClearObstacles();
     m_player -> GetComponent<GameEngine::ThrowProjectileComponent>() -> ClearProjectiles();
+
 	// Update the high scores
 	std::string str = "High Scores: \n";
 	while (scores.size() > 5) scores.pop_back();
@@ -336,7 +344,7 @@ void GameBoard::CreateRestartButton() {
 	restartButton = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(restartButton);
 	restartButton->SetPos(sf::Vector2f(winWidth / 2, winHeight / 2));
-	restartButton->SetSize(sf::Vector2f(80, 80));
+	restartButton->SetSize(sf::Vector2f(64, 64));
 	GameEngine::SpriteRenderComponent* render = restartButton->AddComponent<GameEngine::SpriteRenderComponent>();
 	render->SetFillColor(sf::Color::Transparent);
 	render->SetZLevel(70);
@@ -363,8 +371,12 @@ void GameBoard::Update()
 			// Check if the mouse click is on the button
 			if (mouseX <= restartX + halfRestartWidth && mouseX >= restartX - halfRestartWidth &&
 				mouseY <= restartY + halfRestartHeight && mouseY >= restartY - halfRestartHeight) {
-				Restart();
+				restartButton->GetComponent<GameEngine::SpriteRenderComponent>()->SetTexture(GameEngine::eTexture::BackButtonPressed);
+				restartPressed = true;
 			}
+		}
+		else if (restartPressed) {	// Restart on release
+			Restart();
 		}
 		return;
 	}
