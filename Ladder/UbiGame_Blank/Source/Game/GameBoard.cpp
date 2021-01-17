@@ -122,8 +122,6 @@ void GameBoard::CreatePlayer()
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
 	GameEngine::TextRenderComponent* scoreRender = static_cast<GameEngine::TextRenderComponent*>(m_score->AddComponent<GameEngine::TextRenderComponent>());
-	m_highScores->SetPos(sf::Vector2f(winWidth - 100, 30.f));
-	m_highScores->SetSize(sf::Vector2f(100.f, 720.f));
 	GameEngine::TextRenderComponent* hScoreRender = static_cast<GameEngine::TextRenderComponent*>(m_highScores->AddComponent<GameEngine::TextRenderComponent>());
 	GameEngine::TextRenderComponent* hScoreRender1 = static_cast<GameEngine::TextRenderComponent*>(m_highScoresBack->AddComponent<GameEngine::TextRenderComponent>());
     
