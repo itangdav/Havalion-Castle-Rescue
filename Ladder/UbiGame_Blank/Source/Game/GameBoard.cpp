@@ -50,7 +50,6 @@ void GameBoard::CreateShower()
 
 void GameBoard::CreatePlayer()
 {
-
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	unsigned int winWidth = mainWindow->getSize().x;
 	unsigned int winHeight = mainWindow->getSize().y;
