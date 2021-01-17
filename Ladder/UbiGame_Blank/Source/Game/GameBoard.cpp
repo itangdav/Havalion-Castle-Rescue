@@ -113,7 +113,7 @@ void GameBoard::CreatePlayer()
 	m_highScores->SetSize(sf::Vector2f(200.f, 720.f));
 	m_highScoresBack->SetPos(sf::Vector2f(winWidth - 150, 100.f));
 	m_highScoresBack->SetSize(sf::Vector2f(150.f, 300.f));
-	m_player->SetPos(sf::Vector2f(winWidth/2, 4 * winHeight/5));
+	m_player->SetPos(sf::Vector2f(winWidth/2.0, 4.0 * winHeight/5));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
 	GameEngine::TextRenderComponent* scoreRender = static_cast<GameEngine::TextRenderComponent*>(m_score->AddComponent<GameEngine::TextRenderComponent>());
@@ -121,7 +121,6 @@ void GameBoard::CreatePlayer()
 	m_highScores->SetSize(sf::Vector2f(100.f, 720.f));
 	GameEngine::TextRenderComponent* hScoreRender = static_cast<GameEngine::TextRenderComponent*>(m_highScores->AddComponent<GameEngine::TextRenderComponent>());
 	GameEngine::TextRenderComponent* hScoreRender1 = static_cast<GameEngine::TextRenderComponent*>(m_highScoresBack->AddComponent<GameEngine::TextRenderComponent>());
-	//GameEngine::SoundComponent* musicComp = static_cast<GameEngine::SoundComponent*>(m_player->AddComponent<GameEngine::SoundComponent>());
     
 	BGMusic.openFromFile("Resources/snd/music.wav");
 	BGMusic.play();
