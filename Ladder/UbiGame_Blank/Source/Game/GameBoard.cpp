@@ -87,7 +87,7 @@ void GameBoard::CreatePlayer()
 	scoreRender->SetZLevel(60);
 	scoreRender->SetFont("arial.ttf");
 	scoreRender->SetFillColor(sf::Color::Transparent);
-	scoreRender->SetColor(sf::Color(43, 193, 135, 255));
+	scoreRender->SetColor(sf::Color(222, 180, 33, 255));
 	
 }
 
@@ -245,7 +245,7 @@ void GameBoard::Update()
             //end game
 			GameEngine::GameEngineMain::GetInstance()->isRunning = false;
 			m_shower->DisableShower();
-			scoreRender->SetColor(sf::Color::Red);
+			scoreRender->SetColor(sf::Color(224, 36, 0, 255));
         }
     }
 
