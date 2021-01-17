@@ -170,3 +170,10 @@ void ObstacleShower::ClearObstacles()
     }
     m_obstacles.clear();
 }
+
+
+void ObstacleShower::ClearObstacle(ObstacleEntity* entity)
+{
+    m_obstacles.erase(entity);
+    GameEngineMain::GetInstance() -> RemoveEntity(entity);
+}

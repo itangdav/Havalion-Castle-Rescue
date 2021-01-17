@@ -21,6 +21,7 @@ namespace GameEngine
         
         void ShootArrow(int laddernum);
         void ClearObstacles();
+        void ClearObstacle(ObstacleEntity* entity);
         
     private:
         bool m_showering;

@@ -124,6 +124,8 @@
 		8AAAE04A25B3B83B006265F8 /* vorbis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AAADFD925B3B83B006265F8 /* vorbis.framework */; };
 		8AAAE04B25B3B83B006265F8 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AAADFDA25B3B83B006265F8 /* OpenAL.framework */; };
 		8AAAE05025B3C206006265F8 /* GodControlComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8AAAE04E25B3C206006265F8 /* GodControlComponent.cpp */; };
+		8AAAE05625B3E821006265F8 /* ThrowProjectileComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8AAAE05425B3E821006265F8 /* ThrowProjectileComponent.cpp */; };
+		8AAAE05925B3ECDF006265F8 /* ProjectileMovementComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8AAAE05725B3ECDF006265F8 /* ProjectileMovementComponent.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -950,6 +952,11 @@
 		8AAAE04E25B3C206006265F8 /* GodControlComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GodControlComponent.cpp; sourceTree = "<group>"; };
 		8AAAE04F25B3C206006265F8 /* GodControlComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GodControlComponent.h; sourceTree = "<group>"; };
 		8AAAE05325B3E3F8006265F8 /* Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arrow.png; sourceTree = "<group>"; };
+		8AAAE05425B3E821006265F8 /* ThrowProjectileComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ThrowProjectileComponent.cpp; sourceTree = "<group>"; };
+		8AAAE05525B3E821006265F8 /* ThrowProjectileComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThrowProjectileComponent.h; sourceTree = "<group>"; };
+		8AAAE05725B3ECDF006265F8 /* ProjectileMovementComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProjectileMovementComponent.cpp; sourceTree = "<group>"; };
+		8AAAE05825B3ECDF006265F8 /* ProjectileMovementComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectileMovementComponent.h; sourceTree = "<group>"; };
+		8AAAE05B25B3FE48006265F8 /* BlueFire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueFire.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1139,6 +1146,7 @@
 				8AAADCAE25B3B839006265F8 /* brick-wall-v1.6.png */,
 				8AAAE05325B3E3F8006265F8 /* Arrow.png */,
 				8AAADCAF25B3B839006265F8 /* brick-wall-v1.1.png */,
+				8AAAE05B25B3FE48006265F8 /* BlueFire.png */,
 				8AAADCB025B3B839006265F8 /* ladder-realistic.png */,
 				8AAADCB125B3B839006265F8 /* brick-wall-v1.png */,
 				8AAADCB225B3B839006265F8 /* Rock.png */,
@@ -1222,6 +1230,8 @@
 			isa = PBXGroup;
 			children = (
 				8AAADCD325B3B839006265F8 /* PlayerMovementComponent.cpp */,
+				8AAAE05725B3ECDF006265F8 /* ProjectileMovementComponent.cpp */,
+				8AAAE05825B3ECDF006265F8 /* ProjectileMovementComponent.h */,
 				8AAAE04E25B3C206006265F8 /* GodControlComponent.cpp */,
 				8AAAE04F25B3C206006265F8 /* GodControlComponent.h */,
 				8AAADCD425B3B839006265F8 /* LinkedEntityComponent.cpp */,
@@ -1230,6 +1240,8 @@
 				8AAADCD725B3B839006265F8 /* LinkedEntityComponent.o */,
 				8AAADCD825B3B839006265F8 /* LinkedEntityComponent.h */,
 				8AAADCD925B3B839006265F8 /* ObstacleMovementComponent.h */,
+				8AAAE05425B3E821006265F8 /* ThrowProjectileComponent.cpp */,
+				8AAAE05525B3E821006265F8 /* ThrowProjectileComponent.h */,
 				8AAADCDA25B3B839006265F8 /* ObstacleMovementComponent.o */,
 				8AAADCDB25B3B839006265F8 /* PauseMenuComponent.o */,
 				8AAADCDC25B3B839006265F8 /* PauseMenuComponent.h */,
@@ -2202,6 +2214,7 @@
 				8AAADFE525B3B83B006265F8 /* PlayerMovementComponent.cpp in Sources */,
 				8AAAE05025B3C206006265F8 /* GodControlComponent.cpp in Sources */,
 				8AAADFEF25B3B83B006265F8 /* GameBoard.cpp in Sources */,
+				8AAAE05925B3ECDF006265F8 /* ProjectileMovementComponent.cpp in Sources */,
 				8AAADFF325B3B83B006265F8 /* AnimationManager.cpp in Sources */,
 				8AAADFE325B3B83B006265F8 /* ObstacleEntity.cpp in Sources */,
 				8AAADFE625B3B83B006265F8 /* LinkedEntityComponent.cpp in Sources */,
@@ -2216,6 +2229,7 @@
 				8AAADFDB25B3B83B006265F8 /* Makefile in Sources */,
 				8AAADFF225B3B83B006265F8 /* CameraManager.cpp in Sources */,
 				8AAADFF525B3B83B006265F8 /* CollisionManager.cpp in Sources */,
+				8AAAE05625B3E821006265F8 /* ThrowProjectileComponent.cpp in Sources */,
 				8AAADFFC25B3B83B006265F8 /* Entity.cpp in Sources */,
 				8AAADFF125B3B83B006265F8 /* SoundManager.cpp in Sources */,
 				8AAAE00725B3B83B006265F8 /* AnimationComponent.cpp in Sources */,

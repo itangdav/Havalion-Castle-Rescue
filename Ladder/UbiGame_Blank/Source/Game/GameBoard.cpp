@@ -14,12 +14,14 @@
 #include "Game/Components/PauseMenuComponent.h"
 #include "Game/Components/GodControlComponent.h"
 #include <SFML/Window/Mouse.hpp>
+#include "Game/Components/ThrowProjectileComponent.h"
 #include <vector>
 #include <algorithm>
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
 #include <string>
+#include <set>
 
 using namespace Game;
 
@@ -89,8 +91,8 @@ void GameBoard::Restart() {
 
 	// Reset the timers
 	GameEngine::GameEngineMain::GetInstance()->ResetGameTime();
-	m_shower->ClearObstacles();
-
+	m_shower -> ClearObstacles();
+    m_player -> GetComponent<GameEngine::ThrowProjectileComponent>() -> ClearProjectiles();
 	// Update the high scores
 	std::string str = "High Scores: \n";
 	while (scores.size() > 5) scores.pop_back();
@@ -131,6 +133,8 @@ void GameBoard::CreatePlayer()
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_score);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_highScores);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_highScoresBack);
+    
+    m_player -> AddComponent<GameEngine::ThrowProjectileComponent>();
 	
 	m_score->SetPos(sf::Vector2f(winWidth / 2.0 - 20, 30.f));
 	m_score->SetSize(sf::Vector2f(200.f, 72.f));
@@ -184,6 +188,7 @@ void GameBoard::CreatePlayer()
 	hScoreRender1->SetFont("arial.ttf");
 	hScoreRender1->SetFillColor(sf::Color(0, 0, 0, 200));
 }
+
 
 void GameBoard::CreateLadders()
 {
@@ -363,10 +368,11 @@ void GameBoard::Update()
     std::vector<CollidableComponent*>& collidables = CollisionManager::GetInstance()->GetCollidables();
     GameEngine::CollidableComponent* thiscol = m_player -> GetComponent<GameEngine::CollidableComponent>();
 	GameEngine::TextRenderComponent* scoreRender = m_score->GetComponent<GameEngine::TextRenderComponent>();
+    GameEngine::ThrowProjectileComponent* throwproj = m_player -> GetComponent<GameEngine::ThrowProjectileComponent>();
     for (int a = 0; a < collidables.size(); ++a)
     {
         CollidableComponent* colComponent = collidables[a];
-        if (colComponent == thiscol)
+        if (colComponent == thiscol || (throwproj -> GetProjectiles()).count(colComponent -> GetEntity()))
             continue;
 
         AABBRect intersection;

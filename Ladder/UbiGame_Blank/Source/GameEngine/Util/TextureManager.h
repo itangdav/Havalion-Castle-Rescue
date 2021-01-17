@@ -19,6 +19,7 @@ namespace GameEngine
             Fireball,
             Arrow,
 			BackButton,
+            BlueFire,
 			Count,
 		};
 	}	
@@ -35,6 +36,7 @@ namespace GameEngine
             case eTexture::Fireball: return "Fireball.png";
             case eTexture::Arrow: return "Arrow.png";
 			case eTexture::BackButton: return "back_button.png";
+            case eTexture::BlueFire: return "BlueFire.png";
             default: return "UnknownTextType";
         }
 		return "UnknownTexType";
