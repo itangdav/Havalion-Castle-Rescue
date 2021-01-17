@@ -7,6 +7,7 @@ Inspired by Piano Tiles except we want to avoid certain tiles.
 
 ## Theme/Mechanic
 - Keep it alive!
+- 1 on 1
 - Local Multiplayer
 - The more you have, the worse it is!
 
