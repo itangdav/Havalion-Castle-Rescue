@@ -20,7 +20,7 @@ sf::Vector2f ObstacleManager::GetObstacleSize (eObstacle::ladderType type)
     {
         case eObstacle::ladderType::Rock: return sf::Vector2f(60.f, 60.f);
         case eObstacle::ladderType::Fireball: return sf::Vector2f(30.f, 60.f);
-        case eObstacle::ladderType::Arrow: return sf::Vector2f(48.f, 144.f);
+        case eObstacle::ladderType::Arrow: return sf::Vector2f(30.f, 97.5f);
         default: return sf::Vector2f(0.f, 0.f);
     }
     return sf::Vector2f(0.f, 0.f);

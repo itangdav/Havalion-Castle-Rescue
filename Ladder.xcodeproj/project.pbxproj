@@ -949,7 +949,7 @@
 		8AAADFDA25B3B83B006265F8 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenAL.framework; sourceTree = "<group>"; };
 		8AAAE04E25B3C206006265F8 /* GodControlComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GodControlComponent.cpp; sourceTree = "<group>"; };
 		8AAAE04F25B3C206006265F8 /* GodControlComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GodControlComponent.h; sourceTree = "<group>"; };
-		8AAAE05125B3C44A006265F8 /* Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arrow.png; sourceTree = "<group>"; };
+		8AAAE05325B3E3F8006265F8 /* Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Arrow.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1137,9 +1137,9 @@
 			children = (
 				8AAADCAD25B3B839006265F8 /* fog-overlay.png */,
 				8AAADCAE25B3B839006265F8 /* brick-wall-v1.6.png */,
+				8AAAE05325B3E3F8006265F8 /* Arrow.png */,
 				8AAADCAF25B3B839006265F8 /* brick-wall-v1.1.png */,
 				8AAADCB025B3B839006265F8 /* ladder-realistic.png */,
-				8AAAE05125B3C44A006265F8 /* Arrow.png */,
 				8AAADCB125B3B839006265F8 /* brick-wall-v1.png */,
 				8AAADCB225B3B839006265F8 /* Rock.png */,
 				8AAADCB325B3B839006265F8 /* fog-overlay-2.png */,
