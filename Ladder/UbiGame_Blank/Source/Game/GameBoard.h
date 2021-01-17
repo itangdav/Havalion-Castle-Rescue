@@ -40,15 +40,12 @@ namespace Game
 
 		GameEngine::Entity* fog;
 		void CreateFog();
-<<<<<<< HEAD
         
         GameEngine::Entity* m_god;
-=======
 
 		GameEngine::Entity* pauseText;
 		sf::Clock pauseClock;
 		void CreatePauseText();
->>>>>>> 650502aff2b9330fa8cb71a8773c22c0e44a5dbd
 	};
 }
 

@@ -21,7 +21,7 @@ namespace GameEngine
 		static float		   GetGameTime() { return (sm_gameClock.getElapsedTime() - sm_pauseTime).asSeconds(); }
 		static bool isRunning;
 		static bool isPaused;
-		static sf::Time GameEngineMain::sm_pauseTime;
+		static sf::Time sm_pauseTime;
 		float score;
 		float nextPlay;
 

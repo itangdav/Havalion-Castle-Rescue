@@ -50,7 +50,7 @@ void ObstacleEntity::Update()
     Entity::Update();
     AnimationComponent* anim = GetComponent<AnimationComponent>();
     ObstacleMovementComponent* move = GetComponent<ObstacleMovementComponent>();
-    if (!(GameEngineMain::GetInstance() -> isRunning))
+    if (!(GameEngineMain::GetInstance() -> isRunning) || GameEngineMain::GetInstance() -> isPaused)
     {
         if (anim) anim -> StopAnim();
         if (move) move -> StopMove();
