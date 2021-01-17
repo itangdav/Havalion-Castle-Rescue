@@ -1,7 +1,11 @@
 #pragma once
 #include "GameEngine/EntitySystem/Entity.h"
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
 #include <SFML/System/Vector2.hpp>
+#include <SFML/System/Time.hpp>
 #include <vector>
 
 namespace GameEngine
