@@ -28,6 +28,7 @@ namespace Game
         GameEngine::ObstacleShower* GetShower() {return m_shower;}
 		static sf::Music BGMusic;
 		static float PauseDuration;
+		void Restart();
 
 	private:
         void CreateShower();

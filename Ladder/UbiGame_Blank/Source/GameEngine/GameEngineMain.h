@@ -23,7 +23,6 @@ namespace GameEngine
 		static bool isPaused;
 		static sf::Time sm_pauseTime;
 		float score;
-		float nextPlay;
 
 		sf::RenderWindow* GetRenderWindow() const { return m_renderWindow; }
 		void Update();		
