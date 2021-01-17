@@ -345,15 +345,22 @@ void GameBoard::CreateRestartButton() {
 
 void GameBoard::Update()
 {
-	if (!GameEngine::GameEngineMain::isRunning) {
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+	if (!GameEngine::GameEngineMain::isRunning) {	// a game is finished
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {	// left click
+			// Get game window
 			sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
+
+			// Find mouse position in window
 			int mouseX = sf::Mouse::getPosition(*mainWindow).x;
 			int mouseY = sf::Mouse::getPosition(*mainWindow).y;
+
+			// Store the size and position of the restart button entity
 			float halfRestartWidth = restartButton->GetSize().x / 2.0;
 			float halfRestartHeight = restartButton->GetSize().y / 2.0;
 			float restartX = restartButton->GetPos().x;
 			float restartY = restartButton->GetPos().y;
+
+			// Check if the mouse click is on the button
 			if (mouseX <= restartX + halfRestartWidth && mouseX >= restartX - halfRestartWidth &&
 				mouseY <= restartY + halfRestartHeight && mouseY >= restartY - halfRestartHeight) {
 				Restart();
