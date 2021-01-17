@@ -2,9 +2,7 @@
 
 ## Demo Video
 
-<p align="center">
-  [![Youtube](https://img.youtube.com/vi/2rzQRaaD_DQ/0.jpg)](https://www.youtube.com/watch?v=2rzQRaaD_DQ)
-</p>
+[![Youtube](https://img.youtube.com/vi/2rzQRaaD_DQ/0.jpg)](https://www.youtube.com/watch?v=2rzQRaaD_DQ)
 
 ## Inspiration
 Inspired by Piano Tiles except we want to avoid certain tiles.
@@ -12,6 +10,7 @@ Inspired by Piano Tiles except we want to avoid certain tiles.
 ## Theme/Mechanic
 - Keep it alive!
 - Local Multiplayer
+- 1 v 1
 - The more you have, the worse it is!
 
 ## What it does
