@@ -32,6 +32,7 @@ namespace Game
         void CreateShower();
 		GameEngine::Entity* m_player;
 		GameEngine::Entity* m_score;
+		GameEngine::Entity* m_highScores;
 		void CreatePlayer();
     
         void CreateGod();

@@ -14,6 +14,7 @@
 #include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
 #include "Game/Components/PauseMenuComponent.h"
 #include <vector>
+#include <algorithm>
 #include <string>
 
 using namespace Game;
@@ -80,15 +81,29 @@ void GameBoard::CreateShower()
 
 void GameBoard::CreatePlayer()
 {
+	FILE* stream;
+	freopen_s(&stream, "scores.txt", "r", stdin);
+
+	std::vector<int> scores;
+	int x;
+	while (std::cin >> x)
+	{
+		scores.push_back(x);
+	}
+
+	fclose(stream);
+
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	unsigned int winWidth = mainWindow->getSize().x;
 	unsigned int winHeight = mainWindow->getSize().y;
 
 	m_player = new GameEngine::Entity();
 	m_score = new GameEngine::Entity();
+	m_highScores = new GameEngine::Entity();
 
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_score);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_highScores);
 	
 	m_score->SetPos(sf::Vector2f(winWidth / 2.0 - 20, 30.f));
 	m_score->SetSize(sf::Vector2f(200.f, 72.f));
@@ -96,6 +111,9 @@ void GameBoard::CreatePlayer()
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
 	GameEngine::TextRenderComponent* scoreRender = static_cast<GameEngine::TextRenderComponent*>(m_score->AddComponent<GameEngine::TextRenderComponent>());
+	m_highScores->SetPos(sf::Vector2f(winWidth - 100, 30.f));
+	m_highScores->SetSize(sf::Vector2f(100.f, 720.f));
+	GameEngine::TextRenderComponent* hScoreRender = static_cast<GameEngine::TextRenderComponent*>(m_highScores->AddComponent<GameEngine::TextRenderComponent>());
     
 	BGMusic.openFromFile("Resources/snd/music.wav");
 	BGMusic.play();
@@ -110,12 +128,26 @@ void GameBoard::CreatePlayer()
     m_player -> AddComponent<GameEngine::CollidableComponent>();
 
 	scoreRender->SetString("0");
-	scoreRender->SetCharacterSizePixels(40);
+	scoreRender->SetCharacterSizePixels(69);
 	scoreRender->SetZLevel(60);
 	scoreRender->SetFont("arial.ttf");
 	scoreRender->SetFillColor(sf::Color::Transparent);
 	scoreRender->SetColor(sf::Color(222, 180, 33, 255));
+
+	std::string str = "High Scores: \n";
+
+	for (int i = 0; i < (int)scores.size(); i++) {
+		str.append(std::to_string(i+1) + ") " + std::to_string(scores[i]) + "\n");
+	}
+
+	hScoreRender->SetString(str);
+	hScoreRender->SetCharacterSizePixels(21);
+	hScoreRender->SetZLevel(60);
+	hScoreRender->SetFont("arial.ttf");
+	hScoreRender->SetFillColor(sf::Color::Transparent);
+	hScoreRender->SetColor(sf::Color::Blue);
 	
+	m_player->GetComponent<PlayerMovementComponent>()->scores = scores;
 }
 
 void GameBoard::CreateLadders()
@@ -279,6 +311,23 @@ void GameBoard::Update()
 			scoreRender->SetColor(sf::Color(224, 36, 0, 255));
 			BGMusic.stop();
 			pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(59);
+
+			//save high score
+			FILE* stream1;
+			freopen_s(&stream1, "scores.txt", "w", stdout);
+
+			std::vector<int> scores = m_player->GetComponent<PlayerMovementComponent>()->scores;
+
+			scores.push_back((int)GameEngine::GameEngineMain::GetInstance()->score);
+
+			std::sort(scores.begin(), scores.end(), std::greater<int>());
+
+			for (int i = 0; i < std::min(5, (int)scores.size()); i++) {
+				std::cout << scores[i] << " ";
+			}
+			std::cout << std::endl;
+			fclose(stream1);
+
 			Restart();
         }
     }
