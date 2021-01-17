@@ -86,9 +86,7 @@ void GameBoard::CreateShower()
 
 void GameBoard::CreatePlayer()
 {
-	// FILE* stream;
-	freopen("scores.txt", "r", stdin);
-
+    freopen("score.txt", "r", stdin);
 	std::vector<int> scores;
 	int x;
 	while (std::cin >> x)
@@ -96,7 +94,6 @@ void GameBoard::CreatePlayer()
 		scores.push_back(x);
 	}
     fclose(stdin);
-	// fclose(stream);
 
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	unsigned int winWidth = mainWindow->getSize().x;
@@ -319,8 +316,8 @@ void GameBoard::Update()
 
 			//save high score
 			// FILE* stream1;
-			freopen( "scores.txt", "w", stdout);
-
+            freopen("scores.txt", "w", stdout);
+            
 			std::vector<int> scores = m_player->GetComponent<PlayerMovementComponent>()->scores;
 
 			scores.push_back((int)GameEngine::GameEngineMain::GetInstance()->score);
@@ -331,8 +328,9 @@ void GameBoard::Update()
 				std::cout << scores[i] << " ";
 			}
 			std::cout << std::endl;
+            
             fclose(stdout);
-			// fclose(stream1);
+            
 			Restart();
         }
     }
