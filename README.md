@@ -6,7 +6,7 @@ Inspired by Piano Tiles except we want to avoid certain tiles.
 ## What it does
 We have 5 ladders and we can jump between them. 
 In order to increase variety, the ladders are irregularly spaced so each ladder has its unique advantage.
-Game speeds up as time elapses (**music intensifies**)
+Game speeds up as time elapses (_music intensifies_)
 Objects are falling that we must avoid them.
 We keep track of your top scores.
 
