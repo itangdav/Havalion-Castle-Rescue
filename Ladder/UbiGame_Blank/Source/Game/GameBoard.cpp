@@ -18,6 +18,8 @@
 
 using namespace Game;
 
+sf::Music GameBoard::BGMusic;
+
 GameBoard::GameBoard()
 	:m_player(nullptr)
 	, m_score(nullptr)
@@ -192,12 +194,13 @@ void GameBoard::CreateFog() {
 	}
 }
 
-void GameBoard::CreatePauseText() {
+void GameBoard::CreatePauseMenu() {
 	// Get the window dimensions
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	int winWidth = (int)mainWindow->getSize().x;
 	int winHeight = (int)mainWindow->getSize().y;
 
+	// Create a message that says "Paused"
 	pauseText = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(pauseText);
 	pauseText->SetPos(sf::Vector2f(winWidth / 2 - 70, winHeight / 2 - 30));
@@ -209,6 +212,10 @@ void GameBoard::CreatePauseText() {
 	render->SetCharacterSizePixels(40);
 	render->SetFillColor(sf::Color::Transparent);
 	pauseText->AddComponent<Game::PauseMenuComponent>();
+
+	// Create a dark shade to block the game while the game is paused
+	pauseShade = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(pauseText);
 }
 
 void GameBoard::Update()

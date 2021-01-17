@@ -20,6 +20,7 @@ namespace Game
 		virtual ~GameBoard();
 		void Update();
 		bool IsGameOver() { return false; }
+		static sf::Music BGMusic;
 
 	private:
         void CreateShower();
@@ -44,8 +45,9 @@ namespace Game
         GameEngine::Entity* m_god;
 
 		GameEngine::Entity* pauseText;
+		GameEngine::Entity* pauseShade;
 		sf::Clock pauseClock;
-		void CreatePauseText();
+		void CreatePauseMenu();
 	};
 }
 
