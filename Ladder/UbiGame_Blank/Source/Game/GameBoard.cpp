@@ -67,9 +67,9 @@ void GameBoard::CreatePlayer()
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
 	GameEngine::TextRenderComponent* scoreRender = static_cast<GameEngine::TextRenderComponent*>(m_score->AddComponent<GameEngine::TextRenderComponent>());
-	GameEngine::SoundComponent* musicComp = static_cast<GameEngine::SoundComponent*>(m_player->AddComponent<GameEngine::SoundComponent>());
+	//GameEngine::SoundComponent* musicComp = static_cast<GameEngine::SoundComponent*>(m_player->AddComponent<GameEngine::SoundComponent>());
     
-	musicComp->LoadSoundFromFile("Resources/snd/music.wav");
+	//musicComp->LoadSoundFromFile("Resources/snd/music.wav");
 
 	spriteRender->SetFillColor(sf::Color::Transparent);
 	spriteRender->SetZLevel(9);
@@ -171,20 +171,25 @@ void GameBoard::CreateWall()
 void GameBoard::CreateFog() {
 	// Get the window dimensions
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
-	int winWidth = (int) mainWindow->getSize().x;
-	int winHeight = (int) mainWindow->getSize().y;
+	int winWidth = (int)mainWindow->getSize().x;
+	int winHeight = (int)mainWindow->getSize().y;
 
 	// Set the fog dimensions
-	int fogWidth = winWidth;
-	int fogHeight = winWidth * 27 / 192;
-	fog = new GameEngine::Entity();
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(fog);
-	fog->SetSize(sf::Vector2f(fogWidth, fogHeight));
-	fog->SetPos(sf::Vector2f(winWidth / 2.0, fogHeight / 2.0));
-	GameEngine::SpriteRenderComponent* render = fog->AddComponent<GameEngine::SpriteRenderComponent>();
-	render->SetFillColor(sf::Color::Transparent);
-	render->SetZLevel(3);
-	render->SetTexture(GameEngine::eTexture::Fog);
+	int fogWidth = 460;
+	int fogHeight = 270;
+	int copiesHor = winWidth / fogWidth + 1;
+
+	fog = new GameEngine::Entity * [copiesHor];
+	for (int i = 0; i < copiesHor; i++) {
+		fog[i] = new GameEngine::Entity();
+		GameEngine::GameEngineMain::GetInstance()->AddEntity(fog[i]);
+		fog[i]->SetSize(sf::Vector2f(fogWidth, fogHeight));
+		fog[i]->SetPos(sf::Vector2f(fogWidth * (i + 0.5), fogHeight / 2.0));
+		GameEngine::SpriteRenderComponent* render = fog[i]->AddComponent<GameEngine::SpriteRenderComponent>();
+		render->SetFillColor(sf::Color::Transparent);
+		render->SetZLevel(25);
+		render->SetTexture(GameEngine::eTexture::Fog);
+	}
 }
 
 void GameBoard::CreatePauseText() {
@@ -195,8 +200,8 @@ void GameBoard::CreatePauseText() {
 
 	pauseText = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(pauseText);
-	pauseText->SetPos(sf::Vector2f(winWidth / 2, winHeight / 2));
-	pauseText->SetSize(sf::Vector2f(100, 50));
+	pauseText->SetPos(sf::Vector2f(winWidth / 2 - 70, winHeight / 2 - 30));
+	pauseText->SetSize(sf::Vector2f(200, 100));
 	GameEngine::TextRenderComponent* render = pauseText->AddComponent<GameEngine::TextRenderComponent>();
 	render->SetFont("arial.ttf");
 	render->SetString("Paused");
@@ -256,11 +261,11 @@ void GameBoard::Update()
 
 	scoreRender->SetString(std::to_string((int)GameEngine::GameEngineMain::GetInstance()->score));
 
-	GameEngine::SoundComponent* musicComp = m_player->GetComponent<GameEngine::SoundComponent>();
+	/*GameEngine::SoundComponent* musicComp = m_player->GetComponent<GameEngine::SoundComponent>();
 	
 	if (GameEngine::GameEngineMain::GetInstance()->GetGameTime() >= GameEngine::GameEngineMain::GetInstance()->nextPlay && GameEngine::GameEngineMain::GetInstance()->isRunning) {
 		
 		GameEngine::GameEngineMain::GetInstance()->nextPlay += 4.6 * 60;
 		musicComp->PlaySound(0, false);
-	}
+	}*/
 }

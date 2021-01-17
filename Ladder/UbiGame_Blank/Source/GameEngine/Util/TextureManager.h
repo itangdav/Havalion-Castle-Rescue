@@ -29,7 +29,7 @@ namespace GameEngine
 			case eTexture::Ladder: return "ladder-realistic.png";
 			case eTexture::Wall: return "brick-wall-v1.6.png";
             case eTexture::Rock: return "Rock.png";
-			case eTexture::Fog: return "fog-overlay.png";
+			case eTexture::Fog: return "fog-overlay-2.png";
             case eTexture::Fireball: return "Fireball.png";
             default: return "UnknownTextType";
         }
