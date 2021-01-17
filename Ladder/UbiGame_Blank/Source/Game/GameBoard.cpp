@@ -359,8 +359,7 @@ void GameBoard::Update()
 				std::cout << scores[i] << " ";
 			}
 			std::cout << std::endl;
-            fclose(stdout);
-			// fclose(stream1);
+
 			Restart();
         }
     }
