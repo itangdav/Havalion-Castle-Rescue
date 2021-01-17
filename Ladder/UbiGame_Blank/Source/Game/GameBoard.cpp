@@ -29,6 +29,19 @@ GameBoard::GameBoard()
 	:m_player(nullptr)
 	, m_score(nullptr)
 {
+	// Read the high scores
+	std::ifstream scoreInput;
+	scoreInput.open("scores.txt");
+	if (scoreInput.is_open()) {
+		int x;
+		scores.clear();
+		while (scoreInput >> x) {
+			scores.push_back(x);
+		}
+		scoreInput.close();
+	}
+
+	// Create the entities
 	CreatePlayer();
     CreateGod();
 	CreateWall();
@@ -72,21 +85,18 @@ void GameBoard::Restart() {
 
 	// Reset the timers
 	GameEngine::GameEngineMain::GetInstance()->ResetGameTime();
-    m_shower -> ClearObstacles();
-	//// Rerender high scores
-	//FILE* stream;
-	//freopen_s(&stream, "scores.txt", "r", stdin);
-	//std::vector<int> scores;
-	//int x;
-	//while (std::cin >> x) {
-	//	scores.push_back(x);
-	//}
-	//fclose(stream);
-	//std::string str = "High Scores: \n";
-	//for (int i = 0; i < (int)scores.size(); i++) {
-	//	str.append(std::to_string(i + 1) + ") " + std::to_string(scores[i]) + "\n");
-	//}
-	//m_highScores->GetComponent<GameEngine::TextRenderComponent>()->SetString(str);
+	m_shower->ClearObstacles();
+
+	// Update the high scores
+	std::string str = "High Scores: \n";
+	while (scores.size() > 5) scores.pop_back();
+	for (int i = 0; i < scores.size(); i++) {
+		str += std::to_string(i + 1);
+		str += ") ";
+		str += std::to_string(scores[i]);
+		str += "\n";
+	}
+	m_highScores->GetComponent<GameEngine::TextRenderComponent>()->SetString(str);
 }
 
 void GameBoard::CreateGod()
@@ -104,15 +114,6 @@ void GameBoard::CreateShower()
 
 void GameBoard::CreatePlayer()
 {
-    freopen("score.txt", "r", stdin);
-	std::vector<int> scores;
-	int x;
-	while (std::cin >> x)
-	{
-		scores.push_back(x);
-	}
-    fclose(stdin);
-
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	unsigned int winWidth = mainWindow->getSize().x;
 	unsigned int winHeight = mainWindow->getSize().y;
@@ -160,9 +161,11 @@ void GameBoard::CreatePlayer()
 	scoreRender->SetColor(sf::Color(222, 180, 33, 255));
 
 	std::string str = "High Scores: \n";
-
 	for (int i = 0; i < (int)scores.size(); i++) {
-		str.append(std::to_string(i+1) + ") " + std::to_string(scores[i]) + "\n");
+		str += std::to_string(i + 1);
+		str += ") ";
+		str += std::to_string(scores[i]);
+		str += "\n";
 	}
 
 	hScoreRender->SetString(str);
@@ -176,8 +179,6 @@ void GameBoard::CreatePlayer()
 	hScoreRender1->SetZLevel(59);
 	hScoreRender1->SetFont("arial.ttf");
 	hScoreRender1->SetFillColor(sf::Color(0, 0, 0, 200));
-
-	m_player->GetComponent<PlayerMovementComponent>()->scores = scores;
 }
 
 void GameBoard::CreateLadders()
@@ -343,18 +344,17 @@ void GameBoard::Update()
 			pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(59);
 
 			//save high score
-            freopen("scores.txt", "w", stdout);
-            
-			std::vector<int> scores = m_player->GetComponent<PlayerMovementComponent>()->scores;
-
+			std::ofstream scoreOutput("scores.txt");
 			scores.push_back((int)GameEngine::GameEngineMain::GetInstance()->score);
-
-			std::sort(scores.begin(), scores.end(), std::greater<int>());
-
-			for (int i = 0; i < std::min(5, (int)scores.size()); i++) {
-				std::cout << scores[i] << " ";
+			std::sort(scores.rbegin(), scores.rend());
+			while (scores.size() > 5) scores.pop_back();
+			for (int i = 0; i < scores.size(); i++) {
+				scoreOutput << scores[i] << " ";
 			}
-			std::cout << std::endl;
+			scoreOutput << std::endl;
+			scoreOutput.close();
+
+			// Restart the game
 			Restart();
         }
     }

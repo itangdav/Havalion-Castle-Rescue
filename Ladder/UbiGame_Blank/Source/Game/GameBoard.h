@@ -7,6 +7,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/System/Time.hpp>
 #include <vector>
+#include <fstream>
 
 namespace GameEngine
 {
@@ -58,6 +59,9 @@ namespace Game
 		GameEngine::Entity* pauseShade;
 		sf::Clock pauseClock;
 		void CreatePauseMenu();
+
+		std::fstream scoreFile;
+		std::vector<int> scores;
 	};
 }
 
