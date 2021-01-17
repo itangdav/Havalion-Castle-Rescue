@@ -3,7 +3,7 @@
 
 using namespace GameEngine;
 
-ObstacleShower::ObstacleShower():m_spawntimer(0.f), m_showering(false), m_g1((unsigned int)time(0))
+ObstacleShower::ObstacleShower():m_spawntimer(0.f), m_showering(false), m_g1((unsigned int)time(0)), m_arrowReloadTime(0.5f)
 {
 
 }
@@ -68,7 +68,7 @@ void ObstacleShower::SpawnObstacle(bool onladder)
     static int ladderCount = 5;
     sf::Vector2f pos = sf::Vector2f(0.f, 0.f);
     int ladderNum = RandInt(0, ladderCount - 1);
-    float laddersX[5] = { 0.14, 0.31, 0.5, 0.61, 0.84 };
+    float laddersX[5] = { 0.14, 0.31, 0.5, 0.65, 0.84 };
     pos.x = onladder ? laddersX[ladderNum]*screenWidth : RandFloat(0.f, screenWidth);
     if (onladder)
     {
@@ -84,6 +84,18 @@ void ObstacleShower::SpawnObstacle(bool onladder)
         GameEngine::eObstacle::nonLadderType type = static_cast<GameEngine::eObstacle::nonLadderType>(RandInt(0, (int)GameEngine::eObstacle::nonLadderType::Count - 1));
         CreateObstacle(type, pos);
     }
+}
+
+void ObstacleShower::ShootArrow(int laddernum)
+{
+    if (m_arrowReloadTime > 0.f) return;
+    float laddersX[5] = { 0.14, 0.31, 0.5, 0.65, 0.84 };
+
+    sf::RenderWindow* window = GameEngine::GameEngineMain::GetInstance() -> GetRenderWindow();
+    float screenWidth = (window -> getSize()).x;
+    sf::Vector2f pos = sf::Vector2f(laddersX[laddernum-1]*screenWidth, 0.f);
+    CreateObstacle(GameEngine::eObstacle::ladderType::Arrow, pos);
+    m_arrowReloadTime = 0.5f;
 }
 
 void ObstacleShower::SpawnNewRandomObstacles()
@@ -102,6 +114,7 @@ void ObstacleShower::Update()
     if (!m_showering) return;
     float dt = GameEngine::GameEngineMain::GetInstance() -> GetTimeDelta();
     m_spawntimer -= dt;
+    m_arrowReloadTime -= dt;
     if (m_spawntimer <= 0.f) SpawnNewRandomObstacles();
 }
 

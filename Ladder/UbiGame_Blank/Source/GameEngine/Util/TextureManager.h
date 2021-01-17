@@ -17,6 +17,7 @@ namespace GameEngine
             Rock,
 			Fog,
             Fireball,
+            Arrow,
 			Count,
 		};
 	}	
@@ -31,6 +32,7 @@ namespace GameEngine
             case eTexture::Rock: return "Rock.png";
 			case eTexture::Fog: return "fog-overlay-2.png";
             case eTexture::Fireball: return "Fireball.png";
+            case eTexture::Arrow: return "Arrow.png";
             default: return "UnknownTextType";
         }
 		return "UnknownTexType";

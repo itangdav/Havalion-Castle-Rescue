@@ -13,6 +13,7 @@
 #include "GameEngine/Util/CollisionManager.h"
 #include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
 #include "Game/Components/PauseMenuComponent.h"
+#include "Game/Components/GodControlComponent.h"
 #include <vector>
 #include <string>
 
@@ -40,6 +41,8 @@ GameBoard::~GameBoard()
 void GameBoard::CreateGod()
 {
     m_god = new GameEngine::Entity();
+    m_god -> AddComponent<GameEngine::GodControlComponent>();
+    GameEngine::GameEngineMain::GetInstance() -> AddEntity(m_god);
 }
 
 void GameBoard::CreateShower()

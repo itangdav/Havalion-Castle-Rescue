@@ -20,6 +20,8 @@ namespace Game
 		virtual ~GameBoard();
 		void Update();
 		bool IsGameOver() { return false; }
+        
+        GameEngine::ObstacleShower* GetShower() {return m_shower;}
 
 	private:
         void CreateShower();

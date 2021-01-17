@@ -14,6 +14,7 @@ namespace GameEngine
             None = -1,
             Rock,
             Fireball,
+            Arrow,
             Count,
         };
         enum class nonLadderType

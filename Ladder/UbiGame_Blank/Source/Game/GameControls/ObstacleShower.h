@@ -16,9 +16,12 @@ namespace GameEngine
         void DisableShower();
         void Update();
         
+        void ShootArrow(int laddernum);
+        
     private:
         bool m_showering;
         float m_spawntimer;
+        float m_arrowReloadTime;
         void SpawnNewRandomObstacles();
         void SpawnObstacle(bool onladder);
         
