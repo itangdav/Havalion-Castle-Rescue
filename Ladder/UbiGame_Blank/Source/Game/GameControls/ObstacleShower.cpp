@@ -3,7 +3,7 @@
 
 using namespace GameEngine;
 
-ObstacleShower::ObstacleShower():m_spawntimer(0.f), m_showering(false), m_g1((unsigned int)time(0)), m_arrowReloadTime(1.0f)
+ObstacleShower::ObstacleShower():m_spawntimer(0.f), m_showering(false), m_g1((unsigned int)time(0)), m_arrowReloadTime(1.0f), m_obstacles()
 {
 
 }
@@ -168,4 +168,5 @@ void ObstacleShower::ClearObstacles()
         s.pop();
         GameEngineMain::GetInstance() -> RemoveEntity(ent);
     }
+    m_obstacles.clear();
 }
