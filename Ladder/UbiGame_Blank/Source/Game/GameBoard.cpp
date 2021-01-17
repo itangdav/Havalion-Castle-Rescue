@@ -1,5 +1,4 @@
 #include "GameBoard.h"
-#include "iostream"
 #include "GameEngine/GameEngineMain.h"
 #include "Game/Components/PlayerMovementComponent.h"
 #include "Game/Components/BackgroundMovementComponent.h"
@@ -13,8 +12,12 @@
 #include "GameEngine/Util/CollisionManager.h"
 #include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
 #include "Game/Components/PauseMenuComponent.h"
+#include "Game/Components/GodControlComponent.h"
 #include <vector>
 #include <algorithm>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
 #include <string>
 
 using namespace Game;
@@ -71,6 +74,8 @@ void GameBoard::Restart() {
 void GameBoard::CreateGod()
 {
     m_god = new GameEngine::Entity();
+    m_god -> AddComponent<GameEngine::GodControlComponent>();
+    GameEngine::GameEngineMain::GetInstance() -> AddEntity(m_god);
 }
 
 void GameBoard::CreateShower()
@@ -81,8 +86,8 @@ void GameBoard::CreateShower()
 
 void GameBoard::CreatePlayer()
 {
-	FILE* stream;
-	freopen_s(&stream, "scores.txt", "r", stdin);
+	// FILE* stream;
+	freopen("scores.txt", "r", stdin);
 
 	std::vector<int> scores;
 	int x;
@@ -90,8 +95,8 @@ void GameBoard::CreatePlayer()
 	{
 		scores.push_back(x);
 	}
-
-	fclose(stream);
+    fclose(stdin);
+	// fclose(stream);
 
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	unsigned int winWidth = mainWindow->getSize().x;
@@ -325,8 +330,8 @@ void GameBoard::Update()
 			pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(59);
 
 			//save high score
-			FILE* stream1;
-			freopen_s(&stream1, "scores.txt", "w", stdout);
+			// FILE* stream1;
+			freopen( "scores.txt", "w", stdout);
 
 			std::vector<int> scores = m_player->GetComponent<PlayerMovementComponent>()->scores;
 
@@ -338,8 +343,8 @@ void GameBoard::Update()
 				std::cout << scores[i] << " ";
 			}
 			std::cout << std::endl;
-			fclose(stream1);
-
+            fclose(stdout);
+			// fclose(stream1);
 			Restart();
         }
     }

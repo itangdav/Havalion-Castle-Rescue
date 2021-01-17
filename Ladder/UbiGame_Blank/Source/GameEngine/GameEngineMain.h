@@ -34,6 +34,8 @@ namespace GameEngine
 		void OnInitialised();
 
 		float GetGameSpeed();
+        
+        Game::GameBoard* GetGameBoard() {return m_gameBoard;}
 
 		bool IsGameOver() const { return m_gameBoard && m_gameBoard->IsGameOver(); }
 
