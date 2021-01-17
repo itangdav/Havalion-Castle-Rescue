@@ -19,6 +19,7 @@
 using namespace Game;
 
 sf::Music GameBoard::BGMusic;
+float GameBoard::PauseDuration = 0;
 
 GameBoard::GameBoard()
 	:m_player(nullptr)
@@ -208,13 +209,12 @@ void GameBoard::CreatePauseMenu() {
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(pauseText);
 	pauseText->SetPos(sf::Vector2f(winWidth / 2 - 70, winHeight / 2 - 30));
 	pauseText->SetSize(sf::Vector2f(200, 100));
-	GameEngine::TextRenderComponent* render = pauseText->AddComponent<GameEngine::TextRenderComponent>();
-	render->SetFont("arial.ttf");
-	render->SetString("Paused");
-	render->SetZLevel(0);
-	render->SetCharacterSizePixels(40);
-	render->SetFillColor(sf::Color::Transparent);
-	pauseText->AddComponent<Game::PauseMenuComponent>();
+	GameEngine::TextRenderComponent* textRender = pauseText->AddComponent<GameEngine::TextRenderComponent>();
+	textRender->SetFont("arial.ttf");
+	textRender->SetString("Paused");
+	textRender->SetZLevel(0);
+	textRender->SetCharacterSizePixels(40);
+	textRender->SetFillColor(sf::Color::Transparent);
 
 	if (BGMusic.getStatus() != sf::SoundStream::Paused) {
 		BGMusic.pause();
@@ -222,7 +222,12 @@ void GameBoard::CreatePauseMenu() {
 
 	// Create a dark shade to block the game while the game is paused
 	pauseShade = new GameEngine::Entity();
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(pauseText);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(pauseShade);
+	pauseShade->SetPos(sf::Vector2f(winWidth / 2.0, winHeight / 2.0));
+	pauseShade->SetSize(sf::Vector2f(winWidth, winHeight));
+	GameEngine::RenderComponent* shadeRender = pauseShade->AddComponent<GameEngine::RenderComponent>();
+	shadeRender->SetZLevel(0);
+	shadeRender->SetFillColor(sf::Color(0, 0, 0, 200));
 }
 
 void GameBoard::Update()
@@ -256,22 +261,24 @@ void GameBoard::Update()
 	if (!GameEngine::GameEngineMain::GetInstance()->isRunning) return;
 
 	float dt = GameEngine::GameEngineMain::GetTimeDelta();
-	PauseMenuComponent::pauseDuration -= dt;
-	if (PauseMenuComponent::pauseDuration <= 0) {
-		PauseMenuComponent::pauseDuration = 0;
+	GameBoard::PauseDuration -= dt;
+	if (GameBoard::PauseDuration <= 0) {
+		GameBoard::PauseDuration = 0;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 			GameEngine::GameEngineMain::GetInstance()->isPaused ^= true;
 			if (GameEngine::GameEngineMain::GetInstance()->isPaused) {
 				pauseText->GetComponent<GameEngine::TextRenderComponent>()->SetZLevel(60);
+				pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(59);
 				pauseClock.restart();
 				m_shower->DisableShower();
 			}
 			else {
 				pauseText->GetComponent<GameEngine::TextRenderComponent>()->SetZLevel(0);
+				pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(0);
 				GameEngine::GameEngineMain::GetInstance()->sm_pauseTime += pauseClock.getElapsedTime();
 				m_shower->EnableShower();
 			}
-			PauseMenuComponent::pauseDuration = 0.2;
+			GameBoard::PauseDuration = 0.2;
 		}
 	}
 
