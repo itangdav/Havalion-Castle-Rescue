@@ -132,10 +132,10 @@ void GameBoard::CreatePlayer()
 	
 	m_score->SetPos(sf::Vector2f(winWidth / 2.0 - 20, 30.f));
 	m_score->SetSize(sf::Vector2f(200.f, 72.f));
-	m_highScores->SetPos(sf::Vector2f(winWidth - 200, 30.f));
-	m_highScores->SetSize(sf::Vector2f(200.f, 720.f));
-	m_highScoresBack->SetPos(sf::Vector2f(winWidth - 150, 100.f));
-	m_highScoresBack->SetSize(sf::Vector2f(150.f, 300.f));
+	m_highScores->SetPos(sf::Vector2f(winWidth - 250, 30.f));
+	m_highScores->SetSize(sf::Vector2f(250.f, 720.f));
+	m_highScoresBack->SetPos(sf::Vector2f(winWidth - 170, 100.f));
+	m_highScoresBack->SetSize(sf::Vector2f(200.f, 300.f));
 	m_player->SetPos(sf::Vector2f(winWidth/2.0, 4.0 * winHeight/5));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
@@ -171,7 +171,7 @@ void GameBoard::CreatePlayer()
 	hScoreRender->SetString(str);
 	hScoreRender->SetCharacterSizePixels(21);
 	hScoreRender->SetZLevel(60);
-	hScoreRender->SetFont("arial.ttf");
+	hScoreRender->SetFont("ARCADEPI.ttf");
 	hScoreRender->SetFillColor(sf::Color(0,0,0,0));
 	hScoreRender->SetColor(sf::Color::White);
 	

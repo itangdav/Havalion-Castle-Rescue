@@ -227,6 +227,7 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
     <Image Include="Resources\img\Player.png" />
   </ItemGroup>
   <ItemGroup>
+    <Font Include="Resources\fonts\ARCADEPI.TTF" />
     <Font Include="Resources\fonts\arial.ttf" />
   </ItemGroup>
   <ItemGroup>
