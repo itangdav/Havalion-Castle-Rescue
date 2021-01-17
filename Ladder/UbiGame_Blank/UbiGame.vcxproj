@@ -181,6 +181,8 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
     <ClCompile Include="Source\Game\Components\ObstacleMovementComponent.cpp" />
     <ClCompile Include="Source\Game\Components\PauseMenuComponent.cpp" />
     <ClCompile Include="Source\Game\Components\PlayerMovementComponent.cpp" />
+    <ClCompile Include="Source\Game\Components\ProjectileMovementComponent.cpp" />
+    <ClCompile Include="Source\Game\Components\ThrowProjectileComponent.cpp" />
     <ClCompile Include="Source\Game\GameBoard.cpp" />
     <ClCompile Include="Source\GameEngine\EntitySystem\Components\RenderComponent.cpp" />
     <ClCompile Include="Source\GameEngine\EntitySystem\Component.cpp" />
@@ -211,6 +213,8 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
     <ClInclude Include="Source\Game\Components\ObstacleMovementComponent.h" />
     <ClInclude Include="Source\Game\Components\PauseMenuComponent.h" />
     <ClInclude Include="Source\Game\Components\PlayerMovementComponent.h" />
+    <ClInclude Include="Source\Game\Components\ProjectileMovementComponent.h" />
+    <ClInclude Include="Source\Game\Components\ThrowProjectileComponent.h" />
     <ClInclude Include="Source\Game\GameBoard.h" />
     <ClInclude Include="Source\GameEngine\EntitySystem\Components\RenderComponent.h" />
     <ClInclude Include="Source\GameEngine\EntitySystem\Component.h" />
