@@ -5,6 +5,11 @@
 ## Inspiration
 Inspired by Piano Tiles except we want to avoid certain tiles.
 
+## Theme/Mechanic
+- Keep it alive!
+- Local Multiplayer
+- The more you have, the worse it is!
+
 ## What it does
 We have 5 ladders and we can jump between them. 
 In order to increase variety, the ladders are irregularly spaced so each ladder has its unique advantage.
