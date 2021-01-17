@@ -23,13 +23,15 @@ void ObstacleMovementComponent::Update()
     
     sf::Vector2f displace = sf::Vector2f(0.0f, velocity*dt);
     GetEntity() -> SetPos(GetEntity() -> GetPos() + displace);
-    
-    //check if out of bound
+}
+
+bool ObstacleMovementComponent::IsOutOfBound()
+{
     GameEngine::GameEngineMain* mainEngine = GameEngine::GameEngineMain::GetInstance();
     sf::RenderWindow* window = mainEngine -> GetRenderWindow();
     sf::Vector2u size = window -> getSize();
     sf::Vector2f currpos = GetEntity() -> GetPos();
-    if (size.y <= currpos.y) GameEngine::GameEngineMain::GetInstance() -> RemoveEntity(GetEntity());
+    return (size.y <= currpos.y);
 }
 
 void ObstacleMovementComponent::OnAddToWorld()
