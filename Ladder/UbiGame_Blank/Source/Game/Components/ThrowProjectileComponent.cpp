@@ -31,7 +31,6 @@ void ThrowProjectileComponent::Update()
     {
         sf::Window* window = GameEngineMain::GetInstance() -> GetRenderWindow();
         sf::Vector2i position = sf::Mouse::getPosition(*window);
-        std::cout << position.x << " " << position.y << std::endl;
         sf::Vector2f positionf = sf::Vector2f((float)position.x, (float)position.y);
         sf::Vector2f dir = positionf - (GetEntity() -> GetPos());
         FireProjectile(dir);
@@ -77,8 +76,9 @@ void ThrowProjectileComponent::FireProjectile(sf::Vector2f& dir)
     proj -> AddComponent<CollidableComponent>();
     
     ProjectileMovementComponent* move = proj -> AddComponent<ProjectileMovementComponent>();
-    move -> SetVelocityFactor(1.5f);
-    move -> SetDir(dir);
+    move -> SetVelocityFactor(3.f);
+    float mag = sqrt(dir.x*dir.x + dir.y*dir.y);
+    move -> SetDir(dir/mag);
     move -> SetPlayerEntity(GetEntity());
     
     SpriteRenderComponent* render = proj -> AddComponent<SpriteRenderComponent>();

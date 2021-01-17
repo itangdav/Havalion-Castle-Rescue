@@ -21,8 +21,6 @@ namespace Game
 		float jumpDistance;
 		float jumpTime;
 		float cooldown;
-
-		std::vector<int> scores;
 	
 	private:
 

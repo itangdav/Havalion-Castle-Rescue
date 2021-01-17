@@ -15,7 +15,7 @@
 
 using namespace GameEngine;
 
-ProjectileMovementComponent::ProjectileMovementComponent(): m_velocityFactor(1.5f), m_moving(true), m_dir(sf::Vector2f(0.f, 0.f)), m_player(nullptr)
+ProjectileMovementComponent::ProjectileMovementComponent(): m_velocityFactor(0.f), m_moving(true), m_dir(sf::Vector2f(0.f, 0.f)), m_player(nullptr)
 {
     
 }
@@ -63,7 +63,7 @@ void ProjectileMovementComponent::Update()
     else StartMove();
     if (!m_moving) return;
     float speed = GameEngine::GameEngineMain::GetInstance() -> GetGameSpeed();
-    float velocity = 0.7f*speed*m_velocityFactor; // changes as the game progresses
+    float velocity = 100.f*speed*m_velocityFactor; // changes as the game progresses
     float dt = GameEngine::GameEngineMain::GetInstance() -> GetTimeDelta();
     sf::Vector2f displace = m_dir*velocity*dt;
     GetEntity() -> SetPos(GetEntity() -> GetPos() + displace);
