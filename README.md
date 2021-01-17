@@ -28,7 +28,8 @@ We used Ubisoft Hackers Nest API and the SFML library to create this game.
 In the actual hacking session, there were frustrating times when we got segmentation faults out of the blue, can’t see buttons on the screen, discover novel quirks of C++, or have trouble locating resources and files. Nevertheless, with teamwork and excitement for learning, we turned those challenges into enjoyable experiences.
 
 ## Accomplishments that We're proud of
-As a bunch of game enthusiasts, we're super happy to have made a complete game that is fun to play with.
+- As a bunch of game enthusiasts, we're super happy to have made a complete game that is fun to play with.
+- Achieving a high score of 552.
 
 ## What We learned
 How to work together as a team of 4 to make a game with music and cool visuals
