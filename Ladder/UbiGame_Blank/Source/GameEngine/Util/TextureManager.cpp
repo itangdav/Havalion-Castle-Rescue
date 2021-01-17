@@ -56,6 +56,8 @@ namespace TextureHelper
                 return sf::Vector2f(198.f, 198.f);
             case GameEngine::eTexture::Fireball:
                 return sf::Vector2f(182.f, 362.f);
+            case GameEngine::eTexture::Arrow:
+                return sf::Vector2f(67.f, 255.f);
             default:
                 return sf::Vector2f(-1.f, -1.f);
 		}

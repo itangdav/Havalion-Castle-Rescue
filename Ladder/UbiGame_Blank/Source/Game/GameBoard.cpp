@@ -1,5 +1,4 @@
 #include "GameBoard.h"
-#include "iostream"
 #include "GameEngine/GameEngineMain.h"
 #include "Game/Components/PlayerMovementComponent.h"
 #include "Game/Components/BackgroundMovementComponent.h"
@@ -13,8 +12,12 @@
 #include "GameEngine/Util/CollisionManager.h"
 #include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
 #include "Game/Components/PauseMenuComponent.h"
+#include "Game/Components/GodControlComponent.h"
 #include <vector>
 #include <algorithm>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
 #include <string>
 
 using namespace Game;
@@ -89,6 +92,8 @@ void GameBoard::Restart() {
 void GameBoard::CreateGod()
 {
     m_god = new GameEngine::Entity();
+    m_god -> AddComponent<GameEngine::GodControlComponent>();
+    GameEngine::GameEngineMain::GetInstance() -> AddEntity(m_god);
 }
 
 void GameBoard::CreateShower()
@@ -99,8 +104,8 @@ void GameBoard::CreateShower()
 
 void GameBoard::CreatePlayer()
 {
-	FILE* stream;
-	freopen_s(&stream, "scores.txt", "r", stdin);
+	// FILE* stream;
+	freopen("scores.txt", "r", stdin);
 
 	std::vector<int> scores;
 	int x;
@@ -108,8 +113,8 @@ void GameBoard::CreatePlayer()
 	{
 		scores.push_back(x);
 	}
-
-	fclose(stream);
+    fclose(stdin);
+	// fclose(stream);
 
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	unsigned int winWidth = mainWindow->getSize().x;
@@ -118,20 +123,25 @@ void GameBoard::CreatePlayer()
 	m_player = new GameEngine::Entity();
 	m_score = new GameEngine::Entity();
 	m_highScores = new GameEngine::Entity();
+	m_highScoresBack = new GameEngine::Entity();
 
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_score);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_highScores);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_highScoresBack);
 	
 	m_score->SetPos(sf::Vector2f(winWidth / 2.0 - 20, 30.f));
 	m_score->SetSize(sf::Vector2f(200.f, 72.f));
-	m_player->SetPos(sf::Vector2f(winWidth / 2.0, 4.0 * winHeight / 5));
+	m_highScores->SetPos(sf::Vector2f(winWidth - 200, 30.f));
+	m_highScores->SetSize(sf::Vector2f(200.f, 720.f));
+	m_highScoresBack->SetPos(sf::Vector2f(winWidth - 150, 100.f));
+	m_highScoresBack->SetSize(sf::Vector2f(150.f, 300.f));
+	m_player->SetPos(sf::Vector2f(winWidth/2.0, 4.0 * winHeight/5));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
 	GameEngine::TextRenderComponent* scoreRender = static_cast<GameEngine::TextRenderComponent*>(m_score->AddComponent<GameEngine::TextRenderComponent>());
-	m_highScores->SetPos(sf::Vector2f(winWidth - 100, 30.f));
-	m_highScores->SetSize(sf::Vector2f(100.f, 720.f));
 	GameEngine::TextRenderComponent* hScoreRender = static_cast<GameEngine::TextRenderComponent*>(m_highScores->AddComponent<GameEngine::TextRenderComponent>());
+	GameEngine::TextRenderComponent* hScoreRender1 = static_cast<GameEngine::TextRenderComponent*>(m_highScoresBack->AddComponent<GameEngine::TextRenderComponent>());
     
 	BGMusic.openFromFile("Resources/snd/music.wav");
 	BGMusic.play();
@@ -162,9 +172,14 @@ void GameBoard::CreatePlayer()
 	hScoreRender->SetCharacterSizePixels(21);
 	hScoreRender->SetZLevel(60);
 	hScoreRender->SetFont("arial.ttf");
-	hScoreRender->SetFillColor(sf::Color::Transparent);
-	hScoreRender->SetColor(sf::Color::Blue);
+	hScoreRender->SetFillColor(sf::Color(0,0,0,0));
+	hScoreRender->SetColor(sf::Color::White);
 	
+	hScoreRender1->SetString("");
+	hScoreRender1->SetZLevel(59);
+	hScoreRender1->SetFont("arial.ttf");
+	hScoreRender1->SetFillColor(sf::Color(0, 0, 0, 200));
+
 	m_player->GetComponent<PlayerMovementComponent>()->scores = scores;
 }
 
@@ -331,8 +346,8 @@ void GameBoard::Update()
 			pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(59);
 
 			//save high score
-			FILE* stream1;
-			freopen_s(&stream1, "scores.txt", "w", stdout);
+			// FILE* stream1;
+			freopen( "scores.txt", "w", stdout);
 
 			std::vector<int> scores = m_player->GetComponent<PlayerMovementComponent>()->scores;
 
@@ -344,8 +359,8 @@ void GameBoard::Update()
 				std::cout << scores[i] << " ";
 			}
 			std::cout << std::endl;
-			fclose(stream1);
-
+            fclose(stdout);
+			// fclose(stream1);
 			Restart();
         }
     }

@@ -24,6 +24,8 @@ namespace Game
 		virtual ~GameBoard();
 		void Update();
 		bool IsGameOver() { return false; }
+        
+        GameEngine::ObstacleShower* GetShower() {return m_shower;}
 		static sf::Music BGMusic;
 		static float PauseDuration;
 		void Restart();
@@ -33,6 +35,7 @@ namespace Game
 		GameEngine::Entity* m_player;
 		GameEngine::Entity* m_score;
 		GameEngine::Entity* m_highScores;
+		GameEngine::Entity* m_highScoresBack;
 		void CreatePlayer();
     
         void CreateGod();

@@ -13,7 +13,8 @@ namespace GameEngine
 		{			
 			None,
             RollingRock,
-            FiryBall
+            FiryBall,
+            ShootingArrow
 		};
 	}
 
