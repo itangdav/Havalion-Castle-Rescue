@@ -1,5 +1,4 @@
 #include "GameBoard.h"
-#include "iostream"
 #include "GameEngine/GameEngineMain.h"
 #include "Game/Components/PlayerMovementComponent.h"
 #include "Game/Components/BackgroundMovementComponent.h"
@@ -16,6 +15,9 @@
 #include "Game/Components/GodControlComponent.h"
 #include <vector>
 #include <algorithm>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
 #include <string>
 
 using namespace Game;
@@ -57,10 +59,8 @@ void GameBoard::CreateShower()
 
 void GameBoard::CreatePlayer()
 {
-<<<<<<< HEAD
-=======
-	FILE* stream;
-	freopen_s(&stream, "scores.txt", "r", stdin);
+	// FILE* stream;
+	freopen("scores.txt", "r", stdin);
 
 	std::vector<int> scores;
 	int x;
@@ -68,10 +68,9 @@ void GameBoard::CreatePlayer()
 	{
 		scores.push_back(x);
 	}
+    fclose(stdin);
+	// fclose(stream);
 
-	fclose(stream);
-
->>>>>>> b306277da570b6f209010cb2f672c0a13617bdc0
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	unsigned int winWidth = mainWindow->getSize().x;
 	unsigned int winHeight = mainWindow->getSize().y;
@@ -294,8 +293,8 @@ void GameBoard::Update()
 
 
 			//save high score
-			FILE* stream1;
-			freopen_s(&stream1, "scores.txt", "w", stdout);
+			// FILE* stream1;
+			freopen( "scores.txt", "w", stdout);
 
 			std::vector<int> scores = m_player->GetComponent<PlayerMovementComponent>()->scores;
 
@@ -307,7 +306,8 @@ void GameBoard::Update()
 				std::cout << scores[i] << " ";
 			}
 			std::cout << std::endl;
-			fclose(stream1);
+            fclose(stdout);
+			// fclose(stream1);
         }
     }
 

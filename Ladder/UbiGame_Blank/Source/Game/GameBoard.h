@@ -24,13 +24,10 @@ namespace Game
 		virtual ~GameBoard();
 		void Update();
 		bool IsGameOver() { return false; }
-<<<<<<< HEAD
         
         GameEngine::ObstacleShower* GetShower() {return m_shower;}
-=======
 		static sf::Music BGMusic;
 		static float PauseDuration;
->>>>>>> b306277da570b6f209010cb2f672c0a13617bdc0
 
 	private:
         void CreateShower();
