@@ -13,6 +13,7 @@
 #include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
 #include "Game/Components/PauseMenuComponent.h"
 #include "Game/Components/GodControlComponent.h"
+#include <SFML/Window/Mouse.hpp>
 #include "Game/Components/ThrowProjectileComponent.h"
 #include <vector>
 #include <algorithm>
@@ -67,6 +68,9 @@ void GameBoard::Restart() {
 	m_score->GetComponent<GameEngine::TextRenderComponent>()->SetColor(sf::Color(222, 180, 33, 255));
 	m_shower->EnableShower();
 	BGMusic.play();
+
+	// Hide restart button
+	restartButton->GetComponent<GameEngine::SpriteRenderComponent>()->SetZLevel(0);
 
 	// Get window size
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
@@ -184,6 +188,7 @@ void GameBoard::CreatePlayer()
 	hScoreRender1->SetFont("arial.ttf");
 	hScoreRender1->SetFillColor(sf::Color(0, 0, 0, 200));
 }
+
 
 void GameBoard::CreateLadders()
 {
@@ -321,8 +326,42 @@ void GameBoard::CreatePauseMenu() {
 	shadeRender->SetFillColor(sf::Color(0, 0, 0, 200));
 }
 
+void GameBoard::CreateRestartButton() {
+	// Get the window dimensions
+	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
+	int winWidth = (int)mainWindow->getSize().x;
+	int winHeight = (int)mainWindow->getSize().y;
+
+	// Create the restart button
+	restartButton = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(restartButton);
+	restartButton->SetPos(sf::Vector2f(winWidth / 2, winHeight / 2));
+	restartButton->SetSize(sf::Vector2f(80, 80));
+	GameEngine::SpriteRenderComponent* render = restartButton->AddComponent<GameEngine::SpriteRenderComponent>();
+	render->SetFillColor(sf::Color::Transparent);
+	render->SetZLevel(70);
+	render->SetTexture(GameEngine::eTexture::BackButton);
+}
+
 void GameBoard::Update()
 {
+	if (!GameEngine::GameEngineMain::isRunning) {
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+			sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
+			int mouseX = sf::Mouse::getPosition(*mainWindow).x;
+			int mouseY = sf::Mouse::getPosition(*mainWindow).y;
+			float halfRestartWidth = restartButton->GetSize().x / 2.0;
+			float halfRestartHeight = restartButton->GetSize().y / 2.0;
+			float restartX = restartButton->GetPos().x;
+			float restartY = restartButton->GetPos().y;
+			if (mouseX <= restartX + halfRestartWidth && mouseX >= restartX - halfRestartWidth &&
+				mouseY <= restartY + halfRestartHeight && mouseY >= restartY - halfRestartHeight) {
+				Restart();
+			}
+		}
+		return;
+	}
+
     m_shower -> Update();
     using namespace GameEngine;
     
@@ -360,7 +399,7 @@ void GameBoard::Update()
 			scoreOutput.close();
 
 			// Restart the game
-			Restart();
+			CreateRestartButton();
         }
     }
 
