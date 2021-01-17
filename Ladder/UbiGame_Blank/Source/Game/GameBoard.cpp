@@ -34,10 +34,37 @@ GameBoard::GameBoard()
 	CreatePauseMenu();
 }
 
-
 GameBoard::~GameBoard()
 {
     
+}
+
+void GameBoard::Restart() {
+	GameEngine::GameEngineMain::GetInstance()->isPaused = false;
+	GameEngine::GameEngineMain::GetInstance()->isRunning = true;
+
+	// Undo end game
+	pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(0);
+	m_score->GetComponent<GameEngine::TextRenderComponent>()->SetColor(sf::Color(222, 180, 33, 255));
+	m_shower->EnableShower();
+	BGMusic.play();
+
+	// Get window size
+	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
+	unsigned int winWidth = mainWindow->getSize().x;
+	unsigned int winHeight = mainWindow->getSize().y;
+
+	// Reset plaayer
+	m_player->SetPos(sf::Vector2f(winWidth / 2.0, 4.0 * winHeight / 5));
+	m_player->SetSize(sf::Vector2f(72.f, 72.f));
+	m_player->GetComponent<PlayerMovementComponent>()->jumpDuration = 0;
+
+	// Reset background
+	ladderHiddenCenter->SetPos(sf::Vector2f(winWidth / 2.0, 0));
+	wallHiddenCenter->SetPos(sf::Vector2f(winWidth / 2.0, 0));
+
+	// Reset score
+	
 }
 
 void GameBoard::CreateGod()
@@ -53,7 +80,6 @@ void GameBoard::CreateShower()
 
 void GameBoard::CreatePlayer()
 {
-
 	sf::RenderWindow* mainWindow = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow();
 	unsigned int winWidth = mainWindow->getSize().x;
 	unsigned int winHeight = mainWindow->getSize().y;
@@ -64,15 +90,13 @@ void GameBoard::CreatePlayer()
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_score);
 	
-	m_score->SetPos(sf::Vector2f(winWidth/2 - 20, 30.f));
+	m_score->SetPos(sf::Vector2f(winWidth / 2.0 - 20, 30.f));
 	m_score->SetSize(sf::Vector2f(200.f, 72.f));
-	m_player->SetPos(sf::Vector2f(winWidth/2, 4 * winHeight/5));
+	m_player->SetPos(sf::Vector2f(winWidth / 2.0, 4.0 * winHeight / 5));
 	m_player->SetSize(sf::Vector2f(72.f, 72.f));
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
 	GameEngine::TextRenderComponent* scoreRender = static_cast<GameEngine::TextRenderComponent*>(m_score->AddComponent<GameEngine::TextRenderComponent>());
-	//GameEngine::SoundComponent* musicComp = static_cast<GameEngine::SoundComponent*>(m_player->AddComponent<GameEngine::SoundComponent>());
     
-	//musicComp->LoadSoundFromFile("Resources/snd/music.wav");
 	BGMusic.openFromFile("Resources/snd/music.wav");
 	BGMusic.play();
 	BGMusic.setLoop(true);
@@ -254,6 +278,8 @@ void GameBoard::Update()
 			m_shower->DisableShower();
 			scoreRender->SetColor(sf::Color(224, 36, 0, 255));
 			BGMusic.stop();
+			pauseShade->GetComponent<GameEngine::RenderComponent>()->SetZLevel(59);
+			Restart();
         }
     }
 
@@ -282,14 +308,6 @@ void GameBoard::Update()
 	}
 
 	scoreRender->SetString(std::to_string((int)GameEngine::GameEngineMain::GetInstance()->score));
-
-	/*GameEngine::SoundComponent* musicComp = m_player->GetComponent<GameEngine::SoundComponent>();
-	
-	if (GameEngine::GameEngineMain::GetInstance()->GetGameTime() >= GameEngine::GameEngineMain::GetInstance()->nextPlay && GameEngine::GameEngineMain::GetInstance()->isRunning) {
-		
-		GameEngine::GameEngineMain::GetInstance()->nextPlay += 4.6 * 60;
-		musicComp->PlaySound(0, false);
-	}*/
 
 	if (BGMusic.getStatus() != sf::SoundStream::Playing && (GameEngine::GameEngineMain::GetInstance()->isRunning && !GameEngine::GameEngineMain::GetInstance()->isPaused)) {
 		BGMusic.play();

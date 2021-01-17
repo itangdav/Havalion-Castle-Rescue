@@ -26,6 +26,7 @@ namespace Game
 		bool IsGameOver() { return false; }
 		static sf::Music BGMusic;
 		static float PauseDuration;
+		void Restart();
 
 	private:
         void CreateShower();
