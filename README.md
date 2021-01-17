@@ -38,5 +38,5 @@ In the actual hacking session, there were frustrating times when we got segmenta
 How to work together as a team of 4 to make a game with music and cool visuals
 How to C++
 
-## What's next for Havalion Castle Escape
+## What's next for Havalion Castle Rescue
 Releasing to the public and a global leaderboard.
