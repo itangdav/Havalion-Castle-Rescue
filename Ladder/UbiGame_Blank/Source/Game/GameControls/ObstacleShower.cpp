@@ -33,6 +33,7 @@ void ObstacleShower::CreateObstacle(GameEngine::eObstacle::ladderType type, sf::
     {
         anim -> SetIsLooping(true);
         anim -> PlayAnim(ObstacleManager::GetInstance() -> GetObstacleAnimation(type));
+        obstacle -> SetAnim(ObstacleManager::GetInstance() -> GetObstacleAnimation(type));
     }
 }
 
@@ -56,6 +57,7 @@ void ObstacleShower::CreateObstacle(GameEngine::eObstacle::nonLadderType type, s
     {
         anim -> SetIsLooping(true);
         anim -> PlayAnim(ObstacleManager::GetInstance() -> GetObstacleAnimation(type));
+        obstacle -> SetAnim(ObstacleManager::GetInstance() -> GetObstacleAnimation(type));
     }
 }
 

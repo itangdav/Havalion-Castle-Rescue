@@ -1,17 +1,17 @@
 #pragma once
 #include "GameEngine/EntitySystem/Entity.h"
 #include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
-
 #include <SFML/System/Vector2.hpp>
 #include <vector>
+
 namespace GameEngine
 {
     class ObstacleShower;
 }
+
 namespace Game
 {
 	//Used for storing and controlling all game related entities, as well as providing an entry point for the "game" side of application	
-	class PlayerEntity;	
 
 	class GameBoard
 	{
@@ -26,6 +26,8 @@ namespace Game
 		GameEngine::Entity* m_player;
 		GameEngine::Entity* m_score;
 		void CreatePlayer();
+    
+        void CreateGod();
 
 		GameEngine::Entity* ladderHiddenCenter;
 		GameEngine::Entity** ladders[5];
@@ -38,6 +40,8 @@ namespace Game
 
 		GameEngine::Entity** fog;
 		void CreateFog();
+        
+        GameEngine::Entity* m_god;
 
 		GameEngine::Entity* pauseText;
 		sf::Clock pauseClock;
