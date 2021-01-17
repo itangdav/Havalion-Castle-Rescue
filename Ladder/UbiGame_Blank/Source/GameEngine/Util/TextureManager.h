@@ -18,6 +18,7 @@ namespace GameEngine
 			Fog,
             Fireball,
             Arrow,
+			BackButton,
 			Count,
 		};
 	}	
@@ -33,6 +34,7 @@ namespace GameEngine
 			case eTexture::Fog: return "fog-overlay-2.png";
             case eTexture::Fireball: return "Fireball.png";
             case eTexture::Arrow: return "Arrow.png";
+			case eTexture::BackButton: return "back_button.png";
             default: return "UnknownTextType";
         }
 		return "UnknownTexType";

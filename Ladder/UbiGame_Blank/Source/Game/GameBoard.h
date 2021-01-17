@@ -60,6 +60,9 @@ namespace Game
 		sf::Clock pauseClock;
 		void CreatePauseMenu();
 
+		GameEngine::Entity* restartButton;
+		void CreateRestartButton();
+
 		std::fstream scoreFile;
 		std::vector<int> scores;
 	};
