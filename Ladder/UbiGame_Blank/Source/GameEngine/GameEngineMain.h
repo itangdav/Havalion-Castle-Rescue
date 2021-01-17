@@ -19,10 +19,11 @@ namespace GameEngine
 		//Returns time between update frames in seconds
 		static float		   GetTimeDelta() { return GetInstance()->m_lastDT; }
 		static float		   GetGameTime() { return (sm_gameClock.getElapsedTime() - sm_pauseTime).asSeconds(); }
+		static void			   ResetGameTime() { sm_gameClock.restart(); sm_pauseTime = sf::seconds(0); }
 		static bool isRunning;
 		static bool isPaused;
 		static sf::Time sm_pauseTime;
-		float score;
+		static float score;
 
 		sf::RenderWindow* GetRenderWindow() const { return m_renderWindow; }
 		void Update();		

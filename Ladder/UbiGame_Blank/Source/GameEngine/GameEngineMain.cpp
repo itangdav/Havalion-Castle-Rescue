@@ -21,12 +21,12 @@ sf::Time		GameEngineMain::sm_pauseTime = sf::seconds(0);
 
 bool GameEngineMain::isRunning = true;
 bool GameEngineMain::isPaused = false;
+float GameEngineMain::score = 0;
 
 GameEngineMain::GameEngineMain()
 	: m_renderTarget(nullptr)
 	, m_gameBoard(nullptr)
 	, m_windowInitialised(false)
-	, score(0.f)
 {
 	CreateAndSetUpWindow();
 	//Load predefined textures
