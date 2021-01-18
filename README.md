@@ -7,6 +7,14 @@
 ## Run It
 Download this repo and run the UbiGame.exe file in /Release/ folder.
 
+## Controls
+A/D or Left/Right to move between ladders.
+Esc to pause game
+
+Multiplayer options:
+1,2,3,4,5 to send arrow down respective ladder
+Left click on screen to shoot projectile-canceling fireball.
+
 ## Inspiration
 Inspired by that Ninja jumping game on mobile where you jump between two walls while running up. This extends to 5 ladders instead of just 2.
 
